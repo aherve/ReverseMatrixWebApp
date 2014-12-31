@@ -12,4 +12,6 @@ class Town
 
   field :distance_value       , type: Integer
   field :distance_text        , type: String
+
+  index({ car_travel_time_value: 1 }, { unique: false, name: "car_travel_time_value_index" })
 end

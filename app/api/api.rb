@@ -11,6 +11,7 @@ class API < Grape::API
 
     # Mount some api methods
     mount MyApi::V1::Ping
+    mount MyApi::V1::Towns
 
     # Generate an api documentation
     add_swagger_documentation(mount_path: '/doc/swagger_doc', base_path: '/api')  unless Rails.env.production?
