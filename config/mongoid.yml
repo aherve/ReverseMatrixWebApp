@@ -1,0 +1,19 @@
+development:
+  sessions:
+    default:
+      database: reverse_matrix_web_app_development
+      hosts:
+        - localhost:27017
+      options:
+  options:
+    raise_not_found_error: false
+test:
+  sessions:
+    default:
+      database: reverse_matrix_web_app_test
+      hosts:
+        - localhost:27017
+      options:
+        read: primary
+        max_retries: 1
+        retry_interval: 0
