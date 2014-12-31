@@ -16,8 +16,8 @@ Bundler.require(*Rails.groups)
 module ReverseMatrixWebApp
   class Application < Rails::Application
 
-    config.to_prepare do 
-      DeviseController.respond_to :json
-    end
+    #config.to_prepare do 
+    #  DeviseController.respond_to :json
+    #end
   end
 end
