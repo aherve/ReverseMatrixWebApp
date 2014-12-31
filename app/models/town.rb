@@ -2,14 +2,14 @@ class Town
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :department
-  field :codename
-  field :readable_name
-  field :lat
-  field :lng
-  field :car_travel_time_value
-  field :car_travel_time_text
+  field :department           , type: String
+  field :codename             , type: String
+  field :readable_name        , type: String
+  field :lat                  , type: Float
+  field :lng                  , type: Float
+  field :car_travel_time_value, type: Integer
+  field :car_travel_time_text , type: String
 
-  field :distance_value
-  field :distance_text
+  field :distance_value       , type: Integer
+  field :distance_text        , type: String
 end
