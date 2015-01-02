@@ -5,7 +5,7 @@
 # automatically.
 ###
 describe 'home section', ->
-  beforeEach(module 'lumxTest.home')
+  beforeEach(module 'sortirDeParis.home')
 
   it('should have a dummy test', inject ->
     expect(true).toBeTruthy()

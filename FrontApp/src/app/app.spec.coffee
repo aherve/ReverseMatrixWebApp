@@ -2,7 +2,7 @@ describe 'AppController', ->
   describe 'isCurrentUrl', ->
     AppCtrl = null
 
-    beforeEach(module 'lumxTest')
+    beforeEach(module 'sortirDeParis')
 
     beforeEach(inject ($controller, _$location_, $rootScope) ->
       $location = _$location_

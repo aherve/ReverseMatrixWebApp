@@ -1,6 +1,5 @@
-do (app=angular.module "lumxTest", [
-  'lumxTest.home',
-  'lumxTest.about',
+do (app=angular.module "sortirDeParis", [
+  'sortirDeParis.home',
 
   'lumx',
   'uiGmapgoogle-maps',

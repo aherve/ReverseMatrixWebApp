@@ -9,7 +9,7 @@
 # Regardless, so long as dependencies are managed correctly, the build process
 # will automatically take take of the rest.
 ###
-do (app=angular.module "lumxTest.home", [
+do (app=angular.module "sortirDeParis.home", [
   'ui.router'
 ]) ->
   app.config ($stateProvider) ->
