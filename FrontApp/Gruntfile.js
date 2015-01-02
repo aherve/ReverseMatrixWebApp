@@ -286,8 +286,7 @@ module.exports = function(grunt) {
                     '<%= build_dir %>/front_assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.scss %>'
                 },
                 options: {
-                    cleancss: true,
-                    compress: true
+                  style: 'compressed'
                 }
             }
         },
