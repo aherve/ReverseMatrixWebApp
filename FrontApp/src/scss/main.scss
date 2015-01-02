@@ -1,0 +1,15 @@
+@import "settings";
+@import "lumx/main/lumx";
+
+@import "../app/home/home";
+
+@import 'ionRangeSlider/ion.rangeSlider';
+@import 'ionRangeSlider/normalize';
+@import 'ionRangeSlider/ion.rangeSlider.skinNice';
+
+html, body {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', 'sans-serif' !important;
+}

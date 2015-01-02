@@ -1,0 +1,6 @@
+{
+  "generator-ngbp": {
+    "projectName": "lumxTest",
+    "useCoffeescript": true
+  }
+}

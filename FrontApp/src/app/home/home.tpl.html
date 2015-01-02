@@ -1,0 +1,80 @@
+<div class="card bgc-deep-purple-500 tc-white-1"
+  style="margin-bottom: 10px; z-index: 1; position:
+  relative; border-radius: 0">
+  <div class="grid">
+    <div class="grid__col12">
+      <div class="toolbar">
+        <span class="toolbar__label fs-title">
+          <i class="mdi mdi--access-time" style="position: relative; top: 2px"></i>
+          <span>Sortir de Paris</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="map-container">
+  <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+</div>
+
+<div class="grid">
+  <div class="grid__col4">
+    <div class="card">
+    </div>
+  </div>
+</div>
+
+<div class="cities-container">
+  <div class="grid">
+    <div class="grid__col12">
+
+      <div class="card" style="margin-bottom: 15px; border-radius: 0px">
+        <div class="card__top bgc-light-blue-500 clearfix" style="padding-bottom: 20px; padding-top: 20px;">
+          <strong class="tc-white-1">
+            Temps de trajet depuis Paris
+          </strong>
+        </div>
+        <div class="card_content">
+          <div style="padding: 30px 30px 30px 30px">
+            <div ion-range-slider="" range-options="options" class="ng-isolate-scope" value="1388;5000" style="display: none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card_content">
+          <div class="data-table-container">
+            <table class="data-table data-table--has-primary data-table--has-secondary">
+              <thead class="bgc-light-blue-500 tc-white-1">
+                <tr>
+                  <th lx-ripple lx-tooltip="Temps de trajet" tooltip-position="top">
+                    <strong>
+                    <i class="mdi mdi--access-time"></i>
+                  </strong>
+                  </th>
+                  <th><strong>Municipalités</strong></th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr class="data-table__clickable-row">
+                  <td class="time-td">0:45</td>
+                  <td colspan="2">
+                    <span>Vernon sur bad de la baderie de la ville au long nom</span>
+                  </td>
+                </tr>
+                <tr class="data-table__clickable-row">
+                  <td class="time-td">2:45</td>
+                  <td colspan="2">
+                    <span>Blois</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

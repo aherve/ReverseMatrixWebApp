@@ -1,0 +1,49 @@
+.angular-google-map-container,
+.angular-google-map { 
+  height: 100%; 
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .hidden-xs {
+    display: none;
+  }
+}
+
+.map-container {
+  @extend .hidden-xs;
+  height: 100%; 
+  width: 100%; 
+  position: absolute; 
+  top: 0px; 
+  padding-top: 54px;
+  @media (min-width: 1024px) {
+    padding-top: 64px;
+  }
+}
+
+.cities-container {
+  @media (min-width: 1024px) {
+    & .card {
+      -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 3px 0px;
+      box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 3px 0px;
+    }
+  }
+  & th {
+    border-bottom: 0px !important;
+  }
+  padding: 3px;
+  width: 450px;
+  position: absolute;
+  right: 15px;
+  top: 75px;
+  max-height: 450px; overflow: auto;
+  @media (max-width: 1024px) {
+    right: 0px;
+    left: 0px;
+    width: auto;
+  }
+}
+
+.time-td {
+}
