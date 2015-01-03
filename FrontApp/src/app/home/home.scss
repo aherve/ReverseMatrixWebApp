@@ -12,38 +12,67 @@
 
 .map-container {
   @extend .hidden-xs;
-  height: 100%; 
-  width: 100%; 
-  position: absolute; 
-  top: 0px; 
-  padding-top: 54px;
-  @media (min-width: 1024px) {
-    padding-top: 64px;
-  }
+  height: 100%;
+  width: 100%;
+  padding-top: 64px;
+  padding-right: 438px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
 }
 
 .cities-container {
-  @media (min-width: 1024px) {
-    & .card {
-      -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 3px 0px;
-      box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 3px 0px;
-    }
-  }
-  & th {
-    border-bottom: 0px !important;
-  }
-  padding: 3px;
-  width: 450px;
-  position: absolute;
-  right: 15px;
-  top: 75px;
-  max-height: 450px; overflow: auto;
+  width: 438px;
   @media (max-width: 1024px) {
-    right: 0px;
-    left: 0px;
-    width: auto;
+    width: 100%;
+  }
+  position: absolute;
+  right: 0px;
+  top: 64px;
+  @media (max-width: 1024px) {
+    top: 56px;
+  }
+  height: calc(100% - 64px);
+
+  & .cities-card {
+    height: calc( 100% - 229px );
+    @media (max-width: 1024px) {
+      height: calc( 100% - 221px );
+    }
+    position: relative;
+    overflow: auto;
+    & .card_content,
+    & .data_table_container {
+      position: relative;
+      height: 100%;
+      & .results-table {
+        height: calc( 100% - 64px );
+        @media (max-width: 1024px) {
+          height: calc( 100% - 56px );
+        }
+        position: relative;
+        overflow: auto !important;
+      }
+    }
   }
 }
 
-.time-td {
+.card, .card-top {
+  border-radius: 0;
+}
+
+tr.active {
+  @extend .tc-light-blue-500;
+}
+
+th {
+  border-bottom: 0px !important;
+}
+
+.gm-style-mtc {
+  bottom: 50px;
+  right: 50px;
+  z-index: 2;
 }

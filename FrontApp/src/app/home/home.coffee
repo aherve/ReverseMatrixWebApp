@@ -11,6 +11,7 @@
 ###
 do (app=angular.module "sortirDeParis.home", [
   'ui.router'
+  'sortirDeParis.home.resource'
 ]) ->
   app.config ($stateProvider) ->
     $stateProvider.state 'home',
@@ -22,23 +23,67 @@ do (app=angular.module "sortirDeParis.home", [
       data:
         pageTitle: 'Home'
 
-
   # As you add controllers to a module and they grow in size, feel free to
   # place them in their own files. Let each module grow organically, adding
   # appropriate organization and sub-folders as needed.
-  app.controller 'HomeController',
-    ($scope, LxDialogService, LxProgressService ) ->
+  app.controller 'HomeController', [
+    '$scope', 'LxDialogService', 'LxProgressService', 'Cities',
+    '$location', '$anchorScroll', '$filter',
+    ($scope, LxDialogService, LxProgressService, Cities,
+    $location, $anchorScroll, $filter ) ->
 
-      $scope.openDialog = (dialogId) ->
-        console.log 'lol'
-        LxDialogService.open(dialogId)
+      $scope.cities = []
+      paris =
+        latitude: 48.853
+        longitude: 2.35
+
+
+      getCities = ()->
+        onError = (error)->
+          console.log error
+        onSuccess = (success) ->
+          $scope.cities = success.towns.map (town) ->
+            town.latitude = town.lat
+            town.longitude = town.lng
+            town
+
+        Cities.cities(
+          60 * $scope.from,
+          60 * $scope.to
+        )
+          .then onSuccess, onError
+
+      changeRange = ( from, to )->
+        $scope.from = from
+        $scope.to = to
+        getCities()
+
+      changeRange( 60, 90 )
+
+      $scope.active =
+        city:
+          id: null
+
+      $scope.markerClick = ( marker )->
+        $scope.map.center =
+          longitude: marker.position.D
+          latitude: marker.position.k
+        $scope.active.city.id = marker.key
+        $location.hash( marker.key )
+        $anchorScroll()
+
+      $scope.selectCity = (city) ->
+        $scope.active.city.id = city.id
+        $scope.map.center =
+          latitude: city.lat
+          longitude: city.lng
 
       $scope.options =
         type: "double"
         min: 0
-        max: 360
-        from: 60
-        to: 90
+        max: 480
+        from: $scope.from
+        to: $scope.to
         drag_interval: true
         prettify: (num)->
           min = num % 60
@@ -49,10 +94,24 @@ do (app=angular.module "sortirDeParis.home", [
             min = "0" + min
           hours + "h" + min
         step: 10
-        max_interval: 90
+        max_interval: 120
+        onFinish: (obj) ->
+          changeRange( obj.from, obj.to )
 
       $scope.map =
+        control: {}
         center:
-          latitude: 45
-          longitude: -73
+          latitude: paris.latitude
+          longitude: paris.longitude
         zoom: 8
+  ]
+
+  app.filter 'timeFilter', ()->
+    (total_seconds)->
+      seconds = total_seconds % 60
+      minutes = (( total_seconds - seconds ) / 60) % 60
+      hours = (total_seconds - ( total_seconds % 3600 )) / 3600
+      if minutes < 10
+        minutes = '0' + minutes
+      hours + 'h' + minutes
+
