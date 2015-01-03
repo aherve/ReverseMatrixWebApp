@@ -105,3 +105,13 @@ do (app=angular.module "sortirDeParis.home", [
           longitude: 2.85
         zoom: 9
   ]
+
+  app.filter 'timeFilter', ()->
+    (total_seconds)->
+      seconds = total_seconds % 60
+      minutes = (( total_seconds - seconds ) / 60) % 60
+      hours = (total_seconds - ( total_seconds % 3600 )) / 3600
+      if minutes < 10
+        minutes = '0' + minutes
+      hours + 'h' + minutes
+
