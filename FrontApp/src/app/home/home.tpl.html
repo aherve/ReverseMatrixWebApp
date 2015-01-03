@@ -1,12 +1,12 @@
-<div class="card bgc-deep-purple-500 tc-white-1"
-  style="margin-bottom: 10px; z-index: 1; position:
+<div class="card bgc-deep-purple-600 tc-white-1"
+  style="z-index: 10000; position:
   relative; border-radius: 0">
   <div class="grid">
     <div class="grid__col12">
       <div class="toolbar">
         <span class="toolbar__label fs-title">
-          <i class="mdi mdi--access-time" style="position: relative; top: 2px"></i>
-          <span>Sortir de Paris</span>
+          <span class="pacifico">Sortir de Paris</span>
+          <span class="tc-deep-purple-100 fs-subhead pacifico" style="margin-left: 10px"> par Woodstack</span>
         </span>
       </div>
     </div>
@@ -14,25 +14,27 @@
 </div>
 
 <div class="map-container">
-  <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-</div>
-
-<div class="grid">
-  <div class="grid__col4">
-    <div class="card">
-    </div>
-  </div>
+  <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+    <ui-gmap-markers
+      models="cities"
+      icon="'icon'"
+      click="markerClick"
+      coords="'self'">
+    </ui-gmap-markers>
+  </ui-gmap-google-map>
 </div>
 
 <div class="cities-container">
   <div class="grid">
     <div class="grid__col12">
 
-      <div class="card" style="margin-bottom: 15px; border-radius: 0px">
+      <div class="card time-card">
         <div class="card__top bgc-light-blue-500 clearfix" style="padding-bottom: 20px; padding-top: 20px;">
-          <strong class="tc-white-1">
-            Temps de trajet depuis Paris
-          </strong>
+          <span class="tc-white-1">
+            <span class="pacifico">
+              Temps de trajet
+            </span>
+          </span>
         </div>
         <div class="card_content">
           <div style="padding: 30px 30px 30px 30px">
@@ -41,33 +43,27 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card cities-card">
         <div class="card_content">
           <div class="data-table-container">
             <table class="data-table data-table--has-primary data-table--has-secondary">
               <thead class="bgc-light-blue-500 tc-white-1">
                 <tr>
-                  <th lx-ripple lx-tooltip="Temps de trajet" tooltip-position="top">
+                  <th lx-ripple lx-tooltip="Temps de trajet en voiture" tooltip-position="right">
                     <strong>
-                    <i class="mdi mdi--access-time"></i>
-                  </strong>
+                      <i class="mdi mdi--access-time"></i>
+                    </strong>
                   </th>
-                  <th><strong>Municipalités</strong></th>
+                  <th><span class="pacifico">Municipalité</span></th>
                   <th></th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr class="data-table__clickable-row">
+                <tr class="data-table__clickable-row" ng-repeat="city in cities" id="{{city.id}}" ng-click="selectCity(city)" ng-class="{'active': active.city.id == city.id}">
                   <td class="time-td">0:45</td>
                   <td colspan="2">
-                    <span>Vernon sur bad de la baderie de la ville au long nom</span>
-                  </td>
-                </tr>
-                <tr class="data-table__clickable-row">
-                  <td class="time-td">2:45</td>
-                  <td colspan="2">
-                    <span>Blois</span>
+                    <span>{{ city.readable_name }}</span>
                   </td>
                 </tr>
               </tbody>

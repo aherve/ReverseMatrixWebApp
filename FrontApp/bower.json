@@ -9,7 +9,8 @@
     "lumx": "~0.2.41",
     "ionrangeslider": "~2.0.3",
     "angular-google-maps": "~2.0.12",
-    "bourbon": "~4.1.0"
+    "bourbon": "~4.1.0",
+    "restangular": "~1.4.0"
   },
   "dependencies": {},
   "resolutions": {
