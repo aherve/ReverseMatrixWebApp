@@ -10,6 +10,8 @@ module MyApi
       expose :car_travel_time_value
       expose :car_travel_time_text 
 
+      expose :population
+
       expose :distance_value       
       expose :distance_text        
     end
