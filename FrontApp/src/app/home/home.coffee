@@ -28,20 +28,23 @@ do (app=angular.module "sortirDeParis.home", [
   # appropriate organization and sub-folders as needed.
   app.controller 'HomeController', [
     '$scope', 'LxDialogService', 'LxProgressService', 'Cities',
-    '$location', '$anchorScroll',
+    '$location', '$anchorScroll', '$filter',
     ($scope, LxDialogService, LxProgressService, Cities,
-    $location, $anchorScroll ) ->
+    $location, $anchorScroll, $filter ) ->
 
       $scope.cities = []
+      paris =
+        latitude: 48.853
+        longitude: 2.35
+
+
       getCities = ()->
         onError = (error)->
           console.log error
         onSuccess = (success) ->
-          console.log success.towns
           $scope.cities = success.towns.map (town) ->
             town.latitude = town.lat
             town.longitude = town.lng
-            console.log town
             town
 
         Cities.cities(
@@ -62,7 +65,6 @@ do (app=angular.module "sortirDeParis.home", [
           id: null
 
       $scope.markerClick = ( marker )->
-        console.log marker
         $scope.map.center =
           longitude: marker.position.D
           latitude: marker.position.k
@@ -71,12 +73,10 @@ do (app=angular.module "sortirDeParis.home", [
         $anchorScroll()
 
       $scope.selectCity = (city) ->
-        console.log $scope.map
         $scope.active.city.id = city.id
         $scope.map.center =
           latitude: city.lat
           longitude: city.lng
-        $scope.map.zoom = 11
 
       $scope.options =
         type: "double"
@@ -94,16 +94,16 @@ do (app=angular.module "sortirDeParis.home", [
             min = "0" + min
           hours + "h" + min
         step: 10
-        max_interval: 90
+        max_interval: 120
         onFinish: (obj) ->
           changeRange( obj.from, obj.to )
 
       $scope.map =
         control: {}
         center:
-          latitude: 48.853
-          longitude: 2.85
-        zoom: 9
+          latitude: paris.latitude
+          longitude: paris.longitude
+        zoom: 8
   ]
 
   app.filter 'timeFilter', ()->
