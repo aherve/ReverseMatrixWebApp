@@ -26,7 +26,7 @@
   <div class="card time-card">
     <div class="card__top bgc-light-blue-500 clearfix" style="padding-bottom: 20px; padding-top: 20px;">
       <span class="tc-white-1">
-        <span class="pacifico" lx-ripple lx-tooltip="Faites glisser la barre" tooltip-position="right">
+        <span class="pacifico" lx-ripple lx-tooltip="Faites glisser le curseur" tooltip-position="right">
           Temps de trajet
         </span>
       </span>
@@ -62,9 +62,17 @@
 
             <tbody>
               <tr class="data-table__clickable-row" ng-repeat="city in cities" id="{{city.id}}" ng-click="selectCity(city)" ng-class="{'active': active.city.id == city.id}">
-                <td class="time-td">{{ city.car_travel_time_value | timeFilter }}</td>
+                <td class="time-td">
+                  <div class="list-content-tile list-content-tile--two-lines">
+                    <strong>{{ city.car_travel_time_value | timeFilter }}</strong>
+                    <span style="opacity: 0">_</span>
+                  </div>
+                </td>
                 <td colspan="2">
-                  <span>{{ city.readable_name }}</span>
+                  <div class="list-content-tile list-content-tile--two-lines">
+                    <strong>{{ city.readable_name }}</strong>
+                    <span>{{ city.population }} habitants</span>
+                  </div>
                 </td>
               </tr>
             </tbody>

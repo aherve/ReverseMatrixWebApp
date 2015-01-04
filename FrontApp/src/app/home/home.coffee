@@ -36,6 +36,7 @@ do (app=angular.module "sortirDeParis.home", [
       paris =
         latitude: 48.853
         longitude: 2.35
+      $scope.value = 90
 
 
       getCities = ()->
@@ -48,17 +49,16 @@ do (app=angular.module "sortirDeParis.home", [
             town
 
         Cities.cities(
-          60 * $scope.from,
-          60 * $scope.to
+          60 * ( $scope.value - 5 ),
+          60 * ( $scope.value + 5 )
         )
           .then onSuccess, onError
 
-      changeRange = ( from, to )->
-        $scope.from = from
-        $scope.to = to
+      changeRange = ( value )->
+        $scope.value = value
         getCities()
 
-      changeRange( 60, 90 )
+      changeRange( 95 )
 
       $scope.active =
         city:
@@ -78,23 +78,27 @@ do (app=angular.module "sortirDeParis.home", [
           latitude: city.lat
           longitude: city.lng
 
+
+      prettify = (num)->
+        min = num % 60
+        hours = ( num - min ) / 60
+        if hours < 10
+          hours = "0" + hours
+        if min < 10
+          min = "0" + min
+        hours + "h" + min
+
       $scope.options =
-        type: "double"
-        min: 0
-        max: 480
-        from: $scope.from
-        to: $scope.to
-        drag_interval: true
+        type: "single"
+        min: 5
+        max: 595
+        from: $scope.value
         prettify: (num)->
-          min = num % 60
-          hours = ( num - min ) / 60
-          if hours < 10
-            hours = "0" + hours
-          if min < 10
-            min = "0" + min
-          hours + "h" + min
+          inf = num - 5
+          sup = num + 5
+          prettify(inf) + " - " + prettify(sup)
+
         step: 10
-        max_interval: 120
         onFinish: (obj) ->
           changeRange( obj.from, obj.to )
 
@@ -103,7 +107,7 @@ do (app=angular.module "sortirDeParis.home", [
         center:
           latitude: paris.latitude
           longitude: paris.longitude
-        zoom: 8
+        zoom: 6
   ]
 
   app.filter 'timeFilter', ()->

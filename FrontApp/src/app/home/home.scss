@@ -65,6 +65,10 @@
 
 tr.active {
   @extend .tc-light-blue-500;
+  & .list-content-tile.list-content-tile--two-lines > strong + span {
+    @extend .tc-light-blue-400;
+  }
+
 }
 
 th {
