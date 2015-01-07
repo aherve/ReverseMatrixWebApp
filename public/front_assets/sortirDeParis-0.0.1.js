@@ -1,5 +1,5 @@
 /**
- * sortirDeParis - v0.0.1 - 2015-01-04
+ * sortirDeParis - v0.0.1 - 2015-01-07
  *
  * Copyright (c) 2015 Alexandre Hervé
  */
