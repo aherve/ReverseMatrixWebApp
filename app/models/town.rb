@@ -1,6 +1,9 @@
 class Town
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Autocomplete
+
+  has_many :lands
 
   field :department           , type: String
   field :codename             , type: String

@@ -21,6 +21,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 group :development do 
+  gem 'pry-rails'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-rbenv'
@@ -57,3 +58,4 @@ gem 'delayed_job_mongoid'#, :github => 'collectiveidea/delayed_job'
 gem 'daemons'
 gem 'thor'
 gem 'figaro'
+gem 'nokogiri'
