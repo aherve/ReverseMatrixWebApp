@@ -5,7 +5,7 @@ namespace :lands do
     
     #terrain-construction
     tc_lands = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: 35_000, max_dist_from_paris: 600).new_lands
-    Rails.logger.info "#{tc_lands.count} new lands found from terrain-construction.com"
+    puts "#{tc_lands.count} new lands found from terrain-construction.com"
     tc_lands.each(&:save)
 
   end

@@ -5,18 +5,15 @@ module LandsScrapper
   module TerrainConstruction
     class Scrapper < LandsScrapper::Scrapper
 
-      attr_accessor :pages, :min_surface, :max_dist_from_paris
+      attr_accessor :pages
 
       def initialize(params)
+
         @pages = Hash.new do |h,k|
           h[k] = get_page(k)
         end
 
-        # surface in squared meters
-        @min_surface = params[:min_surface] || params["min_surface"] || 10_000
-
-        #dist in kilometers
-        @max_dist_from_paris = params[:max_dist_from_paris] || params["max_dist_from_paris"] || 500
+        super
 
       end
 
@@ -64,7 +61,7 @@ module LandsScrapper
         @with_town ||= lambda {|formatted_land_hash|
           formatted_land_hash.merge({
             town: Town.where_autocomplete(formatted_land_hash[:locality]).find_by(department: formatted_land_hash[:department])
-            })
+          })
         }
       end
 
