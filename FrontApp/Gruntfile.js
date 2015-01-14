@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-coffeelint');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
          * build tasks. 'js' is all project javascript, except tests.
          * 'commonTemplates' contains our reusable components' ('src/common')
          * template HTML files, while 'appTemplates' contains the templates for
-         * our app's code. 'html' is just our main HTML file. 'scss' is our main
+         * our app's code. 'html' is just our main HTML file. 'less' is our main
          * stylesheet, and 'unit' contains our app's unit tests.
          */
         app_files: {
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
             commonTemplates: [ 'src/common/**/*.tpl.html' ],
 
             html: [ 'src/index.html' ],
-            scss: 'src/scss/main.scss'
+            less: 'src/less/main.less'
         },
 
         /**
@@ -272,19 +272,19 @@ module.exports = function(grunt) {
         },
 
         /**
-         * `grunt-contrib-scss` handles our LESS compilation and uglification automatically.
-         * Only our 'main.scss' file is included in compilation; all other files
+         * `grunt-contrib-less` handles our LESS compilation and uglification automatically.
+         * Only our 'main.less' file is included in compilation; all other files
          * must be imported from this file.
          */
-        sass: {
+        less: {
             build: {
                 files: {
-                    '<%= build_dir %>/front_assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.scss %>'
+                    '<%= build_dir %>/front_assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
                 }
             },
             compile: {
                 files: {
-                    '<%= build_dir %>/front_assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.scss %>'
+                    '<%= build_dir %>/front_assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
                 },
                 options: {
                   style: 'compressed'
@@ -298,7 +298,7 @@ module.exports = function(grunt) {
          * are linted based on the policies listed in 'options'. But we can also
          * specify exclusionary patterns by prefixing them with an exclamation
          * point (!); this is useful when code comes from a third party but is
-         * nonethescss inside 'src/'.
+         * nonetheless inside 'src/'.
          */
         jshint: {
             src: [
@@ -539,9 +539,9 @@ module.exports = function(grunt) {
             /**
              * When the CSS files change, we need to compile and minify them.
              */
-            sass: {
-                files: [ 'src/**/*.scss' ],
-                tasks: [ 'sass:build' ]
+            less: {
+                files: [ 'src/**/*.less' ],
+                tasks: [ 'less:build' ]
             },
 
             /**
@@ -623,7 +623,7 @@ module.exports = function(grunt) {
 
     // The 'build' task gets your app ready to run for development and testing.
     grunt.registerTask('build', [
-      'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'sass:build',
+      'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build',
       'concat:build_css', 'copy:build_app_front_assets', 'copy:build_vendor_front_assets',
       'copy:build_appjs', 'copy:build_vendorjs', 'ngAnnotate:build', 'index:build', 'karmaconfig',
       'karma:continuous'
@@ -632,7 +632,7 @@ module.exports = function(grunt) {
     // The 'compile' task gets your app ready for deployment by concatenating and minifying your code.
     // Note - compile builds off of the build dir (look at concat:compile_js), so run grunt build before grunt compile
     grunt.registerTask('compile', [
-      'sass:compile', 'copy:compile_front_assets', 'concat:compile_js', 'uglify', 'index:compile'
+      'less:compile', 'copy:compile_front_assets', 'concat:compile_js', 'uglify', 'index:compile'
     ]);
 
     // A utility function to get all app JavaScript sources.
@@ -657,7 +657,7 @@ module.exports = function(grunt) {
       var dirRE = new RegExp('^(' + grunt.config('build_dir') + '|' + grunt.config('compile_dir') + ')\/', 'g');
 
       // this.fileSrc comes from either build:src, compile:src, or karmaconfig:src in the index config defined above
-      // see - http://gruntjs.com/api/inside-tasks#this.fiscssrc for documentation
+      // see - http://gruntjs.com/api/inside-tasks#this.filessrc for documentation
       var jsFiles = filterForJS(this.filesSrc).map(function (file) {
         return file.replace(dirRE, '');
       });

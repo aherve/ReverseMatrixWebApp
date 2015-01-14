@@ -1,7 +1,6 @@
 do (app=angular.module "sortirDeParis", [
   'sortirDeParis.home',
 
-  'lumx',
   'uiGmapgoogle-maps',
 
   'templates-app',
