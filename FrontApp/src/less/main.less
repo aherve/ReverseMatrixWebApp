@@ -53,13 +53,13 @@ html, body {
 
 [ui-view].ng-leave,
 [ui-view].ng-enter {
-   -webkit-transition:all 1.2s ease-in-out;
-      -moz-transition:all 1.2s ease-in-out;
-        -o-transition:all 1.2s ease-in-out;
-           transition:all 1.2s ease-in-out;
+   -webkit-transition:all 0.5s ease-in-out;
+      -moz-transition:all 0.5s ease-in-out;
+        -o-transition:all 0.5s ease-in-out;
+           transition:all 0.5s ease-in-out;
   position: absolute;
   top: 64px;
-  bottom: 100px;
+  bottom: 0px;
   left: 0;
   right: 0;
 }
@@ -70,6 +70,15 @@ html, body {
 
 [ui-view].ng-enter {
   z-index: 2;
+}
+
+[ui-view].home\.fieldDetail.ng-enter {
+  z-index: 2;
   &:extend( .appearRight );
+}
+
+[ui-view].home\.fieldDetail.ng-leave {
+  z-index: 2;
+  &:extend( .disappearRight );
 }
 

@@ -80,11 +80,12 @@ disappearRight
   animation-name: disappearRight;
   -webkit-animation-name: disappearRight; 
 
-  animation-duration: 0.4s; 
-  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.6s; 
+  -webkit-animation-duration: 0.6s;
 
-  animation-timing-function: cubic-bezier(.73,.01,1,.65);  
-  -webkit-animation-timing-function: cubic-bezier(.73,.01,1,.65);  
+  animation-timing-function: ease-in;  
+  -webkit-animation-timing-function: ease-in;  
+
 
 }
 
@@ -116,11 +117,11 @@ appearRight
   animation-name: appearRight;
   -webkit-animation-name: appearRight; 
 
-  animation-duration: 1.1s; 
-  -webkit-animation-duration: 1.1s;
+  animation-duration: 0.4s; 
+  -webkit-animation-duration: 0.4s;
 
-  animation-timing-function: cubic-bezier(.18,.87,.17,.99);  
-  -webkit-animation-timing-function: cubic-bezier(.18,.87,.17,.99);  
+  animation-timing-function: cubic-bezier(.16,.9,.69,.94);  
+  -webkit-animation-timing-function: cubic-bezier(.16,.9,.69,.94);  
 
 }
 
@@ -136,6 +137,42 @@ appearRight
 @-webkit-keyframes appearRight {
   0% {
     -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+  }   
+}
+
+/*
+==============================================
+appearLeft
+==============================================
+*/
+
+.appearLeft{
+  animation-name: appearLeft;
+  -webkit-animation-name: appearLeft; 
+
+  animation-duration: 0.4s; 
+  -webkit-animation-duration: 0.4s;
+
+  animation-timing-function: ease-out;  
+  -webkit-animation-timing-function: ease-out;  
+
+}
+
+@keyframes appearLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes appearLeft {
+  0% {
+    -webkit-transform: translateX(-100%);
   }
   100% {
     -webkit-transform: translateX(0);
