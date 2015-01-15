@@ -1,5 +1,5 @@
 class LandMailer < ActionMailer::Base
-  default from: "recherche-terrain@woodstack.io"
+  default from: "aurelien@woodstack.io"
 
   def new_interesting_land(land)
     @url = land.url
@@ -11,7 +11,7 @@ class LandMailer < ActionMailer::Base
   end
 
   def new_land(land)
-
     mail(to: "woodstack@woodstack.io", subject: '[recherche terrain] nouvelle annonce de terrain disponible!')
   end
+
 end
