@@ -35,4 +35,21 @@ describe MyApi::V1::Land do
   end
   #}}}
 
+  #{{{ interesting/not interesting
+  describe :interesting do 
+    subject(:interesting){ post "/api/lands/#{@land.id}/interesting!" ; @land.reload }
+    subject(:not_interesting){ post "/api/lands/#{@land.id}/not_interesting!" ; @land.reload}
+
+    it 'interesting does interesting a land' do 
+      expect{interesting}.to change{Land.last.interesting}.from(false).to(true)
+    end
+
+    it 'uninteresting uninterestings a land' do 
+      @land.update_attribute(:interesting, true)
+      expect{not_interesting}.to change{Land.last.interesting}.from(true).to(false)
+    end
+
+  end
+  #}}}
+
 end

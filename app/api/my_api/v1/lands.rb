@@ -13,6 +13,13 @@ module MyApi
         end
         #}}}
 
+        #{{{ interesting
+        desc "list all lands of interest"
+        get :interesting do 
+          present :lands, Land.where(interesting: true), with: MyApi::Entities::Land
+        end
+        #}}}
+
         namespace ':land_id' do
           before do 
             params do 
@@ -28,8 +35,8 @@ module MyApi
           end
           #}}}
 
-          #{{{ archive/unarchive
-          [:archive!, :unarchive!].each do |method|
+          #{{{ archive/unarchive/interesting/not_intersting
+          [:interesting!, :not_interesting!, :archive!, :unarchive!].each do |method|
             desc "#{method} land"
             post method do 
               if @land.send(method)

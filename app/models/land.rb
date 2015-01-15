@@ -10,6 +10,7 @@ class Land
   field :url
   field :provider
   field :archived, type: Boolean, default: false
+  field :interesting, type: Boolean, default: false
   field :active_url, type: Boolean, default: true
 
   #denormalized data: 
@@ -26,6 +27,14 @@ class Land
   validates_presence_of :url
 
   before_save :denormalize_town_infos
+
+  def interesting!
+    self.update_attributes(interesting: true)
+  end
+
+  def not_interesting!
+    self.update_attributes(interesting: false)
+  end
 
   def archive!
     self.update_attributes(archived: true)
