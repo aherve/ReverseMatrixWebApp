@@ -27,8 +27,17 @@ do (app=angular.module "sortirDeParis.home", [
   # place them in their own files. Let each module grow organically, adding
   # appropriate organization and sub-folders as needed.
   app.controller 'HomeController', [
-    '$scope',
-    ($scope) ->
+    '$scope', '$mdBottomSheet',
+    ($scope, $mdBottomSheet) ->
+      $scope.map =
+        center:
+          latitude: 8
+          longitude: -73
+        zoom: 8
+
+      $scope.openBottomSheet = ->
+        $mdBottomSheet.show
+          templateUrl: 'home/bottom.tpl.html'
 
   ]
 

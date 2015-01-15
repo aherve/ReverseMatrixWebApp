@@ -2,6 +2,7 @@ do (app=angular.module "sortirDeParis", [
   'sortirDeParis.home',
 
   'uiGmapgoogle-maps',
+  'ngMaterial',
 
   'templates-app',
   'templates-common',
@@ -15,6 +16,12 @@ do (app=angular.module "sortirDeParis", [
   app.run ->
 
   app.controller 'AppController', ($scope) ->
+
+  app.config ([
+    '$mdThemingProvider',
+    ($mdThemingProvider)->
+      $mdThemingProvider.setDefaultTheme('deep-purple')
+  ])
 
   app.directive 'ionRangeSlider', ()->
     restrict: 'A'
