@@ -14,8 +14,8 @@ do (app=angular.module "sortirDeParis.home", [
           templateUrl: 'home/home.tpl.html'
 
   app.controller 'HomeController', [
-    '$scope', '$mdBottomSheet', '$state',
-    ($scope, $mdBottomSheet, $state) ->
+    '$scope', '$mdBottomSheet', '$state', '$rootScope',
+    ($scope, $mdBottomSheet, $state, $rootScope) ->
       $scope.$state = $state
       $scope.map =
         control: {}
@@ -29,6 +29,12 @@ do (app=angular.module "sortirDeParis.home", [
         latitude: 8
         longitude: -73
       ]
+
+      $rootScope.$on '$stateChangeSuccess', ()->
+        window.setTimeout(
+          ()->
+            $scope.map.control.refresh($scope.map.center)
+        )
   ]
 
   app.filter 'timeFilter', ()->

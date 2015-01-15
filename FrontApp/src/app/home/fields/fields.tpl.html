@@ -1,0 +1,20 @@
+<div flex layout="column" ui-view="main"></div>
+
+<md-tabs md-theme="cyan">
+  <md-tab ui-sref="home.fields.list" ui-sref-active="active" md-active="$state.current.name=='home.fields.list'">
+    <md-tab-label>
+      <div layout="row" layout-align="center center">
+        <span class="fa fa-2x fa-list"></span>
+        <span class="lead" style="margin-left: 10px">Liste</span>
+      </div>
+    </md-tab-label>
+  </md-tab>
+  <md-tab ui-sref="home.fields.map" ui-sref-active="active" md-active="$state.current.name == 'home.fields.map'">
+    <md-tab-label>
+      <div layout="row" layout-align="center center">
+        <span class="fa fa-2x fa-map-marker"></span>
+        <span class="lead" style="margin-left: 10px">Carte</span>
+      </div>
+    </md-tab-label>
+  </md-tab>
+</md-tabs>
