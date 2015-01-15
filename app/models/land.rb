@@ -27,9 +27,11 @@ class Land
   validates_presence_of :url
 
   before_save :denormalize_town_infos
+  after_create :new_land_mail
 
   def interesting!
     self.update_attributes(interesting: true)
+    LandMailer.new_interesting_land(self).deliver
   end
 
   def not_interesting!
@@ -45,6 +47,10 @@ class Land
   end
 
   private
+
+  def new_land_mail
+    LandMailer.new_land(self).deliver
+  end
 
   def denormalize_town_infos
     unless town.blank?
