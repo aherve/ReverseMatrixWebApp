@@ -20,6 +20,7 @@ class Land
   field :town_readable_name
   field :town_distance_value
   field :town_car_travel_time_value
+  field :town_car_travel_time_text
 
   index({ url: 1},{sparse: false, unique: true, name: 'url_land_index'})
 
@@ -53,14 +54,16 @@ class Land
   end
 
   def denormalize_town_infos
-    unless town.blank?
+    t = town
+    unless t.blank?
       self.write_attributes(
-        town_population: town.population,
-        town_department: town.department,
-        town_codename: town.codename,
-        town_readable_name: town.readable_name,
-        town_distance_value: town.distance_value,
-        town_car_travel_time_value: town.car_travel_time_value,
+        town_population: t.population,
+        town_department: t.department,
+        town_codename: t.codename,
+        town_readable_name: t.readable_name,
+        town_distance_value: t.distance_value,
+        town_car_travel_time_value: t.car_travel_time_value,
+        town_car_travel_time_text: t.car_travel_time_text,
       )
     end
   end

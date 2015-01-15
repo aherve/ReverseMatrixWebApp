@@ -60,7 +60,7 @@ module LandsScrapper
       def with_town
         @with_town ||= lambda {|formatted_land_hash|
           formatted_land_hash.merge({
-            town: Town.where_autocomplete(formatted_land_hash[:locality]).find_by(department: formatted_land_hash[:department])
+            town_id: (Town.where_autocomplete(formatted_land_hash[:locality]).find_by(department: formatted_land_hash[:department]).id rescue nil)
           })
         }
       end
@@ -74,7 +74,7 @@ module LandsScrapper
               :surface_in_squared_meters,
               :description,
               :url,
-              :town,
+              :town_id,
             )
           )
         }
