@@ -18,12 +18,10 @@ module Autocomplete
 
   # callback to populate :autocomplete
   def generate_autocomplete
-    if complete_fields.map{|k| changes.has_key? k}.include?(true) or new_record?
-      s = self.complete_fields.map{|f| self.send(f)}.join(" ")
-      s = s.truncate(100, omission: "", separator: " ") if s.length > 100
-      write_attribute(:autocomplete, Autocomplete.normalize(s))
-      write_attribute(:autocomplete_length, Autocomplete.normalize(s).size)
-    end
+    s = self.complete_fields.map{|f| self.send(f)}.join(" ")
+    s = s.truncate(100, omission: "", separator: " ") if s.length > 100
+    write_attribute(:autocomplete, Autocomplete.normalize(s))
+    write_attribute(:autocomplete_length, Autocomplete.normalize(s).size)
   end
 
   # turn strings into autocomplete keys
