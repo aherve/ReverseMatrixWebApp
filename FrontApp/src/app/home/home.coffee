@@ -1,44 +1,34 @@
-###
-# Each section of the site has its own module. It probably also has
-# submodules, though this boilerplate is too simple to demonstrate it. Within
-# 'src/app/home', however, could exist several additional folders representing
-# additional modules that would then be listed as dependencies of this one.
-# For example, a 'note' section could have the submodules 'note.create',
-# 'note.delete', 'note.edit', etc.
-#
-# Regardless, so long as dependencies are managed correctly, the build process
-# will automatically take take of the rest.
-###
 do (app=angular.module "sortirDeParis.home", [
   'ui.router'
+  'sortirDeParis.fields'
+  'sortirDeParis.fieldDetail'
   'sortirDeParis.home.resource'
 ]) ->
   app.config ($stateProvider) ->
     $stateProvider.state 'home',
-      url: '/home'
+      url: '/'
+      abstract: true
       views:
         "main":
           controller: 'HomeController'
           templateUrl: 'home/home.tpl.html'
-      data:
-        pageTitle: 'Home'
 
-  # As you add controllers to a module and they grow in size, feel free to
-  # place them in their own files. Let each module grow organically, adding
-  # appropriate organization and sub-folders as needed.
   app.controller 'HomeController', [
-    '$scope', '$mdBottomSheet',
-    ($scope, $mdBottomSheet) ->
+    '$scope', '$mdBottomSheet', '$state',
+    ($scope, $mdBottomSheet, $state) ->
+      $scope.$state = $state
       $scope.map =
+        control: {}
         center:
           latitude: 8
           longitude: -73
         zoom: 8
 
-      $scope.openBottomSheet = ->
-        $mdBottomSheet.show
-          templateUrl: 'home/bottom.tpl.html'
-
+      $scope.cities = [
+        id: 1
+        latitude: 8
+        longitude: -73
+      ]
   ]
 
   app.filter 'timeFilter', ()->

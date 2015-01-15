@@ -96,7 +96,6 @@ module.exports = function(grunt) {
                 'vendor/angular-google-maps/dist/angular-google-maps.js'
             ],
             css: [
-                'vendor/angular-material/angular-material.css'
             ],
             front_assets: [
             ]

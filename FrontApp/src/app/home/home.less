@@ -1,8 +1,99 @@
 .angular-google-map-container,
-.angular-google-map { 
+.angular-google-map,
+.full-flex { 
   height: 100%; 
   width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.field-detail {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: white;
+  padding: 30px;
+  z-index: 100;
+  &.open {
+    &:extend( .appearRight );
+  }
+  &.closed {
+    &:extend( .disappearRight );
+  }
+}
+
+
+/*
+==============================================
+disappearRight
+==============================================
+*/
+
+.disappearRight{
+  animation-name: disappearRight;
+  -webkit-animation-name: disappearRight; 
+
+  animation-duration: 0.2s; 
+  -webkit-animation-duration: 0.2s;
+
+  animation-timing-function: cubic-bezier(.73,.01,1,.65);  
+  -webkit-animation-timing-function: cubic-bezier(.73,.01,1,.65);  
+
+}
+
+@keyframes disappearRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@-webkit-keyframes disappearRight {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+  }   
+}
+
+/*
+==============================================
+appearRight
+==============================================
+*/
+
+.appearRight{
+  animation-name: appearRight;
+  -webkit-animation-name: appearRight; 
+
+  animation-duration: 0.2s; 
+  -webkit-animation-duration: 0.2s;
+
+  animation-timing-function: cubic-bezier(.18,.87,.17,.99);  
+  -webkit-animation-timing-function: cubic-bezier(.18,.87,.17,.99);  
+
+}
+
+@keyframes appearRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes appearRight {
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+  }   
 }

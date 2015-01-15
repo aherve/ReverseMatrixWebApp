@@ -4,6 +4,10 @@ do (app=angular.module "sortirDeParis", [
   'uiGmapgoogle-maps',
   'ngMaterial',
 
+  'sortirDeParis.fieldDetail',
+  'sortirDeParis.list',
+  'sortirDeParis.map',
+  'sortirDeParis.fields',
   'templates-app',
   'templates-common',
   'ui.router.state',
@@ -11,7 +15,6 @@ do (app=angular.module "sortirDeParis", [
 ]) ->
 
   app.config ($stateProvider, $urlRouterProvider) ->
-    $urlRouterProvider.otherwise '/home'
 
   app.run ->
 
