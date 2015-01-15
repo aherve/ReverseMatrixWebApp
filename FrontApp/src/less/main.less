@@ -28,6 +28,7 @@
  */
 
 @import 'angular-material.less';
+@import 'animations.less';
 @import 'themes/deep-purple-theme.less';
 @import 'themes/cyan-theme.less';
 @import '../app/home/home.less';
@@ -45,3 +46,30 @@ html, body {
 [ng-click] {
   cursor: pointer;
 }
+
+.ui-view-container {
+  position: relative;
+}
+
+[ui-view].ng-leave,
+[ui-view].ng-enter {
+   -webkit-transition:all 1.2s ease-in-out;
+      -moz-transition:all 1.2s ease-in-out;
+        -o-transition:all 1.2s ease-in-out;
+           transition:all 1.2s ease-in-out;
+  position: absolute;
+  top: 64px;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+}
+
+[ui-view].ng-leave {
+  z-index: 1;
+}
+
+[ui-view].ng-enter {
+  z-index: 2;
+  &:extend( .appearRight );
+}
+

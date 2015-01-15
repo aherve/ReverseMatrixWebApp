@@ -14,8 +14,8 @@ do (app=angular.module "sortirDeParis.home", [
           templateUrl: 'home/home.tpl.html'
 
   app.controller 'HomeController', [
-    '$scope', '$mdBottomSheet', '$state', '$rootScope',
-    ($scope, $mdBottomSheet, $state, $rootScope) ->
+    '$scope', '$mdBottomSheet', '$state', '$rootScope', 'Lands',
+    ($scope, $mdBottomSheet, $state, $rootScope, Lands) ->
       $scope.$state = $state
       $scope.map =
         control: {}
@@ -29,6 +29,9 @@ do (app=angular.module "sortirDeParis.home", [
         latitude: 8
         longitude: -73
       ]
+
+      onSuccess = (success) -> console.log success
+      Lands.lands( 0, 17200, 1000, 10000000000, -1, -1).then onSuccess
 
       $rootScope.$on '$stateChangeSuccess', ()->
         window.setTimeout(
