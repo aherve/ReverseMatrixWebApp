@@ -73,6 +73,8 @@ GEM
       capistrano (~> 3.0)
       sshkit (~> 1.2)
     capistrano-stats (1.1.1)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
     certified (1.0.0)
     coderay (1.1.0)
     coercible (1.0.0)
@@ -107,9 +109,11 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    ffi (1.9.6)
     figaro (1.0.0)
       thor (~> 0.14)
-    grape (0.10.1)
+    formatador (0.2.5)
+    grape (0.9.0)
       activesupport
       builder
       hashie (>= 2.1.0)
@@ -129,8 +133,18 @@ GEM
     grape-swagger-rails (0.0.10)
       grape-swagger (~> 0.7.2)
       railties (>= 3.2.12)
+    guard (2.10.1)
+      formatador (>= 0.2.4)
+      listen (~> 2.7)
+      lumberjack (~> 1.0)
+      pry (>= 0.9.12)
+      thor (>= 0.18.1)
+    guard-rspec (4.3.1)
+      guard (~> 2.1)
+      rspec (>= 2.14, < 4.0)
     hashie (3.3.2)
     hike (1.2.3)
+    hitimes (1.2.2)
     i18n (0.7.0)
     ice_nine (0.11.1)
     jbuilder (2.2.6)
@@ -139,15 +153,20 @@ GEM
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.1)
+    json (1.8.2)
     jwt (1.2.0)
     kramdown (1.5.0)
+    listen (2.8.3)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+    lumberjack (1.0.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
-    minitest (5.5.0)
+    minitest (5.5.1)
     mongo_session_store-rails4 (5.1.0)
       actionpack (>= 3.1)
     moped (2.0.3)
@@ -216,8 +235,15 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
     rdoc (4.2.0)
       json (~> 1.4)
+    rspec (3.1.0)
+      rspec-core (~> 3.1.0)
+      rspec-expectations (~> 3.1.0)
+      rspec-mocks (~> 3.1.0)
     rspec-autotest (1.0.0)
       rspec-core (>= 2.99.0.beta1, < 4.0.0)
     rspec-core (3.1.7)
@@ -264,6 +290,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    timers (4.0.1)
+      hitimes
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -294,9 +322,10 @@ DEPENDENCIES
   delayed_job_mongoid
   factory_girl_rails
   figaro
-  grape
+  grape (= 0.9.0)
   grape-entity
   grape-swagger-rails
+  guard-rspec
   jbuilder (~> 2.0)
   jquery-rails
   mongo_session_store-rails4

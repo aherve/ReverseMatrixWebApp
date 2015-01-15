@@ -35,9 +35,10 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-autotest'
   gem 'autotest-rails'
+  gem 'guard-rspec'
 end
 
-gem 'grape'
+gem 'grape', '0.9.0'
 gem 'grape-entity'
 gem 'grape-swagger-rails'
 #gem 'grape-swagger'

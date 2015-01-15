@@ -8,9 +8,9 @@ class Land
   field :surface_in_squared_meters, type: Integer
   field :description, type: String
   field :url
-
   field :provider
-  index({ url: 1},{sparse: false, unique: true, name: 'url_land_index'})
+  field :archived, type: Boolean, default: false
+  field :active_url, type: Boolean, default: true
 
   #denormalized data: 
   field :town_population
@@ -20,10 +20,20 @@ class Land
   field :town_distance_value
   field :town_car_travel_time_value
 
+  index({ url: 1},{sparse: false, unique: true, name: 'url_land_index'})
+
   validates_uniqueness_of :url
   validates_presence_of :url
 
   before_save :denormalize_town_infos
+
+  def archive!
+    self.update_attributes(archived: true)
+  end
+
+  def unarchive!
+    self.update_attributes(archived: false)
+  end
 
   private
 
