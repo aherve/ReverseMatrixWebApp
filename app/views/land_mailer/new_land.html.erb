@@ -1,0 +1,15 @@
+<h1>Nouvelle annonce disponible </h1>
+
+<p>
+  <ul>
+    <li>prix: <%= @price %> euros</li>
+    <li>surface: <%= @surface %>m²</li>
+    <li>commune: <%= @town_name %></li>
+    <li>temps de trajet en voiture depuis Paris : <%= @traject %></li>
+  </ul>
+</p>
+
+<p>
+  <%= link_to "voir l'annonce complète", @url %>
+</p>
+
