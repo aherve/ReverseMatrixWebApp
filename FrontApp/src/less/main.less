@@ -1,37 +1,13 @@
-/**
- * This is the main application stylesheet. It should include or import all
- * stylesheets used throughout the application as this is the only stylesheet in
- * the Grunt configuration that is automatically processed.
- */
-
-
-/**
- * First, we include lumx LESS files. Only the ones used in the
- * project should be imported as the rest are just wasting space.
- */
-
-//@import 'lumx.less';
-
-/**
- * This is our main variables file. We must include it last so we can overwrite any variable
- * definitions in our imported stylesheets.
- */
-
 @import 'variables.less';
 
-
-/**
- * Now that all app-wide styles have been applied, we can load the styles for
- * all the submodules and components we are using. 
- *
- * TODO: In a later version of this boilerplate, I'd like to automate this.
- */
-
 @import 'angular-material.less';
-@import 'animations.less';
 @import 'themes/deep-purple-theme.less';
 @import 'themes/cyan-theme.less';
-@import '../app/home/home.less';
+@import 'themes/pink-theme.less';
+@import 'ionRangeSlider/ion.rangeSlider.less';
+@import 'ionRangeSlider/ion.rangeSlider.skinFlat.less';
+@import 'ionRangeSlider/ion.rangeSlider.skinNice.less';
+@import 'ionRangeSlider/normalize.less';
 
 .pacifico {
   font-family: 'Pacifico', 'Roboto', sans;
@@ -40,45 +16,42 @@
 html, body {
   background-color: white;
   height: 100%;
-  width: 100%;
 }
 
 [ng-click] {
   cursor: pointer;
 }
 
-.ui-view-container {
-  position: relative;
+.angular-google-map-container,
+.angular-google-map,
+#map-content,
+ng-switch,
+md-content {
+  height: 100%; 
+  width: 100%;
 }
 
-[ui-view].ng-leave,
-[ui-view].ng-enter {
-   -webkit-transition:all 0.5s ease-in-out;
-      -moz-transition:all 0.5s ease-in-out;
-        -o-transition:all 0.5s ease-in-out;
-           transition:all 0.5s ease-in-out;
+.filter-button {
+  position: fixed;
+  bottom: 4em;
+  right: 1.5em;
+  z-index: 100;
+}
+
+.spinner-wrapper {
   position: absolute;
-  top: 64px;
-  bottom: 0px;
-  left: 0;
   right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  & .spinner {
+  }
 }
 
-[ui-view].ng-leave {
-  z-index: 1;
+.md-whiteframe-z-1 {
+  box-shadow: 0px -2px 5px 0 rgba(0, 0, 0, 0.26); 
 }
 
-[ui-view].ng-enter {
-  z-index: 2;
+.pull-right {
+  float: right !important;
 }
-
-[ui-view].home\.fieldDetail.ng-enter {
-  z-index: 2;
-  &:extend( .appearRight );
-}
-
-[ui-view].home\.fieldDetail.ng-leave {
-  z-index: 2;
-  &:extend( .disappearRight );
-}
-

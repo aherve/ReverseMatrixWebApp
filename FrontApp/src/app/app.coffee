@@ -1,24 +1,94 @@
 do (app=angular.module "sortirDeParis", [
-  'sortirDeParis.home',
-
   'uiGmapgoogle-maps',
   'ngMaterial',
-
-  'sortirDeParis.fieldDetail',
-  'sortirDeParis.list',
-  'sortirDeParis.map',
-  'sortirDeParis.fields',
   'templates-app',
   'templates-common',
   'ui.router.state',
   'ui.router',
+  'restangular',
 ]) ->
 
-  app.config ($stateProvider, $urlRouterProvider) ->
+  app.factory 'Loading', [
+    '$timeout',
+    ($timeout)->
+      new class Loading
+        constructor: ->
+          @loading = false
 
-  app.run ->
+        start: ->
+          @loading = true
+          that = @
+          $timeout(
+            ()->
+              that.loading = false
+            1000
+          )
 
-  app.controller 'AppController', ($scope) ->
+        end: ->
+          @loading = false
+  ]
+
+  app.controller 'FiltersController', [
+    '$scope', '$mdDialog', 'Loading',
+    ($scope, $mdDialog, Loading)->
+
+      $scope.hide = ()->
+        Loading.start()
+        $mdDialog.hide()
+
+      $scope.cancel = ()->
+        $mdDialog.cancel()
+  ]
+
+  app.controller 'AppController', [
+    '$scope', '$mdSidenav', '$mdDialog', 'Loading',
+    ($scope, $mdSidenav, $mdDialog, Loading) ->
+      $scope.Loading = Loading
+      $scope.data =
+        selectedIndex: 0
+
+      $scope.options =
+        type: "single"
+        min: 5
+        max: 595
+        from: $scope.value
+        prettify: (num)->
+          inf = num - 5
+          sup = num + 5
+          prettify(inf) + " - " + prettify(sup)
+        step: 10
+        onFinish: (obj) ->
+          changeRange( obj.from, obj.to )
+
+      $scope.showFilters = ( event )->
+        $mdDialog.show
+          templateUrl: 'filters.tpl.html'
+          controller: 'FiltersController'
+          targetEvent: event
+
+
+      $scope.markerClick = ()->
+        $scope.toggleRight()
+
+      $scope.itemClick = ()->
+        $scope.toggleRight()
+
+      $scope.toggleRight = ()->
+        $mdSidenav('right').toggle()
+
+      $scope.map =
+        control: {}
+        center:
+          latitude: 8
+          longitude: -73
+        zoom: 8
+
+      $scope.cities = [
+        id: 1
+        latitude: 8
+        longitude: -73
+      ]
+  ]
 
   app.config ([
     '$mdThemingProvider',
