@@ -38,6 +38,28 @@ do (app=angular.module "sortirDeParis", [
 
       $scope.cancel = ()->
         $mdDialog.cancel()
+
+      $scope.includeArchived = false
+      $scope.includeInactive = false
+
+      $scope.time =
+        from: 3600
+        to: 7200
+
+      $scope.timeOptions =
+        type: "double"
+        min: 0
+        max: 28800
+        from: $scope.time.from
+        to: $scope.time.to
+        prettify: (num)->
+          h = (num - ( num % 3600 )) / 3600
+          m = ((num - ( num % 60 )) / 60) % 60
+          if m < 10 then m = '0' + m
+          h + 'h' + m + 'min'
+        drag_interval: true
+        step: 60
+        onFinish: (obj) ->
   ]
 
   app.controller 'AppController', [
@@ -47,18 +69,6 @@ do (app=angular.module "sortirDeParis", [
       $scope.data =
         selectedIndex: 0
 
-      $scope.options =
-        type: "single"
-        min: 5
-        max: 595
-        from: $scope.value
-        prettify: (num)->
-          inf = num - 5
-          sup = num + 5
-          prettify(inf) + " - " + prettify(sup)
-        step: 10
-        onFinish: (obj) ->
-          changeRange( obj.from, obj.to )
 
       $scope.showFilters = ( event )->
         $mdDialog.show
@@ -142,3 +152,22 @@ do (app=angular.module "sortirDeParis", [
           headers: headers
           httpConfig: httpConfig
   ]
+
+  app.directive 'scrollClass', [
+    '$timeout',
+    ($timeout)->
+      (scope, element, params)->
+        $timeout(
+          ()->
+            container = angular.element( document.getElementById( 'content' ) )
+            container.bind("scroll", (event)->
+              if container.context.scrollTop >= 5
+                element.addClass params.scrollClass
+              else
+                element.removeClass params.scrollClass
+            )
+        ,
+          100
+        )
+  ]
+

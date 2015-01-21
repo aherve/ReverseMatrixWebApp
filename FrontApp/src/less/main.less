@@ -55,3 +55,27 @@ md-content {
 .pull-right {
   float: right !important;
 }
+
+.md-sidenav-right {
+  min-width: 60%;
+  @media (max-width: 624px) {
+    min-width: 90%;
+  }
+}
+
+.irs-wrapper {
+  padding: 0px;
+}
+
+.md-dialog {
+  min-height: 80%; 
+  min-width: 60%;
+  position: relative;
+  @media (max-width: 624px) {
+    min-width: 100%;
+    min-height: 100%; 
+  }
+}
+md-dialog > md-content {
+  background-color: transparent !important;
+}
