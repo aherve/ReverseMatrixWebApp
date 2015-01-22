@@ -62,20 +62,17 @@
       <!-- content -->
       <md-content flex>
         <ng-switch on="data.selectedIndex" class="tabpanel-container">
-          <div role="tabpanel" id="list-content" aria-labelledby="list" ng-switch-when="0" md-swipe-left="next()" md-swipe-right="previous()">
-            <md-subheader class="md-primary">
+          <div role="tabpanel" id="list-content" aria-labelledby="list" ng-switch-when="0" md-swipe-left="next()" md-swipe-right="previous()" style="margin-bottom: 100px">
+            <md-subheader class="md-sticky-no-effects">
              Résultats de la recherche 
             </md-subheader>
             <md-list>
-              <md-item ng-repeat="i in [0, 1, 2]" ng-click="itemClick()">
+              <md-item ng-repeat="land in Lands.lands">
                 <md-item-content>
-                  <div class="md-tile-content">
-                    <h3>lol</h3>
-                    <h4>Hahah qsdf qsf sqdf</h4>
-                    <p>Tahsdf  q qsfqq fqsdfq qqs q qs qs sqdf qsd qsd</p>
-                    <p><a ui-sref="home.fieldDetail({fieldId: i})">detail</a></p>
+                  <div class="md-tile-content" land-content land="land">
                   </div>
                 </md-item-content>
+                <hr ng-if="!$last"/>
               </md-item>
             </md-list>
           </div>
@@ -106,13 +103,12 @@
       </h1>
       </md-toolbar>
       <md-content class="md-padding">
-        hehe
+        <div ng-repeat="land in [activeLand]">
+          <div ng-if="activeLand" land-content land="activeLand"></div>
+        </div>
       </md-content>
     </md-sidenav>
     <button class="md-fab md-button md-primary md-pink-theme filter-button" ng-click="showFilters( $event )">
-      <md-tooltip>
-        Critères de recherche
-      </md-tooltip>
       <span class="fa fa-search"></span>
     </button>
   </body>

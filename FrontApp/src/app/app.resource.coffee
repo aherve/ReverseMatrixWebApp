@@ -4,6 +4,11 @@ do (app=angular.module 'sortirDeParis.resource', [
   app.factory 'Lands', [
     'Restangular', 'Loading',
     (Restangular, Loading)->
+      formatCoordinates = (land)->
+        land.latitude = land.town_lat
+        land.longitude = land.town_lng
+        land
+
       new class Lands
         constructor: ->
           @lands = []
@@ -13,7 +18,7 @@ do (app=angular.module 'sortirDeParis.resource', [
             that = @
             onSuccess = (success)->
               console.log success
-              that.lands = success.lands
+              that.lands = success.lands.map( formatCoordinates )
               Loading.stop()
 
             onError = (error)->
@@ -25,8 +30,8 @@ do (app=angular.module 'sortirDeParis.resource', [
               max_surface: max_surface
               min_traject: min_traject
               max_traject: max_traject
-              include_archived: archived || -1
-              include_inactive: inactive || -1
+              include_archived: archived
+              include_inactive: inactive
 
             Loading.start()
             Restangular
@@ -38,4 +43,40 @@ do (app=angular.module 'sortirDeParis.resource', [
           Restangular
             .one 'lands', id
             .get()
+
+        interesting: (land)->
+          Restangular
+            .one 'lands', land.id
+            .customPOST null, 'interesting!'
+            .then(
+              (success) ->
+                land.interesting = true
+            )
+
+        notInteresting: (land)->
+          Restangular
+            .one 'lands', land.id
+            .customPOST null, 'not_interesting!'
+            .then(
+              (success) ->
+                land.interesting = false
+            )
+
+        archive: (land)->
+          Restangular
+            .one 'lands', land.id
+            .customPOST null, 'archive!'
+            .then(
+              (success) ->
+                land.archived = true
+            )
+
+        unArchive: (land)->
+          Restangular
+            .one 'lands', land.id
+            .customPOST null, 'unarchive!'
+            .then(
+              (success) ->
+                land.archived = false
+            )
   ]

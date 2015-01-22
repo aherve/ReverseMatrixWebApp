@@ -28,35 +28,52 @@ do (app=angular.module "sortirDeParis", [
           @loading = false
   ]
 
-  app.controller 'FiltersController', [
-    '$scope', '$mdDialog', 'Lands',
-    ($scope, $mdDialog, Lands)->
+  app.factory 'FiltersService', [
+    'Lands',
+    (Lands)->
+      new class FiltersService
+        constructor: ->
+          @time =
+            from: 0
+            to: 10000
+          @surface =
+            from: 20000
+            to: 40000
+          @includeArchived = true
+          @includeInactive = false
 
+        updateTime: (obj)->
+          @time.from = obj.from
+          @time.to = obj.to
+
+        updateSurface: (obj)->
+          @surface.from = obj.from
+          @surface.to = obj.to
+
+        fetchLands: ()->
+          console.log @includeArchived - 1
+          Lands.filter(@time.from, @time.to, @surface.from, @surface.to,
+            @includeArchived - 1, @includeInactive - 1)
+  ]
+
+  app.controller 'FiltersController', [
+    '$scope', '$mdDialog', '$filter', 'FiltersService',
+    ($scope, $mdDialog, $filter, FiltersService)->
+
+      $scope.FiltersService = FiltersService
       $scope.hide = ()->
-        Lands.filter($scope.time.from, $scope.time.to,
-          $scope.surface.from, $scope.surface.to)
+        FiltersService.fetchLands()
         $mdDialog.hide()
 
       $scope.cancel = ()->
         $mdDialog.cancel()
 
-      $scope.includeArchived = false
-      $scope.includeInactive = false
-
-      $scope.time =
-        from: 0
-        to: 10000
-
-      $scope.surface =
-        from: 0
-        to: 200000
-
       $scope.timeOptions =
         type: "double"
         min: 0
         max: 28800
-        from: $scope.time.from
-        to: $scope.time.to
+        from: FiltersService.time.from
+        to: FiltersService.time.to
         prettify: (num)->
           h = (num - ( num % 3600 )) / 3600
           m = ((num - ( num % 60 )) / 60) % 60
@@ -65,18 +82,35 @@ do (app=angular.module "sortirDeParis", [
         drag_interval: true
         step: 600
         onFinish: (obj) ->
+          FiltersService.updateTime(obj)
 
       $scope.surfaceOptions =
         type: "double"
         min: 0
-        max: 1000000
-        from: $scope.surface.from
-        to: $scope.surface.to
+        max: 100000
+        from: FiltersService.surface.from
+        to: FiltersService.surface.to
         prettify: (num)->
-          num + ' m2'
+          $filter( 'number' )(num) + ' m2'
         drag_interval: true
         step: 2000
         onFinish: (obj) ->
+          FiltersService.updateSurface(obj)
+  ]
+
+  app.controller 'LandController', [
+    '$scope', 'Lands',
+    ($scope, Lands)->
+      $scope.Lands = Lands
+  ]
+
+  app.directive 'landContent', [
+    ()->
+      restrict: 'A'
+      scope:
+        land: '='
+      templateUrl: 'land.tpl.html'
+      controller: 'LandController'
   ]
 
   app.controller 'AppController', [
@@ -93,11 +127,10 @@ do (app=angular.module "sortirDeParis", [
           controller: 'FiltersController'
           targetEvent: event
 
+      $scope.showFilters()
 
-      $scope.markerClick = ()->
-        $scope.toggleRight()
-
-      $scope.itemClick = ()->
+      $scope.markerClick = ( land )->
+        $scope.activeLand = land.model
         $scope.toggleRight()
 
       $scope.toggleRight = ()->
@@ -106,8 +139,8 @@ do (app=angular.module "sortirDeParis", [
       $scope.map =
         control: {}
         center:
-          latitude: 8
-          longitude: -73
+          latitude: 48.864716
+          longitude: 2.349014
         zoom: 8
   ]
 
