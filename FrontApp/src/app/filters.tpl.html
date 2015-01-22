@@ -1,0 +1,52 @@
+<md-dialog class="md-content-overflow md-dialog">
+  <md-subheader style="padding-top: 15px; padding-bottom: 15px; z-index: 2; margin-left: 20px; margin-right: -20px; left: -20px; border-top-right-radius: 4px; border-top-left-radius: 4px" scroll-class="augmented-subheader" scroll-parent="content">
+  <h3>
+    Recherche de terrains
+  </h3>
+  </md-subheader>
+  <md-content flex style="min-height: 50%; padding: 0" flex-align="space-between" id="content">
+    <md-list>
+      <md-item>
+        <md-item-content>
+          <div class="md-tile-content padding-max">
+            <h5 class="text-deep-purple">Temps de trajet :</h5>
+            <div class="irs-wrapper">
+              <div ion-range-slider="" range-options="timeOptions" class="ng-isolate-scope" value="1388;5000" style="display: none;"></div>
+            </div>
+          </div>
+        </md-item-content>
+      </md-item>
+      <md-divider></md-divider>
+      <md-item class="md-padding">
+        <md-item-content>
+          <div class="md-tile-content padding-max">
+            <h5 class="text-deep-purple">Surface du terrain :</h5>
+            <div class="irs-wrapper">
+              <div ion-range-slider="" range-options="surfaceOptions" class="ng-isolate-scope" value="1388;5000" style="display: none;"></div>
+            </div>
+          </div>
+        </md-item-content>
+      </md-item>
+      <md-divider></md-divider>
+      <md-item>
+        <md-item-content>
+          <div class="md-tile-content padding-max">
+            <h5 class="text-deep-purple">Autres options :</h5>
+            <md-switch ng-model="FiltersService.includeArchived" aria-label="Switch 1">
+               Inclure les terrains archivés 
+            </md-switch>
+            <md-switch ng-model="FiltersService.includeInactive" aria-label="Switch 1">
+               Inclure les annonces retirées 
+            </md-switch>
+          </div>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-content>
+  <div class="md-actions">
+    <small>
+    <md-button class="text-muted" ng-click="cancel()" aria-control="cancel">annuler</md-button>
+    <md-button class="md-primary" ng-click="hide()" aria-control="validate">voir les terrains</md-button>
+  </small>
+  </div><!-- md-actions -->
+</md-dialog>
