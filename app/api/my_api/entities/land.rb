@@ -20,6 +20,9 @@ module MyApi
       expose :town_car_travel_time_value
       expose :town_car_travel_time_text
 
+      expose :town_lat
+      expose :town_lng
+
       expose :created_at
 
     end

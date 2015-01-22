@@ -21,6 +21,8 @@ class Land
   field :town_distance_value
   field :town_car_travel_time_value
   field :town_car_travel_time_text
+  field :town_lat
+  field :town_lng
 
   index({ url: 1},{sparse: false, unique: true, name: 'url_land_index'})
 
@@ -28,7 +30,7 @@ class Land
   validates_presence_of :url
 
   before_save :denormalize_town_infos
-  after_create :new_land_mail
+  #after_create :new_land_mail
 
   def interesting!
     self.update_attributes(interesting: true)
@@ -64,6 +66,8 @@ class Land
         town_distance_value: t.distance_value,
         town_car_travel_time_value: t.car_travel_time_value,
         town_car_travel_time_text: t.car_travel_time_text,
+        town_lat: t.lat,
+        town_lng: t.lng,
       )
     end
   end
