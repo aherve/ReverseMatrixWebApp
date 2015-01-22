@@ -5,7 +5,7 @@ do (app=angular.module "sortirDeParis", [
   'templates-common',
   'ui.router.state',
   'ui.router',
-  'restangular',
+  'sortirDeParis.resource'
 ]) ->
 
   app.factory 'Loading', [
@@ -21,19 +21,20 @@ do (app=angular.module "sortirDeParis", [
           $timeout(
             ()->
               that.loading = false
-            1000
+            10000
           )
 
-        end: ->
+        stop: ->
           @loading = false
   ]
 
   app.controller 'FiltersController', [
-    '$scope', '$mdDialog', 'Loading',
-    ($scope, $mdDialog, Loading)->
+    '$scope', '$mdDialog', 'Lands',
+    ($scope, $mdDialog, Lands)->
 
       $scope.hide = ()->
-        Loading.start()
+        Lands.filter($scope.time.from, $scope.time.to,
+          $scope.surface.from, $scope.surface.to)
         $mdDialog.hide()
 
       $scope.cancel = ()->
@@ -43,12 +44,12 @@ do (app=angular.module "sortirDeParis", [
       $scope.includeInactive = false
 
       $scope.time =
-        from: 3600
-        to: 7200
+        from: 0
+        to: 10000
 
       $scope.surface =
-        from: 10000
-        to: 20000
+        from: 0
+        to: 200000
 
       $scope.timeOptions =
         type: "double"
@@ -68,7 +69,7 @@ do (app=angular.module "sortirDeParis", [
       $scope.surfaceOptions =
         type: "double"
         min: 0
-        max: 100000
+        max: 1000000
         from: $scope.surface.from
         to: $scope.surface.to
         prettify: (num)->
@@ -79,12 +80,12 @@ do (app=angular.module "sortirDeParis", [
   ]
 
   app.controller 'AppController', [
-    '$scope', '$mdSidenav', '$mdDialog', 'Loading',
-    ($scope, $mdSidenav, $mdDialog, Loading) ->
+    '$scope', '$mdSidenav', '$mdDialog', 'Loading', 'Lands',
+    ($scope, $mdSidenav, $mdDialog, Loading, Lands) ->
+      $scope.Lands = Lands
       $scope.Loading = Loading
       $scope.data =
         selectedIndex: 0
-
 
       $scope.showFilters = ( event )->
         $mdDialog.show
@@ -108,12 +109,6 @@ do (app=angular.module "sortirDeParis", [
           latitude: 8
           longitude: -73
         zoom: 8
-
-      $scope.cities = [
-        id: 1
-        latitude: 8
-        longitude: -73
-      ]
   ]
 
   app.config ([
