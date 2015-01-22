@@ -39,7 +39,7 @@ do (app=angular.module "sortirDeParis", [
           @surface =
             from: 20000
             to: 40000
-          @includeArchived = true
+          @includeArchived = false
           @includeInactive = false
 
         updateTime: (obj)->
@@ -213,5 +213,11 @@ do (app=angular.module "sortirDeParis", [
         ,
           100
         )
+  ]
+
+  app.filter 'replaceComa', [
+    ()->
+      (input)->
+        input.replace /,/g, ' '
   ]
 
