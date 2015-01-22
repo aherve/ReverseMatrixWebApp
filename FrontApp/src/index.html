@@ -30,7 +30,6 @@
       <div class="spinner-wrapper" layout="col" layout-align="center center">
         <md-progress-circular class="md-hue-2 spinner" md-mode="indeterminate" style="z-index: 57"></md-progress-circular>
       </div>
-
     </div>
     <div layout="column" layout-fill style="height: 100%">
       <md-toolbar style="z-index: 58" class="md-whiteframe-z1">
@@ -64,6 +63,9 @@
       <md-content flex>
         <ng-switch on="data.selectedIndex" class="tabpanel-container">
           <div role="tabpanel" id="list-content" aria-labelledby="list" ng-switch-when="0" md-swipe-left="next()" md-swipe-right="previous()">
+            <md-subheader class="md-primary">
+             Résultats de la recherche 
+            </md-subheader>
             <md-list>
               <md-item ng-repeat="i in [0, 1, 2]" ng-click="itemClick()">
                 <md-item-content>

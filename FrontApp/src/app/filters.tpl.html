@@ -1,5 +1,5 @@
 <md-dialog class="md-content-overflow md-dialog">
-  <md-subheader style="padding-top: 15px; padding-bottom: 15px; z-index: 2; margin-left: 20px; margin-right: -20px; left: -20px; border-top-right-radius: 4px; border-top-left-radius: 4px" scroll-class="md-whiteframe-z1" scroll-parent="content" class="md-primary">
+  <md-subheader style="padding-top: 15px; padding-bottom: 15px; z-index: 2; margin-left: 20px; margin-right: -20px; left: -20px; border-top-right-radius: 4px; border-top-left-radius: 4px" scroll-class="augmented-subheader" scroll-parent="content" class="md-primary">
   <h3>
     Recherche de terrains
   </h3>
@@ -9,7 +9,7 @@
       <md-item>
         <md-item-content>
           <div class="md-tile-content">
-            <h6 class="md-accent">Temps de trajet :</h6>
+            <h6 class="text-deep-purple">Temps de trajet :</h6>
             <div class="irs-wrapper">
               <div ion-range-slider="" range-options="timeOptions" class="ng-isolate-scope" value="1388;5000" style="display: none;"></div>
             </div>
@@ -20,9 +20,9 @@
       <md-item>
         <md-item-content>
           <div class="md-tile-content">
-            <h6 class="md-primary">Surface :</h6>
+            <h6 class="text-deep-purple">Surface du terrain :</h6>
             <div class="irs-wrapper">
-              <div ion-range-slider="" range-options="timeOptions" class="ng-isolate-scope" value="1388;5000" style="display: none;"></div>
+              <div ion-range-slider="" range-options="surfaceOptions" class="ng-isolate-scope" value="1388;5000" style="display: none;"></div>
             </div>
           </div>
         </md-item-content>
@@ -31,7 +31,7 @@
       <md-item>
         <md-item-content>
           <div class="md-tile-content">
-            <h6 class="md-primary">Autres options :</h6>
+            <h6 class="text-deep-purple">Autres options :</h6>
             <md-switch ng-model="includeArchived" aria-label="Switch 1">
                Inclure les terrains archivés 
             </md-switch>

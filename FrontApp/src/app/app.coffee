@@ -46,6 +46,10 @@ do (app=angular.module "sortirDeParis", [
         from: 3600
         to: 7200
 
+      $scope.surface =
+        from: 10000
+        to: 20000
+
       $scope.timeOptions =
         type: "double"
         min: 0
@@ -58,7 +62,19 @@ do (app=angular.module "sortirDeParis", [
           if m < 10 then m = '0' + m
           h + 'h' + m + 'min'
         drag_interval: true
-        step: 60
+        step: 600
+        onFinish: (obj) ->
+
+      $scope.surfaceOptions =
+        type: "double"
+        min: 0
+        max: 100000
+        from: $scope.surface.from
+        to: $scope.surface.to
+        prettify: (num)->
+          num + ' m2'
+        drag_interval: true
+        step: 2000
         onFinish: (obj) ->
   ]
 
