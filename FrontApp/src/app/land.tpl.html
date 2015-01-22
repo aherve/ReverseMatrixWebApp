@@ -1,0 +1,33 @@
+<div ng-class="{'archived': land.archived, 'interesting': land.interesting}">
+  <h2 style="margin-bottom: 35px"><span class="fa fa-star favourite-star" style="display:none"></span><a class="text-cyan" ng-href="{{land.url}}" target="_blank" style="text-decoration: none"> {{ land.town_readable_name }} <small><span class="fa fa-external-link"></span></small></a>
+  </h2>
+  <h4>
+    {{ land.description }}
+  </h4>
+
+  <table style="margin: 20px 0px" class="table table-bordered">
+    <tbody style="font-size: 0.85em;">
+      <tr>
+        <td>Prix: </td>
+        <td>{{ land.price_in_euro | currency:"":0 | replaceComa }} &euro;</td>
+      </tr>
+      <tr>
+        <td>Surface: </td>
+        <td>{{ land.surface_in_squared_meters | number | replaceComa }} m<sup>2</sup> </td>
+      </tr>
+      <tr>
+        <td><span style="margin-right: 20px">Département:</span> </td>
+        <td>{{ land.town_department }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <md-button ng-hide="land.archived" class="md-button md-small md-primary" ng-click="Lands.archive(land)"><span class="fa fa-archive"></span> 
+    Archiver
+  </md-button>
+
+  <md-button ng-show="land.archived" class="md-button md-small md-primary btn-unarchive" ng-click="Lands.unArchive(land)"><span class="fa fa-archive"></span> Annuler archiver</md-button>
+
+  <md-button ng-hide="land.interesting" class="md-button md-small md-primary" ng-click="Lands.interesting(land)"><span class="fa fa-star"></span> Ajouter aux favoris</md-button>
+  <md-button ng-show="land.interesting" class="md-button md-small md-primary" ng-click="Lands.notInteresting(land)"><span class="fa fa-star"></span> Retirer des favoris</md-button>
+</div>

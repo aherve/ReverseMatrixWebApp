@@ -1,37 +1,214 @@
-/**
- * This is the main application stylesheet. It should include or import all
- * stylesheets used throughout the application as this is the only stylesheet in
- * the Grunt configuration that is automatically processed.
- */
-
-
-/**
- * First, we include lumx LESS files. Only the ones used in the
- * project should be imported as the rest are just wasting space.
- */
-
-//@import 'lumx.less';
-
-/**
- * This is our main variables file. We must include it last so we can overwrite any variable
- * definitions in our imported stylesheets.
- */
-
 @import 'variables.less';
 
+@import 'angular-material.less';
+@import 'themes/deep-purple-theme.less';
+@import 'themes/cyan-theme.less';
+@import 'themes/yellow-theme.less';
+@import 'themes/pink-theme.less';
+@import 'ionRangeSlider/ion.rangeSlider.less';
+@import 'ionRangeSlider/ion.rangeSlider.skinFlat.less';
+@import 'ionRangeSlider/ion.rangeSlider.skinNice.less';
+@import 'ionRangeSlider/normalize.less';
 
-/**
- * Now that all app-wide styles have been applied, we can load the styles for
- * all the submodules and components we are using. 
- *
- * TODO: In a later version of this boilerplate, I'd like to automate this.
- */
-
-@import '../app/home/home.less';
-
+.pacifico {
+  font-family: 'Pacifico', 'Roboto', sans;
+}
 
 html, body {
   background-color: white;
   height: 100%;
+}
+
+[ng-click] {
+  cursor: pointer;
+}
+
+.angular-google-map-container,
+.angular-google-map,
+#map-content,
+ng-switch,
+md-content {
+  height: 100%; 
   width: 100%;
+}
+
+.filter-button {
+  position: fixed;
+  bottom: 4em;
+  right: 1.5em;
+  z-index: 100;
+}
+
+.spinner-wrapper {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  & .spinner {
+  }
+}
+
+.md-whiteframe-z-1 {
+  box-shadow: 0px -2px 5px 0 rgba(0, 0, 0, 0.26); 
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.md-sidenav-right {
+  min-width: 40%;
+  @media (max-width: 624px) {
+    min-width: 90%;
+  }
+}
+
+.augmented-subheader {
+  &:extend( .md-whiteframe-z1 );
+  margin-top: 2px;
+}
+
+@cyan: #00bcd4;
+@deep-purple: #673ab7;
+@yellow: #ffeb3b;
+
+.text-yellow {
+  color: @yellow;
+}
+
+.text-cyan {
+  color: @cyan;
+}
+
+.text-deep-purple {
+  color: @deep-purple;
+}
+
+.irs-wrapper {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.md-dialog {
+  min-height: 80%; 
+  min-width: 60%;
+  position: relative;
+  @media (max-width: 624px) {
+    min-width: 100%;
+    min-height: 100%; 
+  }
+}
+md-dialog > md-content {
+  background-color: transparent !important;
+}
+
+.md-tile-content.padding-max {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+
+.md-button.md-small {
+  padding: 6px;
+  font-size: 12px;
+}
+
+@line-height-base:        1.428571429;
+@hr-border:                   @gray-lighter;
+@gray-lighter:           lighten(#000, 93.5%); // #eee
+hr {
+  margin-top:    @line-height-base;
+  margin-bottom: @line-height-base;
+  border: 0;
+  border-top: 1px solid @hr-border;
+}
+
+@gray: lighten(#000, 60%);
+
+.interesting .favourite-star {
+  &:extend( .text-cyan );
+  display: inline-block !important;
+}
+
+.archived {
+  color: @gray !important;
+  & > h2 > a,
+  & .md-button.md-primary {
+    color: @gray !important;
+  }
+  &.interesting .favourite-star {
+    color: @gray !important;
+  }
+}
+
+
+
+@line-height-computed: 1em;
+@table-cell-padding:            8px;
+@line-height-base:        1.428571429; // 20/14
+
+.table {
+  min-width: 40%;
+  margin-bottom: @line-height-computed;
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: @table-cell-padding;
+        line-height: @line-height-base;
+        vertical-align: top;
+        border-top: 1px solid @table-border-color;
+      }
+    }
+  }
+  // Bottom align for column headings
+  > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid @table-border-color;
+  }
+  // Remove top border from thead by default
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+}
+@table-border-color: rgba(0, 0, 0, 0.1);
+.table-bordered {
+  border: 1px solid @table-border-color;
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        border: 1px solid @table-border-color;
+      }
+    }
+  }
+  > thead > tr {
+    > th,
+    > td {
+      border-bottom-width: 2px;
+    }
+  }
+}
+
+@table-bg-accent:               #f9f9f9;
+.table-striped {
+  > tbody > tr:nth-child(odd) {
+    > td,
+    > th {
+      background-color: @table-bg-accent;
+    }
+  }
 }

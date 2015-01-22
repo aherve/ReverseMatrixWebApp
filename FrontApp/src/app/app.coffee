@@ -1,21 +1,154 @@
 do (app=angular.module "sortirDeParis", [
-  'sortirDeParis.home',
-
-  'lumx',
   'uiGmapgoogle-maps',
-
+  'ngMaterial',
   'templates-app',
   'templates-common',
   'ui.router.state',
   'ui.router',
+  'sortirDeParis.resource'
 ]) ->
 
-  app.config ($stateProvider, $urlRouterProvider) ->
-    $urlRouterProvider.otherwise '/home'
+  app.factory 'Loading', [
+    '$timeout',
+    ($timeout)->
+      new class Loading
+        constructor: ->
+          @loading = false
 
-  app.run ->
+        start: ->
+          @loading = true
+          that = @
+          $timeout(
+            ()->
+              that.loading = false
+            10000
+          )
 
-  app.controller 'AppController', ($scope) ->
+        stop: ->
+          @loading = false
+  ]
+
+  app.factory 'FiltersService', [
+    'Lands',
+    (Lands)->
+      new class FiltersService
+        constructor: ->
+          @time =
+            from: 0
+            to: 10000
+          @surface =
+            from: 20000
+            to: 40000
+          @includeArchived = false
+          @includeInactive = false
+
+        updateTime: (obj)->
+          @time.from = obj.from
+          @time.to = obj.to
+
+        updateSurface: (obj)->
+          @surface.from = obj.from
+          @surface.to = obj.to
+
+        fetchLands: ()->
+          console.log @includeArchived - 1
+          Lands.filter(@time.from, @time.to, @surface.from, @surface.to,
+            @includeArchived - 1, @includeInactive - 1)
+  ]
+
+  app.controller 'FiltersController', [
+    '$scope', '$mdDialog', '$filter', 'FiltersService',
+    ($scope, $mdDialog, $filter, FiltersService)->
+
+      $scope.FiltersService = FiltersService
+      $scope.hide = ()->
+        FiltersService.fetchLands()
+        $mdDialog.hide()
+
+      $scope.cancel = ()->
+        $mdDialog.cancel()
+
+      $scope.timeOptions =
+        type: "double"
+        min: 0
+        max: 28800
+        from: FiltersService.time.from
+        to: FiltersService.time.to
+        prettify: (num)->
+          h = (num - ( num % 3600 )) / 3600
+          m = ((num - ( num % 60 )) / 60) % 60
+          if m < 10 then m = '0' + m
+          h + 'h' + m + 'min'
+        drag_interval: true
+        step: 600
+        onFinish: (obj) ->
+          FiltersService.updateTime(obj)
+
+      $scope.surfaceOptions =
+        type: "double"
+        min: 0
+        max: 100000
+        from: FiltersService.surface.from
+        to: FiltersService.surface.to
+        prettify: (num)->
+          $filter( 'number' )(num) + ' m2'
+        drag_interval: true
+        step: 2000
+        onFinish: (obj) ->
+          FiltersService.updateSurface(obj)
+  ]
+
+  app.controller 'LandController', [
+    '$scope', 'Lands',
+    ($scope, Lands)->
+      $scope.Lands = Lands
+  ]
+
+  app.directive 'landContent', [
+    ()->
+      restrict: 'A'
+      scope:
+        land: '='
+      templateUrl: 'land.tpl.html'
+      controller: 'LandController'
+  ]
+
+  app.controller 'AppController', [
+    '$scope', '$mdSidenav', '$mdDialog', 'Loading', 'Lands',
+    ($scope, $mdSidenav, $mdDialog, Loading, Lands) ->
+      $scope.Lands = Lands
+      $scope.Loading = Loading
+      $scope.data =
+        selectedIndex: 0
+
+      $scope.showFilters = ( event )->
+        $mdDialog.show
+          templateUrl: 'filters.tpl.html'
+          controller: 'FiltersController'
+          targetEvent: event
+
+      $scope.showFilters()
+
+      $scope.markerClick = ( land )->
+        $scope.activeLand = land.model
+        $scope.toggleRight()
+
+      $scope.toggleRight = ()->
+        $mdSidenav('right').toggle()
+
+      $scope.map =
+        control: {}
+        center:
+          latitude: 48.864716
+          longitude: 2.349014
+        zoom: 8
+  ]
+
+  app.config ([
+    '$mdThemingProvider',
+    ($mdThemingProvider)->
+      $mdThemingProvider.setDefaultTheme('deep-purple')
+  ])
 
   app.directive 'ionRangeSlider', ()->
     restrict: 'A'
@@ -63,3 +196,28 @@ do (app=angular.module "sortirDeParis", [
           headers: headers
           httpConfig: httpConfig
   ]
+
+  app.directive 'scrollClass', [
+    '$timeout',
+    ($timeout)->
+      (scope, element, params)->
+        $timeout(
+          ()->
+            container = angular.element( document.getElementById( 'content' ) )
+            container.bind("scroll", (event)->
+              if container.context.scrollTop >= 5
+                element.addClass params.scrollClass
+              else
+                element.removeClass params.scrollClass
+            )
+        ,
+          100
+        )
+  ]
+
+  app.filter 'replaceComa', [
+    ()->
+      (input)->
+        input.replace /,/g, ' '
+  ]
+
