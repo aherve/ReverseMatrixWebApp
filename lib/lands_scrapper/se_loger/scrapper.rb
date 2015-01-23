@@ -41,17 +41,17 @@ module LandsScrapper
       end
 
       # extract lands from page
-      def lands
+      def to_lands
         @lands ||= lambda { |nokogiri_page|
           nokogiri_page.xpath(".//article[contains(@class,'listing')]").map do |p|
             h = {
-            provider: :seloger,
-            price_in_euro: p.xpath(".//a[contains(@class,'amount')]").first.text.gsub(/\D/,'').to_i,
-            locality: p.xpath(".//h2//span").text,
-            surface_in_squared_meters: p.xpath(".//ul[contains(@class,'property_list')]//li").last.text.to_i,
-            description: p.xpath(".//p[contains(@class,'description')]").first.text.chomp.strip,
-            url: p.xpath(".//h2//a").first.attributes["href"].value,
-            img: (p.xpath(".//div[contains(@class,'listing_photo_container')]//img").first.attributes["src"].value rescue nil),
+              provider: :seloger,
+              price_in_euro: (p.xpath(".//a[contains(@class,'amount')]").first.text.gsub(/\D/,'').to_i rescue nil),
+              locality: (p.xpath(".//h2//span").text rescue nil),
+              surface_in_squared_meters: (p.xpath(".//ul[contains(@class,'property_list')]//li").last.text.to_i rescue nil),
+              description: (p.xpath(".//p[contains(@class,'description')]").first.text.chomp.strip rescue nil),
+              url: (p.xpath(".//h2//a").first.attributes["href"].value rescue nil),
+              img: (p.xpath(".//div[contains(@class,'listing_photo_container')]//img").first.attributes["src"].value rescue nil),
             } 
           end
         }
@@ -83,16 +83,19 @@ module LandsScrapper
 
       def lands
         all_pages
-        .flat_map(&lands)
+        .flat_map(&to_lands)
         .select{|h| h[:surface_in_squared_meters] >= @min_surface}
         .map(&with_town)
         .map(&to_land)
       end
 
       def new_lands
-        lands.reject{|l| 
-          Land.where(url: l.url).exists?
-        }
+        all_pages
+        .flat_map(&to_lands)
+        .select{|h| h[:surface_in_squared_meters] >= @min_surface}
+        .reject{|h| Land.where(url: h[:url]).exist?}
+        .map(&with_town)
+        .map(&to_land)
       end
 
     end
