@@ -11,6 +11,7 @@ module MyApi
       expose :archived
       expose :interesting
       expose :active_url
+      expose :img
 
       expose :town_population
       expose :town_department

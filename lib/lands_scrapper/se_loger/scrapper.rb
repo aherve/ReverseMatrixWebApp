@@ -19,7 +19,7 @@ module LandsScrapper
       def get_page(dep,i)
         Nokogiri::HTML(
           open(
-            "http://www.seloger.com/list.htm?cp=#{dep}&idtt=2&idtypebien=4.json&LISTING-LISTpg=#{i}"
+            "http://www.seloger.com/list.htm?cp=#{dep}&idtt=2&idtypebien=4.json&LISTING-LISTpg=#{i}&surfacemin=#{@min_surface}"
           )
         )
       end
@@ -27,9 +27,15 @@ module LandsScrapper
       def number_of_pages(dep)
         text = @pages[dep][1].xpath(".//p[contains(@class,'pagination_result_number')]").text
         nb_annonces = text.split(" ").first.to_i
-        i,j = nb_annonces_per_page = text.split(" ").last.scan(/([0-9]+)/).map(&:first).map(&:to_i)
-        nb_annonces_per_page = j - i + 1
-        return (nb_annonces / nb_annonces_per_page.to_f).ceil
+        nb = begin
+               i,j = nb_annonces_per_page = text.split(" ").last.scan(/([0-9]+)/).map(&:first).map(&:to_i)
+               nb_annonces_per_page = j - i + 1
+               (nb_annonces / nb_annonces_per_page.to_f).ceil
+             rescue
+               0
+             end
+        puts "[seloger.com]: found #{nb} pages of results in department #{dep}" 
+        nb
       end
 
       def all_pages
@@ -48,13 +54,22 @@ module LandsScrapper
               provider: :seloger,
               price_in_euro: (p.xpath(".//a[contains(@class,'amount')]").first.text.gsub(/\D/,'').to_i rescue nil),
               locality: (p.xpath(".//h2//span").text rescue nil),
-              surface_in_squared_meters: (p.xpath(".//ul[contains(@class,'property_list')]//li").last.text.to_i rescue nil),
+              surface_in_squared_meters: (to_squared_meters(p.xpath(".//ul[contains(@class,'property_list')]//li").last.text ) rescue nil),
               description: (p.xpath(".//p[contains(@class,'description')]").first.text.chomp.strip rescue nil),
               url: (p.xpath(".//h2//a").first.attributes["href"].value rescue nil),
               img: (p.xpath(".//div[contains(@class,'listing_photo_container')]//img").first.attributes["src"].value rescue nil),
             } 
           end
         }
+      end
+
+      def to_squared_meters(text)
+        return nil if text.nil?
+        if text.match(/ha\z/) #result in hectares
+          (text.gsub(',','.').split(" ").first.to_f * 10_000).to_i
+        else
+          text.to_i
+        end
       end
 
       def with_town
@@ -84,7 +99,6 @@ module LandsScrapper
       def lands
         all_pages
         .flat_map(&to_lands)
-        .select{|h| h[:surface_in_squared_meters] >= @min_surface}
         .map(&with_town)
         .map(&to_land)
       end
@@ -92,8 +106,7 @@ module LandsScrapper
       def new_lands
         all_pages
         .flat_map(&to_lands)
-        .select{|h| (h[:surface_in_squared_meters] >= @min_surface) rescue nil}
-        .reject{|h| Land.where(url: h[:url]).exist?}
+        .reject{|h| Land.where(url: h[:url]).exists?}
         .map(&with_town)
         .map(&to_land)
       end
