@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html ng-app="sortirDeParis" ng-controller="AppController">
-<head>
+  <head>
     <!-- utf 8 -->
     <meta charset="UTF-8">
 
     <!-- pacifico font -->
     <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
-    
+
+    <!-- roboto font -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
     <!-- responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,7 +18,7 @@
     <!-- gmaps -->
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
-    <!-- font awesome from BootstrapCDN -->
+    <!-- font awesome from BootstrapCDN  -->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <!-- compiled CSS -->
@@ -23,8 +26,105 @@
 
     <!-- compiled JavaScript -->
     <script type="text/javascript" src="front_assets/sortirDeParis-0.0.1.js"></script>
-</head>
-<body>
-    <div class="container" ui-view="main"></div>
-</body>
+  </head>
+  <body>
+    <div ng-show="Loading.loading">
+      <md-backdrop class="md-sidenav-backdrop md-opaque md-deep-purple-theme" style="z-index: 57"></md-backdrop>
+      <div class="spinner-wrapper" layout="col" layout-align="center center">
+        <md-progress-circular class="md-hue-2 spinner" md-mode="indeterminate" style="z-index: 57"></md-progress-circular>
+      </div>
+    </div>
+    <div layout="column" layout-fill style="height: 100%">
+      <md-toolbar style="z-index: 58" class="">
+        <div class="md-toolbar-tools">
+          <span class="pacifico">Sortir de Paris</span>
+          <!-- fill up the space between left and right area -->
+          <span flex></span>
+          <md-button>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-tabs class="md-white-theme md-whiteframe-z1" md-selected="data.selectedIndex" style="z-index: 57">
+        <md-tab id="filters" aria-controls="tab1-content" class="md-right-tab">
+          <md-tab-label>
+            <div layout="row" layout-align="center center">
+              <span class="fa fa-search"></span>
+              <span class="hidden-xs" style="margin-left: 10px">Recherche</span>
+            </div>
+          </md-tab-label>
+        </md-tab>
+        <md-tab id="list" aria-controls="tab1-content" class="md-right-tab">
+          <md-tab-label>
+            <div layout="row" layout-align="center center">
+              <span class="fa fa-list"></span>
+              <span class="hidden-xs"  style="margin-left: 10px">Liste</span>
+            </div>
+          </md-tab-label>
+        </md-tab>
+        <md-tab id="map" aria-controls="tab1-content" class="md-left-tab">
+          <md-tab-label>
+            <div layout="row" layout-align="center center">
+              <span class="fa fa-map-marker"></span>
+              <span class="hidden-xs" style="margin-left: 10px">Carte</span>
+            </div>
+          </md-tab-label>
+        </md-tab>
+      </md-tabs>
+      <!-- content -->
+      <md-content flex class="md-content" id="global-content">
+        <ng-switch on="data.selectedIndex" class="tabpanel-container">
+          <section role="tabpanel" id="map-content" aria-labelledby="search" ng-switch-when="0" md-swipe-left="next()" md-swipe-right="previous()">
+            <div class="md-whiteframe-z1 list-wrapper">
+              <div ng-include="'filters.tpl.html'" ng-controller="FiltersController"></div>
+            </div>
+          </section>
+          <div role="tabpanel" id="list-content" aria-labelledby="list" ng-switch-when="1" md-swipe-left="next()" md-swipe-right="previous()" style="margin-bottom: 100px;">
+            <div class="md-whiteframe-z1 list-wrapper">
+              <div class="padding-max" layout="column" layout-align="center" style="height: 100px" ng-hide="Lands.lands.length"><div>Lancez une recherche de terrains dans l'onglet à gauche puis revenez consulter les résultats ici !</div></div>
+              <div style="height: 8px"></div>
+              <h4 class="padding-max md-toolbar-tools" ng-show="Lands.lands.length">Résultats de recherche</h4>
+              <hr/>
+              <md-list ng-show="Lands.lands.length">
+                <md-item ng-repeat="land in Lands.lands">
+                  <md-item-content>
+                    <div class="md-tile-content" land-content land="land"></div>
+                  </md-item-content>
+                  <hr ng-if="!$last"/>
+                </md-item>
+              </md-list>
+            </div>
+          </div>
+          <div role="tabpanel" id="map-content" aria-labelledby="map" ng-switch-when="2" md-swipe-left="next()" md-swipe-right="previous()">
+            <ui-gmap-google-map 
+              control="map.control"
+              center='map.center' 
+              zoom='map.zoom' 
+              ng-click="FieldDetail.fieldIsOpen = !FieldDetail.fieldIsOpen; resizeMap()">
+              <ui-gmap-markers
+                models="Lands.lands"
+                icon="'icon'"
+                click="markerClick"
+                coords="'self'">
+              </ui-gmap-markers>
+            </ui-gmap-google-map>
+          </div>
+        </ng-switch>
+      </md-content>
+    </div><!-- layout column -->
+
+    <!--- sidenav -->
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+      <md-toolbar>
+      <h1 class="md-toolbar-tools" layout="row" layout-align="space-between">
+        <span flex>Détail terrain</span>
+        <small class="fa fa-times" ng-click="toggleRight()"></small>
+      </h1>
+      </md-toolbar>
+      <md-content class="md-padding">
+        <div ng-repeat="land in [activeLand]">
+          <div ng-if="activeLand" land-content land="activeLand"></div>
+        </div>
+      </md-content>
+    </md-sidenav>
+  </body>
 </html>

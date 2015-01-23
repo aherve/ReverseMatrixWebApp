@@ -12,6 +12,7 @@ class Land
   field :archived, type: Boolean, default: false
   field :interesting, type: Boolean, default: false
   field :active_url, type: Boolean, default: true
+  field :img
 
   #denormalized data: 
   field :town_population

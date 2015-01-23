@@ -6,7 +6,7 @@ module Autocomplete
     field :autocomplete_length
     before_save :generate_autocomplete
 
-    scope :where_autocomplete, lambda{|s| where(autocomplete: /#{Autocomplete.normalize(s)}/)}
+    scope :where_autocomplete, lambda{|s| where(autocomplete: /#{Autocomplete.normalize(s)}/).asc(:autocomplete_length)}
   end
 
   def complete_fields
@@ -39,4 +39,5 @@ module Autocomplete
     .squish
     norm
   end
+
 end

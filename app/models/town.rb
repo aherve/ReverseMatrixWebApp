@@ -20,4 +20,11 @@ class Town
 
   index({ car_travel_time_value: 1 }, { unique: false, name: "car_travel_time_value_index" })
   index({ codename: 1},{sparse: true, unique: true, name: 'codename_index'})
+
+  def self.find_by_approximate_name(name)
+    t   = (Town.where_autocomplete(name).first)
+    t ||= (Town.where_autocomplete(name.upcase.gsub("ST",'SAINT')).first)
+    t ||= (Town.where_autocomplete(name.upcase.gsub("SAINT",'ST')).first)
+  end
+
 end

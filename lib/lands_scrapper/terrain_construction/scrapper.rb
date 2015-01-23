@@ -75,6 +75,7 @@ module LandsScrapper
               :description,
               :url,
               :town_id,
+              :img,
             )
           )
         }
