@@ -1,12 +1,10 @@
-<div ng-class="{'archived': land.archived, 'interesting': land.interesting}">
-  <h2 style="margin-bottom: 35px"><span class="fa fa-star favourite-star" style="display:none"></span><a class="text-cyan" ng-href="{{land.url}}" target="_blank" style="text-decoration: none"> {{ land.town_readable_name }} <small><span class="fa fa-external-link"></span></small></a>
-  </h2>
-  <h4>
-    {{ land.description }}
-  </h4>
+<div ng-class="{'archived': land.archived, 'interesting': land.interesting}" class="land-wrapper">
+  <div style="padding-left: 6px">
+    <h3 style="margin-bottom: 0px"><span class="fa fa-star favourite-star" style="display:none"></span><a class="text-cyan" ng-href="{{land.url}}" target="_blank" style="text-decoration: none"> {{ land.town_readable_name }} <small><span class="fa fa-external-link"></span></small></a>
+    </h3>
 
-  <table style="margin: 20px 0px" class="table table-bordered">
-    <tbody style="font-size: 0.85em;">
+  <table style="margin: 20px 0px" class="table">
+    <tbody style="font-size: 0.75em;">
       <tr>
         <td>Prix: </td>
         <td>{{ land.price_in_euro | currency:"":0 | replaceComa }} &euro;</td>
@@ -21,6 +19,11 @@
       </tr>
     </tbody>
   </table>
+
+  <p>
+    {{ land.description }}
+  </p>
+</div>
 
   <md-button ng-hide="land.archived" class="md-button md-small md-primary" ng-click="Lands.archive(land)"><span class="fa fa-archive"></span> 
     Archiver

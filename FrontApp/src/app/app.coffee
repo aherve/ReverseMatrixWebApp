@@ -51,22 +51,23 @@ do (app=angular.module "sortirDeParis", [
           @surface.to = obj.to
 
         fetchLands: ()->
-          console.log @includeArchived - 1
           Lands.filter(@time.from, @time.to, @surface.from, @surface.to,
             @includeArchived - 1, @includeInactive - 1)
   ]
 
   app.controller 'FiltersController', [
-    '$scope', '$mdDialog', '$filter', 'FiltersService',
-    ($scope, $mdDialog, $filter, FiltersService)->
+    '$scope', '$filter', 'FiltersService', '$anchorScroll',
+    ($scope, $filter, FiltersService, $anchorScroll)->
 
       $scope.FiltersService = FiltersService
-      $scope.hide = ()->
-        FiltersService.fetchLands()
-        $mdDialog.hide()
 
-      $scope.cancel = ()->
-        $mdDialog.cancel()
+      $scope.search = ()->
+        content = angular.element(
+          window.document.getElementById( 'global-content')
+        )
+        FiltersService.fetchLands().then ()->
+          content.context.scrollTop = 0
+          $scope.data.selectedIndex = 1
 
       $scope.timeOptions =
         type: "double"
@@ -121,14 +122,6 @@ do (app=angular.module "sortirDeParis", [
       $scope.data =
         selectedIndex: 0
 
-      $scope.showFilters = ( event )->
-        $mdDialog.show
-          templateUrl: 'filters.tpl.html'
-          controller: 'FiltersController'
-          targetEvent: event
-
-      $scope.showFilters()
-
       $scope.markerClick = ( land )->
         $scope.activeLand = land.model
         $scope.toggleRight()
@@ -139,9 +132,9 @@ do (app=angular.module "sortirDeParis", [
       $scope.map =
         control: {}
         center:
-          latitude: 48.864716
-          longitude: 2.349014
-        zoom: 8
+          latitude: 47.0833300
+          longitude: 2.4
+        zoom: 6
   ]
 
   app.config ([

@@ -7,7 +7,7 @@
 @import 'themes/pink-theme.less';
 @import 'ionRangeSlider/ion.rangeSlider.less';
 @import 'ionRangeSlider/ion.rangeSlider.skinFlat.less';
-@import 'ionRangeSlider/ion.rangeSlider.skinNice.less';
+//@import 'ionRangeSlider/ion.rangeSlider.skinNice.less';
 @import 'ionRangeSlider/normalize.less';
 
 .pacifico {
@@ -15,8 +15,8 @@
 }
 
 html, body {
-  background-color: white;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 [ng-click] {
@@ -34,8 +34,8 @@ md-content {
 
 .filter-button {
   position: fixed;
-  bottom: 4em;
-  right: 1.5em;
+  bottom: 2em;
+  right: 2em;
   z-index: 100;
 }
 
@@ -70,6 +70,7 @@ md-content {
 }
 
 @cyan: #00bcd4;
+@pink: #ec407a;
 @deep-purple: #673ab7;
 @yellow: #ffeb3b;
 
@@ -103,7 +104,7 @@ md-dialog > md-content {
   background-color: transparent !important;
 }
 
-.md-tile-content.padding-max {
+.padding-max {
   padding-left: 40px;
   padding-right: 40px;
 }
@@ -118,8 +119,6 @@ md-dialog > md-content {
 @hr-border:                   @gray-lighter;
 @gray-lighter:           lighten(#000, 93.5%); // #eee
 hr {
-  margin-top:    @line-height-base;
-  margin-bottom: @line-height-base;
   border: 0;
   border-top: 1px solid @hr-border;
 }
@@ -133,7 +132,7 @@ hr {
 
 .archived {
   color: @gray !important;
-  & > h2 > a,
+  & > h3 > a,
   & .md-button.md-primary {
     color: @gray !important;
   }
@@ -145,11 +144,11 @@ hr {
 
 
 @line-height-computed: 1em;
-@table-cell-padding:            8px;
+@table-cell-padding:            0px;
 @line-height-base:        1.428571429; // 20/14
 
 .table {
-  min-width: 40%;
+  min-width: 20%;
   margin-bottom: @line-height-computed;
   // Cells
   > thead,
@@ -161,7 +160,7 @@ hr {
         padding: @table-cell-padding;
         line-height: @line-height-base;
         vertical-align: top;
-        border-top: 1px solid @table-border-color;
+        //border-top: 1px solid @table-border-color;
       }
     }
   }
@@ -203,7 +202,7 @@ hr {
   }
 }
 
-@table-bg-accent:               #f9f9f9;
+@table-bg-accent:  #f9f9f9;
 .table-striped {
   > tbody > tr:nth-child(odd) {
     > td,
@@ -211,4 +210,70 @@ hr {
       background-color: @table-bg-accent;
     }
   }
+}
+
+md-tabs.md-deep-purple-theme.md-white-theme {
+  & .md-header {
+    background-color: white !important;
+    color: rgba( 0, 0, 0, 0.73 ) !important;
+    height: 55px;
+  }
+  & .md-header-items-container {
+  }
+}
+
+md-tabs.md-white-theme.md-deep-purple-theme md-tabs-ink-bar {
+  color: @pink !important;
+  background: @pink !important;
+  height: 5px;
+}
+
+md-tabs.md-white-theme.md-deep-purple-theme md-tab {
+  color: rgba( 0, 0, 0, 0.73 ) !important;
+}
+
+.container {
+  width: 80%;
+}
+
+.md-tile-content.padding-max {
+  margin-bottom: 30px;
+}
+
+.hidden-xs {
+  @media (max-width: 624px){
+    display: none;
+  }
+}
+
+.list-wrapper {
+  min-height: 100px;
+  margin-top: 50px;
+  margin-right: 10%;
+  margin-left: 10%;
+  background-color: white;
+  margin-bottom: 80px;
+  @media (max-width: 624px) {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+  }
+}
+
+.md-right-tab {
+}
+
+.md-left-tab {
+}
+
+.md-content {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.md-tile-content {
+  background-color: white !important;
+}
+
+.land-wrapper {
+  padding: 20px;
 }
