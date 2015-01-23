@@ -92,7 +92,7 @@ module LandsScrapper
       def new_lands
         all_pages
         .flat_map(&to_lands)
-        .select{|h| h[:surface_in_squared_meters] >= @min_surface}
+        .select{|h| (h[:surface_in_squared_meters] >= @min_surface) rescue nil}
         .reject{|h| Land.where(url: h[:url]).exist?}
         .map(&with_town)
         .map(&to_land)
