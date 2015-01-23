@@ -12,7 +12,7 @@ namespace :lands do
     #se loger.com
     puts "fetching lands from seloger.com"
     nl = LandsScrapper::SeLoger::Scrapper.new(min_surface: 30_000).new_lands
-    puts "#{nl.size} new lands found from seloger.com"
+    puts "#{nl.count} new lands found from seloger.com"
     nl.each(&:save)
   end
 
