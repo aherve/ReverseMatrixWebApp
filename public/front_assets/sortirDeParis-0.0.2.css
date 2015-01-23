@@ -7457,7 +7457,7 @@ md-tooltip.md-pink-theme .md-background {
 .irs-bar,
 .irs-bar-edge,
 .irs-slider {
-  background: url(../front_assets/img/sprite-skin-flat2.png) repeat-x;
+  background: url(../front_assets/img/sprite-skin-flat3.png) repeat-x;
 }
 .irs {
   height: 40px;
@@ -7531,7 +7531,7 @@ md-tooltip.md-pink-theme .md-background {
   line-height: 1.333;
   text-shadow: none;
   padding: 1px 5px;
-  background: #ec407a;
+  background: #00bcd4;
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
@@ -8108,4 +8108,9 @@ md-tabs.md-white-theme.md-deep-purple-theme md-tab {
 }
 .land-wrapper {
   padding: 20px;
+}
+.irs-from:after,
+.irs-to:after,
+.irs-single:after {
+  border-top-color: #00bcd4;
 }
