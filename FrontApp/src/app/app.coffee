@@ -76,10 +76,7 @@ do (app=angular.module "sortirDeParis", [
         from: FiltersService.time.from
         to: FiltersService.time.to
         prettify: (num)->
-          h = (num - ( num % 3600 )) / 3600
-          m = ((num - ( num % 60 )) / 60) % 60
-          if m < 10 then m = '0' + m
-          h + 'h' + m + 'min'
+          $filter( 'formatSeconds' )( num )
         drag_interval: true
         step: 600
         onFinish: (obj) ->
@@ -97,6 +94,15 @@ do (app=angular.module "sortirDeParis", [
         step: 2000
         onFinish: (obj) ->
           FiltersService.updateSurface(obj)
+  ]
+
+  app.filter 'formatSeconds', [
+    ()->
+      (num) ->
+        h = (num - ( num % 3600 )) / 3600
+        m = ((num - ( num % 60 )) / 60) % 60
+        if m < 10 then m = '0' + m
+        h + 'h' + m + 'min'
   ]
 
   app.controller 'LandController', [

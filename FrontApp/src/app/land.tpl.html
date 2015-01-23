@@ -6,16 +6,20 @@
   <table style="margin: 20px 0px" class="table">
     <tbody style="font-size: 0.75em;">
       <tr>
-        <td>Prix: </td>
+        <td>Prix :</td>
         <td>{{ land.price_in_euro | currency:"":0 | replaceComa }} &euro;</td>
       </tr>
       <tr>
-        <td>Surface: </td>
+        <td>Surface :</td>
         <td>{{ land.surface_in_squared_meters | number | replaceComa }} m<sup>2</sup> </td>
       </tr>
       <tr>
-        <td><span style="margin-right: 20px">Département:</span> </td>
+        <td><span style="margin-right: 20px">Département :</span> </td>
         <td>{{ land.town_department }}</td>
+      </tr>
+      <tr>
+        <td>Temps de trajet :</td>
+        <td> {{ land.town_car_travel_time_value | formatSeconds }}</td>
       </tr>
     </tbody>
   </table>
