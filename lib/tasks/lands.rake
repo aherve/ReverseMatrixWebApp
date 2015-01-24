@@ -3,11 +3,11 @@ namespace :lands do
   desc "scrap the ouèbe to find new lands"
   task update: :environment do
 
-    @min_surf = 10_000
+    @min_surf = 400
     
     #terrain-construction
     puts "fetching lands from terrain-construction.com"
-    tc_lands = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: @min_surf, max_dist_from_paris: 800).new_lands
+    tc_lands = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: @min_surf, max_dist_from_paris: 900).new_lands
     puts "#{tc_lands.count} new lands found from terrain-construction.com"
     tc_lands.each(&:save)
 
