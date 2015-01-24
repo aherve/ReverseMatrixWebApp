@@ -94,9 +94,12 @@ module LandsScrapper
       end
 
       def new_lands
-        lands.reject{|l| 
-          Land.where(url: l.url).exists?
-        }
+        all_pages
+        .flat_map(&to_raw_lands)
+        .map(&to_formatted_land)
+        .reject{|h| Land.where(url: h[:url]).exists?}
+        .map(&with_town)
+        .map(&to_land)
       end
 
     end
