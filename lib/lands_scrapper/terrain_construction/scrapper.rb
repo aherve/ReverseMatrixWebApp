@@ -47,7 +47,7 @@ module LandsScrapper
 
       def to_formatted_land
         @to_formatted_land ||= lambda { |raw_land|
-          {
+          h = {
             provider: :terrain_construction,
             price_in_euro: (raw_land.xpath(".//div[contains(@class,'group-left')]//span[contains(@class,'prix')]").first.text.gsub(" ","_").to_i rescue nil),
             locality: (raw_land.xpath(".//span[contains(@class,'locality')]").first.text rescue nil),

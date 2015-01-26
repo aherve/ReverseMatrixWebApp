@@ -7,15 +7,13 @@ namespace :lands do
     
     #terrain-construction
     puts "fetching lands from terrain-construction.com"
-    tc_lands = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: @min_surf, max_dist_from_paris: 900).new_lands
-    puts "#{tc_lands.count} new lands found from terrain-construction.com"
-    tc_lands.each(&:save)
+    nl = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: @min_surf, max_dist_from_paris: 900).new_lands
+    nl.each{|l| puts "new land in #{l.town.readable_name}: #{l.surface_in_squared_meters}m² for #{l.price_in_euro} euros" if l.save and l.town_id.present?}
 
     #se loger.com
     puts "fetching lands from seloger.com"
     nl = LandsScrapper::SeLoger::Scrapper.new(min_surface: @min_surf).new_lands
-    puts "#{nl.count} new lands found from seloger.com"
-    nl.each(&:save)
+    nl.each{|l| puts "new land in #{l.town.readable_name}: #{l.surface_in_squared_meters}m² for #{l.price_in_euro} euros" if l.save and l.town_id.present?}
   end
 
 end
