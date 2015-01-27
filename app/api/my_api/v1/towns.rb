@@ -5,6 +5,7 @@ module MyApi
 
       namespace :towns do 
 
+        #{{{ search town from travel distance
         desc "get all towns for which the travel time is between t_min and t_max (please provide at least one of the two parameters)"
         params do 
           optional :t_min, type: Integer, desc: "minimum travel time in seconds"
@@ -21,6 +22,18 @@ module MyApi
           present :towns, towns, with: MyApi::Entities::Town
 
         end
+        #}}}
+
+        #{{{ typeahead
+        desc "performs typeahead search on town names"
+        params do 
+          requires :query, desc: "what to search for"
+        end
+        post :typeahead do 
+          towns = Town.where_autocomplete(params[:query])
+          present :towns, towns, with: MyApi::Entities::Town
+        end
+        #}}}
 
         namespace ':town_id' do 
           before do 
@@ -30,10 +43,12 @@ module MyApi
             @town = Town.find(params[:town_id]) || error!('town not found', 404)
           end
 
+          #{{{ get
           desc "get a town infos"
           get do 
             present :town, @town, with: MyApi::Entities::Town
           end
+          #}}}
 
         end
 

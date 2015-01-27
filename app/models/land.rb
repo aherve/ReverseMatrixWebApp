@@ -4,6 +4,10 @@ class Land
 
   belongs_to :town
 
+  has_and_belongs_to_many :new_in, class_name: "Project", inverse_of: :new_lands
+  has_and_belongs_to_many :archived_in, class_name: "Project", inverse_of: :archived_lands
+  has_and_belongs_to_many :favorite_in, class_name: "Project", inverse_of: :favorite_lands
+
   field :price_in_euro, type: Integer
   field :surface_in_squared_meters, type: Integer
   field :description, type: String

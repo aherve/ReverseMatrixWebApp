@@ -4,6 +4,7 @@ class Town
   include Autocomplete
 
   has_many :lands
+  has_many :projects
 
   field :department           , type: String
   field :codename             , type: String

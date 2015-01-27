@@ -2,6 +2,8 @@ class User
   include Mongoid::Document
   include GoogleOmniauth
 
+  has_many :projects, class_name: "Project", inverse_of: :owner
+
   #{{{ devise
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
