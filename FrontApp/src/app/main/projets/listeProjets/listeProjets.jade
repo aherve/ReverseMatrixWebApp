@@ -1,0 +1,15 @@
+section
+  md-subheader.md-primary 
+    span.md-subheader-content Mes projets
+
+  md-list( layout="column" )
+    md-item( ng-repeat="i in [1, 2, 3]", ui-sref="main.projets.detail({ projetId: i })")
+      md-item-content
+        div.md-item-tile-left image
+        div.md-tile-content
+          h3 Titre de l'annonce
+          h4 sous titre
+          p Contenu de l'annonce, contenu de l'annonce
+
+md-button.action-button.md-warn.md-fab( ui-sref="main.projets.new")
+  span.fa.fa-plus

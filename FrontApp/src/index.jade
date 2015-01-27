@@ -1,5 +1,5 @@
 doctype html
-html(lang="en", ng-app="angularNgbpMaterial")
+html(lang="en", ng-app="trouverDesTerrains")
   head
     title= pageTitle
 
@@ -11,15 +11,8 @@ html(lang="en", ng-app="angularNgbpMaterial")
     // Note that inject and endinject must be surrounded by a space on both sides
     // endinject 
 
+    link( rel="stylesheet", href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" )
+
   body(ng-controller="AppController", ng-cloak)
-
-    div(layout="column", layout-fill)
-      md-toolbar.md-primary
-        .md-toolbar-tools
-          | my title lol
-          span( flex )
-          md-button
-            | look ! a button !
-
-
+    div.full-height.full-width( layout="row", ui-view="main" )
 

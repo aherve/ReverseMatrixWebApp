@@ -1,0 +1,27 @@
+md-sidenav( 
+  class="md-sidenav-left md-whiteframe-z-2"
+  md-component-id="sidenav-left"
+  md-is-locked-open="$media( 'gt-md' )"
+)
+  md-toolbar.md-primary
+    h1.md-toolbar-tools  Terrains à construire
+  md-list
+    md-item
+      md-item-content
+        div.md-tile-content vue carte
+    md-item
+      md-item-content
+        div.md-tile-content vue liste
+    md-divider
+    md-item( ui-sref="main.projets.list" )
+      md-item-content
+        div.md-tile-content mes projets
+      
+div( layout="column", layout-fill, class="full-height" )
+  md-toolbar.md-primary
+    h1.md-toolbar-tools 
+      span.fa.fa-bars(ng-click="toggleLeftNav()", hide-gt-sm)
+      | &nbsp; {{ $state.current.data.pageTitle }}
+
+  md-content(ui-view="main", style="position: relative")
+

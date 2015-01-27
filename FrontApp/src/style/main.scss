@@ -20,3 +20,23 @@
   src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/Roboto-Regular.woff) format('woff');
 }
 
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+html, body {
+  @extend .full-height;
+  @extend .full-width;
+}
+
+[ui-sref], ng-click {
+  cursor: pointer
+}
+
+.big-padding {
+  padding: 30px;
+}

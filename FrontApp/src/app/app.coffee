@@ -1,12 +1,12 @@
-do (app=angular.module "angularNgbpMaterial", [
+do (app=angular.module "trouverDesTerrains", [
   'ui.router',
   'ngMaterial'
+  'trouverDesTerrains.main'
 ]) ->
 
   app.config ([
     '$mdThemingProvider',
     ($mdThemingProvider)->
-      console.log $mdThemingProvider
       $mdThemingProvider.theme('default')
         .primaryColor('deep-purple')
         .accentColor('cyan')
@@ -14,6 +14,13 @@ do (app=angular.module "angularNgbpMaterial", [
   ])
 
   app.config ($stateProvider, $urlRouterProvider) ->
-    $urlRouterProvider.otherwise ''
+    $urlRouterProvider.when '/', '/projets'
+    $urlRouterProvider.otherwise '/projets'
 
-  app.controller 'AppController', ($scope) ->
+  app.controller 'AppController', [
+    '$scope', '$mdSidenav', '$state',
+    ($scope, $mdSidenav, $state) ->
+      $scope.$state = $state
+      $scope.toggleLeftNav = ->
+        $mdSidenav( 'sidenav-left' ).toggle()
+  ]
