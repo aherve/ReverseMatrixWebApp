@@ -4,9 +4,9 @@ module GoogleOmniauth
   included do 
     field :provider
     field :uid
-    field :first_name
-    field :last_name
-    field :image
+    field :first_name, type: String, default: ""
+    field :last_name, type: String, default: ""
+    field :image, type: String
   end
 
   module ClassMethods
