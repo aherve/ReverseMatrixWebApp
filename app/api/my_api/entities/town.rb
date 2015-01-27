@@ -2,7 +2,7 @@ module MyApi
   module Entities
     class Town < Grape::Entity
       expose :id
-      #expose :department           
+      expose :department           
       #expose :codename             
       expose :readable_name        
       expose :lat                  

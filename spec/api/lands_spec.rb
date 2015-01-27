@@ -11,8 +11,8 @@ describe MyApi::V1::Land do
 
     it "finds land" do 
       get_land
-      assert json_response.has_key?("land")
-      expect(json_response["land"]["id"]).to eq @land.id.to_s
+      assert parsed_response.has_key?("land")
+      expect(parsed_response["land"]["id"]).to eq @land.id.to_s
     end
 
   end

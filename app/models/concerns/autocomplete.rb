@@ -36,6 +36,7 @@ module Autocomplete
     .gsub(/ THE /, "")
     .gsub(" AND ", " & ")
     .gsub(" ET ", " & ")
+    .gsub(" SAINT ", " ST ")
     .squish
     norm
   end
