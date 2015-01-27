@@ -34,7 +34,7 @@ class Project
   end
 
   def lands
-    Land
+    ls = Land
     .gte(surface_in_squared_meters: min_surface)
     .lte(surface_in_squared_meters: max_surface)
     .near_sphere(location: town.location)
