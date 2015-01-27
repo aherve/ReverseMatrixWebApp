@@ -37,6 +37,7 @@ describe MyApi::V1::Projects do
   end
   #}}}
 
+  #{{{
   describe :'get/index/update/delete' do 
     before do
       sign_up_and_login!
@@ -102,5 +103,34 @@ describe MyApi::V1::Projects do
     end
 
   end
+  #}}}
+
+  #{{{ score
+  describe :score do 
+    before do 
+      sign_up_and_login!
+      @project = FactoryGirl.create(:project)
+      @project.update_attribute(:owner_id, @user.id)
+      @land = FactoryGirl.create(:land)
+    end
+
+    subject(:favorite) { post "/api/projects/#{@project.id}/lands/#{@land.id}/score", score: 1 }
+    subject(:unselect) { post "/api/projects/#{@project.id}/lands/#{@land.id}/score", score: 0 }
+    subject(:archive)  { post "/api/projects/#{@project.id}/lands/#{@land.id}/score", score: -1 }
+
+    it "archive land" do 
+      expect{archive}.to change{Project.last.archived_land_ids}.from([]).to([@land.id])
+    end
+
+    it "favorite land" do 
+      expect{favorite}.to change{Project.last.favorite_land_ids}.from([]).to([@land.id])
+    end
+
+    it "unselect land" do 
+      favorite
+      expect{unselect}.to change{Project.last.favorite_land_ids}.from([@land.id]).to([])
+    end
+  end
+  #}}}
 
 end

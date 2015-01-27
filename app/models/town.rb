@@ -19,6 +19,10 @@ class Town
 
   field :population, type: Integer
 
+  def location
+    [lng, lat]
+  end
+
   index({ car_travel_time_value: 1 }, { unique: false, name: "car_travel_time_value_index" })
   index({ codename: 1},{sparse: true, unique: true, name: 'codename_index'})
 
