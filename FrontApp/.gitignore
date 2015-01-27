@@ -1,8 +1,4 @@
-/node_modules
-/vendor
-/build
-/bin
-/.sass-cache
-.DS_Store
-dump.rdb
-npm-debug.log
+bin
+build
+vendor
+node_modules

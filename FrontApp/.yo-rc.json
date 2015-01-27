@@ -1,6 +1,6 @@
 {
-  "generator-ngbp": {
-    "projectName": "sortirDeParis",
+  "generator-ngbp-material": {
+    "projectName": "trouverDesTerrains",
     "useCoffeescript": true
   }
 }
