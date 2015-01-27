@@ -61,3 +61,6 @@ gem 'thor'
 gem 'figaro'
 gem 'nokogiri'
 gem 'postmark-rails'
+
+gem 'devise'
+gem 'omniauth-google-oauth2'

@@ -4,10 +4,10 @@ class API < Grape::API
   version :v1, using: :accept_version_header, format: :json, default_format: :json do 
 
     ## Users management
-    #helpers Devise::Controllers::SignInOut
-    #helpers Devise::Controllers::StoreLocation
-    #helpers MyApi::V1::Helpers::Session
-    #mount MyApi::V1::Users
+    helpers Devise::Controllers::SignInOut
+    helpers Devise::Controllers::StoreLocation
+    helpers MyApi::V1::Helpers::Session
+    mount MyApi::V1::Users
 
     # Mount some api methods
     mount MyApi::V1::Ping

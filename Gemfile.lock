@@ -45,6 +45,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    bcrypt (3.1.9)
     bson (2.3.0)
     bson_ext (1.5.1)
     builder (3.2.2)
@@ -98,6 +99,13 @@ GEM
       mongoid (>= 3.0, < 5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    devise (3.4.1)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      responders
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     equalizer (0.0.9)
     erubis (2.7.0)
@@ -193,6 +201,9 @@ GEM
       rack (~> 1.0)
     omniauth-facebook (2.0.0)
       omniauth-oauth2 (~> 1.2)
+    omniauth-google-oauth2 (0.2.6)
+      omniauth (> 1.0)
+      omniauth-oauth2 (~> 1.1)
     omniauth-oauth (1.0.1)
       oauth
       omniauth (~> 1.0)
@@ -206,6 +217,7 @@ GEM
       omniauth-oauth (~> 1.0)
     optionable (0.2.0)
     origin (2.1.1)
+    orm_adapter (0.5.0)
     postmark (1.5.0)
       json
       rake
@@ -246,6 +258,8 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.2.0)
       json (~> 1.4)
+    responders (1.1.2)
+      railties (>= 3.2, < 4.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -310,6 +324,8 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -326,6 +342,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   daemons
   delayed_job_mongoid
+  devise
   factory_girl_rails
   figaro
   grape (= 0.9.0)
@@ -338,6 +355,7 @@ DEPENDENCIES
   mongoid!
   nokogiri
   omniauth-facebook
+  omniauth-google-oauth2
   omniauth-twitter
   postmark-rails
   pry
