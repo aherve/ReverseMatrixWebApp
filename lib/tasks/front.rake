@@ -11,4 +11,14 @@ namespace :front do
     end
   end
 
+  desc "test front application"
+  task :test do 
+    Dir.chdir('FrontApp') do
+      sh "pwd"
+      sh "npm install"
+      sh "bower install"
+      sh "grunt karma:unit"
+    end
+  end
+
 end
