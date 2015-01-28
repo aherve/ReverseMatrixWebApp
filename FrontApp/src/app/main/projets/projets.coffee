@@ -27,13 +27,13 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .one 'projects', projectsId
             .get()
 
-        postProject: (townId, name, min_surface, max_surface, max_distance )->
+        postProject: (project)->
           params =
-            townId: townId
-            name: name
-            min_surface: min_surface
-            max_surface: max_surface
-            max_distance: max_distance
+            townId: project.townId
+            name: project.name
+            min_surface: project.min_surface
+            max_surface: project.max_surface
+            max_distance: project.max_distance
           Restangular
             .all 'projects'
             .customPOST params

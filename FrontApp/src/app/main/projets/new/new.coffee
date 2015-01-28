@@ -15,11 +15,9 @@ do (app=angular.module "trouverDesTerrains.new", [
   app.controller 'NewController', [
     '$scope', 'Projet',
     ($scope, Projet) ->
+      $scope.project = {
+        townId: '54b7d53f616865624fdf8a00'
+      }
+      $scope.createProject = ->
+        Projet.postProject $scope.project
   ]
-
-  app.directive 'ionRangeSlider', ()->
-    restrict: 'A'
-    scope:
-      rangeOptions: '='
-    link: (scope, elem, attrs) ->
-      elem.ionRangeSlider(scope.rangeOptions)
