@@ -3,9 +3,11 @@ module MyApi
     class Project < Grape::Entity
       expose :id
 
-      expose :new_lands, using: MyApi::Entities::Land
-      expose :archived_lands, using: MyApi::Entities::Land
-      expose :favorite_lands, using: MyApi::Entities::Land
+      expose :new_lands_count
+      expose :archived_lands_count
+      expose :favorite_lands_count
+
+      expose :town, using: MyApi::Entities::Town
     end
   end
 end

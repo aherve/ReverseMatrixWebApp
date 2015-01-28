@@ -95,6 +95,27 @@ module MyApi
 
           namespace :lands do 
 
+            #{{{ archived
+            desc "get the archived lands for this project"
+            get :archived do 
+              present :archived_lands, @project.archived_lands, with: MyApi::Entities::Land
+            end
+            #}}}
+
+            #{{{ new
+            desc "get the new lands for this project"
+            get :new do 
+              present :new_lands, @project.new_lands, with: MyApi::Entities::Land
+            end
+            #}}}
+
+            #{{{ favorite
+            desc "get the favorite lands for this project" 
+            get :favorite do 
+              present :favorite_lands, @project.favorite_lands, with: MyApi::Entities::Land
+            end
+            #}}}
+
             namespace ':land_id' do 
               before do 
                 params do
