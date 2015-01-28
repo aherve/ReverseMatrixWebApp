@@ -3,12 +3,12 @@ section
     span.md-subheader-content Mes projets
 
   md-list( layout="column" )
-    md-item( ng-repeat="i in [1, 2, 3]", ui-sref="main.projets.detail({ projetId: i })")
+    md-item( ng-repeat="project in Project.projects", ui-sref="main.projects.detail.new({ projectId: project.id })")
       md-item-content
         div.md-tile-content
-          h3 Titre de l'annonce
+          h3 {{ project.town.readable_name }}
           h4 sous titre
           p Contenu de l'annonce, contenu de l'annonce
 
-md-button.action-button.md-warn.md-fab( ui-sref="main.projets.new")
+md-button.action-button.md-warn.md-fab( ui-sref="main.projects.new")
   span.fa.fa-plus

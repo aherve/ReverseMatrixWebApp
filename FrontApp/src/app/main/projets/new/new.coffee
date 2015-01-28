@@ -2,7 +2,7 @@ do (app=angular.module "trouverDesTerrains.new", [
   'ui.router'
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
-    $stateProvider.state 'main.projets.new',
+    $stateProvider.state 'main.projects.new',
       url: '/new'
       views:
         "main@main":
@@ -13,11 +13,12 @@ do (app=angular.module "trouverDesTerrains.new", [
   ]
 
   app.controller 'NewController', [
-    '$scope', 'Projet',
-    ($scope, Projet) ->
+    '$scope', 'Project',
+    ($scope, Project) ->
       $scope.project = {
-        townId: '54b7d53f616865624fdf8a00'
+        town_id: '54b7d533616865624fa67700'
       }
+
       $scope.createProject = ->
-        Projet.postProject $scope.project
+        Project.createProject $scope.project
   ]

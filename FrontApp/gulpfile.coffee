@@ -17,6 +17,8 @@ filter = require('gulp-filter')
 concat = require('gulp-concat')
 rename = require('gulp-rename')
 gulpif = require('gulp-if')
+url = require('url')
+proxy = require('proxy-middleware')
 
 # Paths
 index_path = 'build/index.html'
@@ -26,11 +28,23 @@ build_vendor_dir = 'build/vendor/'
 build_assets_dir = 'build/assets/'
 
 
-gulp.task 'connect', ->
-	connect.server
-		root : ['build']
-		livereload : true
-	return
+`
+gulp.task('connect', function(){
+    connect.server({
+        root: ['build'], 
+        livereload: true,
+        middleware: function(connect, o) {
+          return [ (function() {
+            var url = require('url');
+            var proxy = require('proxy-middleware');
+            var options = url.parse('http://localhost:3000/api');
+            options.route = '/api';
+            return proxy(options);
+          })()]
+        }
+    });
+});
+`
 
 
 gulp.task 'move:jade', ->

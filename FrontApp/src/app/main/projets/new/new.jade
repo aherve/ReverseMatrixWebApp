@@ -20,16 +20,18 @@ div.big-padding
       )
 
     md-input-container
-      label Distance max : {{ project.max_distance }}
-    md-slider( flex, min="0", max="100", ng-model="project.max_distance", class="md-accent")
+      label Distance max depuis {{ project.town }} : {{ (project.max_distance || 0) / 1000 }} km
+    md-slider( flex, step="10000", min="0", max="1500000", ng-model="project.max_distance", class="md-accent")
 
     md-input-container
-      label Surface min : {{ project.min_surface }}
-    md-slider( flex, min="0", max="100", ng-model="project.min_surface", class="md-accent")
+      label Surface min : {{ project.min_surface }} m
+        sup 2
+    md-slider( flex, min="0", step="10", max="100000", ng-model="project.min_surface", class="md-accent")
 
     md-input-container
-      label Surface min : {{ project.max_surface }}
-    md-slider( flex, min="0", max="100", ng-model="project.max_surface", class="md-accent")
+      label Surface max : {{ project.max_surface }} m
+        sup 2
+    md-slider( flex, step="10", min="0", max="100000", ng-model="project.max_surface", class="md-accent")
 
     div( layout, layout-align="end" )
       md-button.md-raised.md-warn( 

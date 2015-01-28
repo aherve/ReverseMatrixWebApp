@@ -44,3 +44,44 @@ html, body {
 .center {
   text-align: center;
 }
+
+.text-cyan {
+  color: rgb( 0, 184, 212 );
+}
+
+$pink: rgb( 233, 30, 99 );
+.text-pink {
+  color: $pink;
+}
+
+.lands-list .md-tile-content {
+  padding: 25px;
+}
+
+md-tabs.md-white-theme {
+  .md-header {
+    background-color: white !important;
+    color: rgba( 0, 0, 0, 0.73 ) !important;
+    height: 55px;
+  }
+}
+
+md-tabs.md-white-theme md-tabs-ink-bar {
+  color: $pink !important;
+  background: $pink !important;
+  height: 5px;
+}
+
+md-tabs.md-white-theme md-tab {
+  color: rgba( 0, 0, 0, 0.73 ) !important;
+}
+
+.wrapper {
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 50px;
+  @media (max-width: 624px) {
+    margin: 0;
+  }
+}
+

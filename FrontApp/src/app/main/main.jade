@@ -1,4 +1,5 @@
 md-sidenav( 
+  ng-hide="true"
   class="md-sidenav-left md-whiteframe-z2"
   md-component-id="sidenav-left"
   md-is-locked-open="$media( 'gt-md' )"
@@ -13,15 +14,15 @@ md-sidenav(
       md-item-content
         div.md-tile-content vue liste
     md-divider
-    md-item( ui-sref="main.projets.list" )
+    md-item( ui-sref="main.projects.list" )
       md-item-content
         div.md-tile-content mes projets
       
-div( layout="column", layout-fill, class="full-height" )
+div( layout="column", layout-fill, class="full-height full-width" )
   md-toolbar.md-primary
     h1.md-toolbar-tools 
       span.fa.fa-bars(ng-click="toggleLeftNav()", hide-gt-sm)
       | &nbsp; {{ $state.current.data.pageTitle }}
 
-  md-content(ui-view="main", style="position: relative")
+  md-content(ui-view="main", class="full-width")
 

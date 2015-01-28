@@ -2,7 +2,7 @@ do (app=angular.module "trouverDesTerrains.listeProjets", [
   'ui.router'
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
-    $stateProvider.state 'main.projets.list',
+    $stateProvider.state 'main.projects.list',
       url: ''
       views:
         "main@main":
@@ -10,12 +10,22 @@ do (app=angular.module "trouverDesTerrains.listeProjets", [
           templateUrl: 'app/main/projets/listeProjets/listeProjets.html'
       data:
         pageTitle: 'mes projets'
+      resolve:
+        projects: [
+          'Project',
+          (Project)->
+            console.log 'resolving projects'
+            onSuccess = (success)->
+              console.log success
+            onError = (error)->
+              console.log error
+            Project.getProjects().then onSuccess, onError
+        ]
   ]
 
-  app.controller 'ListeProjetsController', ['$scope', ($scope) ->
-    init = ->
-      # Initialize
-      console.log 'pro list crtl'
+  app.controller 'ListeProjetsController', [
+    '$scope', 'Project',
+    ($scope, Project) ->
+      $scope.Project = Project
 
-    init()
   ]

@@ -1,0 +1,32 @@
+section
+  md-subheader
+    | {{ lands.length }} &nbsp;
+    span( ng-if="$state.current.name == 'main.projects.detail.new'" ) nouveaux terrains
+    span( ng-if="$state.current.name == 'main.projects.detail.archived'" ) terrains archivés
+    span( ng-if="$state.current.name == 'main.projects.detail.favourite'" ) terrains dans vos favoris
+
+  md-list.lands-list( layout="column" )
+    md-item( ng-repeat="land in lands")
+      md-item-content
+        div.md-tile-content
+          h3
+            a.text-cyan(
+              target = '_blank'
+              ng-href="{{ land.url }}"
+            ) {{ land.town_readable_name }}
+            small  - {{ land.surface_in_squared_meters }} m
+              sup 2
+          p prix : {{ land.price_in_euro }} &euro;
+          p temps de trajet  : {{ land.town_car_travel_time_text }}
+          p {{ land.description }} 
+
+          md-button.md-primary.md-small
+            span.fa.fa-archive
+            |  archiver
+
+          md-button.md-primary.md-small
+            span.fa.fa-star
+            |  ajouter aux favoris
+
+      md-divider
+
