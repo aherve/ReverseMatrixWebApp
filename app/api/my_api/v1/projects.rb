@@ -22,7 +22,6 @@ module MyApi
           requires :name, type: String, desc: "project's name"
           requires :min_surface, type: Integer, desc: "min surface in squared meters"
           requires :max_surface, type: Integer, desc: "min surface in squared meters"
-          requires :min_distance, type: Integer, desc: "min distance from town in meters"
           requires :max_distance, type: Integer, desc: "max distance from town in meters"
         end
         post do 
@@ -31,7 +30,6 @@ module MyApi
             :name,
             :min_surface,
             :max_surface,
-            :min_distance,
             :max_distance,
           ])
 
@@ -53,6 +51,7 @@ module MyApi
             @project = Project.find_by(id: params[:project_id], owner_id: current_user.id) || error!("project not found",404)
           end
 
+
           #{{{ get
           desc "get the full description of the project"
           get do 
@@ -67,7 +66,6 @@ module MyApi
             optional :name, type: String, desc: "project's name"
             optional :min_surface, type: Integer, desc: "min surface in squared meters"
             optional :max_surface, type: Integer, desc: "min surface in squared meters"
-            optional :min_distance, type: Integer, desc: "min distance from town in meters"
             optional :max_distance, type: Integer, desc: "max distance from town in meters"
           end
           put do 
@@ -76,7 +74,6 @@ module MyApi
               :name,
               :min_surface,
               :max_surface,
-              :min_distance,
               :max_distance,
             ])
 
@@ -96,7 +93,38 @@ module MyApi
           end
           #}}}
 
+          namespace :lands do 
 
+            namespace ':land_id' do 
+              before do 
+                params do
+                  requires :land_id, desc: "id of the land"
+                end
+                @land = @project.lands.find_by(id: params[:land_id]) || error!("land not found",404)
+              end
+
+              #{{{ score
+              desc "archive, favorite, or unselect land."
+              params do 
+                requires :score, type: Integer, desc: "1=> favorite, -1 => archive, 0=> unselect"
+              end
+              post :score do 
+                if (s = params["score"]) == 1
+                  @project.favorite!(@land)
+                elsif s == 0
+                  @project.unselect!(@land)
+                elsif s == -1
+                  @project.archive!(@land)
+                else
+                  error!("wrong argument score", '403')
+                end
+
+                present :project, @project, with: MyApi::Entities::Project
+              end
+              #}}}
+
+            end
+          end
         end
       end
     end

@@ -5,7 +5,10 @@ describe MyApi::V1::Projects do
 
   #{{{ create
   describe :create do 
-    subject(:create_project){ post '/api/projects/', FactoryGirl.build(:project).attributes}
+    before do 
+      @town = FactoryGirl.create(:town)
+    end
+    subject(:create_project){ post '/api/projects/', FactoryGirl.build(:project).attributes.merge(town_id: @town.id)}
 
     context "when logged out" do
 
@@ -37,10 +40,12 @@ describe MyApi::V1::Projects do
   end
   #}}}
 
+  #{{{
   describe :'get/index/update/delete' do 
     before do
       sign_up_and_login!
       @project = FactoryGirl.create(:project)
+      @project.town = FactoryGirl.create(:town)
       @project.owner = @user ; @project.save
     end
 
@@ -102,5 +107,38 @@ describe MyApi::V1::Projects do
     end
 
   end
+  #}}}
+
+  #{{{ score
+  describe :score do 
+    before do 
+      sign_up_and_login!
+      @project = FactoryGirl.create(:project)
+      @project.town = FactoryGirl.create(:town)
+      @project.owner = @user ; @project.save
+      @land = FactoryGirl.create(:land)
+    end
+
+    subject(:favorite) { post "/api/projects/#{@project.id}/lands/#{@land.id}/score", score: 1 }
+    subject(:unselect) { post "/api/projects/#{@project.id}/lands/#{@land.id}/score", score: 0 }
+    subject(:archive)  { post "/api/projects/#{@project.id}/lands/#{@land.id}/score", score: -1 }
+
+    it "archive land" do 
+    pending
+      expect{archive}.to change{Project.last.archived_land_ids}.from([]).to([@land.id])
+    end
+
+    it "favorite land" do 
+    pending
+      expect{favorite}.to change{Project.last.favorite_land_ids}.from([]).to([@land.id])
+    end
+
+    it "unselect land" do 
+    pending
+      favorite
+      expect{unselect}.to change{Project.last.favorite_land_ids}.from([@land.id]).to([])
+    end
+  end
+  #}}}
 
 end

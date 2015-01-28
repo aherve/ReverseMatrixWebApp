@@ -4,7 +4,6 @@ class Land
 
   belongs_to :town
 
-  has_and_belongs_to_many :new_in, class_name: "Project", inverse_of: :new_lands
   has_and_belongs_to_many :archived_in, class_name: "Project", inverse_of: :archived_lands
   has_and_belongs_to_many :favorite_in, class_name: "Project", inverse_of: :favorite_lands
 
@@ -29,6 +28,9 @@ class Land
   field :town_lat
   field :town_lng
 
+  field :location, type: Array
+  index({ location: "2d"})
+  
   index({ url: 1},{sparse: false, unique: true, name: 'url_land_index'})
 
   validates_uniqueness_of :url
@@ -73,6 +75,7 @@ class Land
         town_car_travel_time_text: t.car_travel_time_text,
         town_lat: t.lat,
         town_lng: t.lng,
+        location: [t.lng, t.lat],
       )
     end
   end
