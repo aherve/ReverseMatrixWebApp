@@ -60,7 +60,8 @@ globs.app = [
   'vendor/angular-material/angular-material.js'
   'vendor/angular-mocks/angular-mocks.js'
   'vendor/lodash/dist/lodash.js'
-  'vendor/restangular/restangular.js'
+  'vendor/restangular/dist/restangular.js'
+  'vendor/angular-typeahead/angular-typeahead.js'
 
   globs.app_js
   "!build/app/**/*.spec.js"
