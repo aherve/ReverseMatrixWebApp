@@ -49,4 +49,16 @@ class Project
     Land.any_in(id: ( land_ids - favorite_land_ids - archived_land_ids) )
   end
 
+  def new_lands_count
+    new_lands.count
+  end
+
+  def archived_lands_count
+    archived_land_ids.size
+  end
+
+  def favorite_lands_count
+    favorite_land_ids.count
+  end
+
 end
