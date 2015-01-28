@@ -12,9 +12,12 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         pageTitle: 'Détail du projet'
   ]
 
-  app.controller 'ProjetDetailController', ['$scope', ($scope) ->
-    init = ->
-      # Initialize
+  app.controller 'ProjetDetailController', [
+    '$scope', '$stateParams',
+    ($scope, $stateParams) ->
+      $scope.projetId = $stateParams.projetId
+      init = ->
+        # Initialize
 
-    init()
+      init()
   ]

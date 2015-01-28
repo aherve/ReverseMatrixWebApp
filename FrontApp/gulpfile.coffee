@@ -23,6 +23,7 @@ index_path = 'build/index.html'
 src_dir = 'src/'
 build_dir = 'build/'
 build_vendor_dir = 'build/vendor/'
+build_assets_dir = 'build/assets/'
 
 
 gulp.task 'connect', ->
@@ -59,6 +60,11 @@ gulp.task 'move:coffee', ->
 	.pipe coffee({ bare : true })
 	.pipe gulp.dest(build_dir)
 
+gulp.task 'move:assets', ->
+	gulp.src globs.assets
+	.pipe plumber()
+	.pipe gulp.dest(build_assets_dir)
+
 
 gulp.task 'move:vendor', ->
 	gulp.src globs.vendor
@@ -79,34 +85,13 @@ gulp.task 'run:karma', ->
 gulp.task 'watch', ->
 	gulp.watch globs.vendor, ['move:vendor']
 	gulp.watch globs.jade, ['move:jade']
+	gulp.watch globs.assets, ['move:assets']
 	gulp.watch globs.sass, ['move:sass']
 	gulp.watch globs.coffee, ['move:coffee']
 	gulp.watch globs.karma, ['run:karma']
 	
 
-gulp.task 'move:files', ['move:vendor', 'move:sass', 'move:coffee'], ->
+gulp.task 'move:files', ['move:vendor', 'move:sass', 'move:assets', 'move:coffee'], ->
 	gulp.start 'move:jade'
 
 gulp.task 'default', ['move:files', 'connect', 'watch']
-
-`
-/** *****************************************
- *
- * Internal helper functions
- *
- ** ***************************************** */
-
-
-function readModuleArg() {
-  var module = argv.c ? 'material.components.' + argv.c : (argv.module || argv.m);
-  if (!module) {
-    gutil.log('\nProvide a compnent argument via \`-c\`:',
-      '\nExample: -c toast');
-    gutil.log('\nOr provide a module argument via \`--module\` or \`-m\`.',
-      '\nExample: --module=material.components.toast or -m material.components.dialog');
-    process.exit(1);
-  }
-  return module;
-}
-`
-

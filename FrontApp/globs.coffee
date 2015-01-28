@@ -11,6 +11,8 @@ globs.app_css = 'build/style/main.css'
 globs.vendor_js = 'build/vendor/**/*.js'
 globs.vendor_css = 'build/vendor/**/*.css'
 globs.vendor = 'vendor/**/*'
+globs.assets = 'src/assets/**/*'
+globs.assets_js = 'build/assets/**/*.js'
 
 # choose the angular material themes you want to use
 # globs.themes = [ 'cyan', 'deep-purple', 'pink' ]
@@ -47,22 +49,23 @@ globs.karma = [
  
 globs.app = [
   # you need to reference bower modules here
-  'vendor/jquery/dist/jquery.js',
-  'vendor/angular/angular.js',
-  'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
-  'vendor/hammerjs/hammer.min.js',
-  'vendor/angular-ui-router/release/angular-ui-router.js',
-  'vendor/angular-ui-utils/modules/route/route.js',
-  'vendor/angular-animate/angular-animate.js',
-  'vendor/angular-aria/angular-aria.js',
-  'vendor/angular-material/angular-material.js',
-  'vendor/angular-mocks/angular-mocks.js',
-  'vendor/lodash/dist/lodash.js',
+  'vendor/jquery/dist/jquery.js'
+  'vendor/angular/angular.js'
+  'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js'
+  'vendor/hammerjs/hammer.min.js'
+  'vendor/angular-ui-router/release/angular-ui-router.js'
+  'vendor/angular-ui-utils/modules/route/route.js'
+  'vendor/angular-animate/angular-animate.js'
+  'vendor/angular-aria/angular-aria.js'
+  'vendor/angular-material/angular-material.js'
+  'vendor/angular-mocks/angular-mocks.js'
+  'vendor/lodash/dist/lodash.js'
   'vendor/restangular/restangular.js'
 
   globs.app_js
   "!build/app/**/*.spec.js"
   globs.app_css
+  globs.assets_js
 ]
 
 module.exports = globs
