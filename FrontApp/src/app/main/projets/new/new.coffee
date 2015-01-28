@@ -12,9 +12,14 @@ do (app=angular.module "trouverDesTerrains.new", [
         pageTitle: 'Nouveau projet'
   ]
 
-  app.controller 'NewController', ['$scope', ($scope) ->
-    init = ->
-      # Initialize
-
-    init()
+  app.controller 'NewController', [
+    '$scope', 'Projet',
+    ($scope, Projet) ->
   ]
+
+  app.directive 'ionRangeSlider', ()->
+    restrict: 'A'
+    scope:
+      rangeOptions: '='
+    link: (scope, elem, attrs) ->
+      elem.ionRangeSlider(scope.rangeOptions)

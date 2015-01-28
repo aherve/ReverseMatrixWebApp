@@ -15,4 +15,3 @@ do (app=angular.module "trouverDesTerrains.main", [
   ]
 
   app.controller 'MainController', ->
-    console.log 'main controller'

@@ -38,6 +38,11 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .all 'projects'
             .customPOST params
 
+        townsTypeahead: (string)->
+          Restangular
+            .all 'towns'
+            .customPOST string, 'typeahead'
+
         getArchivedLands: (projectId)->
           Restangular
             .one 'project', projectId
