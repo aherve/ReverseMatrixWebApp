@@ -6,6 +6,7 @@ globs.src = 'src/**/*'
 globs.build = 'build/**/*'
 globs.html = 'build/**/*.html'
 globs.app_js = 'build/app/**/*.js'
+globs.common_js = 'build/common/**/*.js'
 globs.app_sass = 'src/style/app.scss'
 globs.app_css = 'build/style/main.css'
 globs.vendor_js = 'build/vendor/**/*.js'
@@ -65,6 +66,7 @@ globs.app = [
   'vendor/ionrangeslider/js/ion.rangeSlider.js'
 
   globs.app_js
+  globs.common_js
   "!build/app/**/*.spec.js"
   globs.app_css
   globs.assets_js

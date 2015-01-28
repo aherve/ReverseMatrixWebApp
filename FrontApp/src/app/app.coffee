@@ -2,7 +2,9 @@ do (app=angular.module "trouverDesTerrains", [
   'ui.router'
   'ngMaterial'
   'siyfion.sfTypeahead'
+  'security'
   'trouverDesTerrains.main'
+  'trouverDesTerrains.landing'
 ]) ->
 
   app.config ([
@@ -16,7 +18,7 @@ do (app=angular.module "trouverDesTerrains", [
 
   app.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.when '/', '/projets'
-    $urlRouterProvider.otherwise '/projets'
+    $urlRouterProvider.otherwise '/landing'
 
   app.controller 'AppController', [
     '$scope', '$mdSidenav', '$state',
