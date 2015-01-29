@@ -21,6 +21,8 @@ url = require('url')
 proxy = require('proxy-middleware')
 templateCache = require('gulp-angular-templatecache')
 uglify = require('gulp-uglify')
+p = require('./package.json')
+v = p.version
 
 # Paths
 index_path = 'build/index.html'
@@ -117,13 +119,14 @@ gulp.task 'run:karmaonce', ->
 gulp.task 'compile:javascript', ->
   gulp.src globs.js
     .pipe plumber()
-    .pipe(concat('app.js'))
+    .pipe(concat('app-' + v + '.js'))
     .pipe(uglify())
     .pipe(gulp.dest(compile_assets_dir))
 
 gulp.task 'compile:movecss', ->
   gulp.src globs.app_css
     .pipe plumber()
+    .pipe(rename('app-' + v + '.css'))
     .pipe(gulp.dest(compile_assets_dir))
 
 gulp.task 'compile:moveassets', ->
