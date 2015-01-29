@@ -22,6 +22,9 @@ module.exports = function(config) {
       
     ],
 
+    //plugins
+    plugins: ['karma-jasmine', 'karma-phantomjs-launcher'],
+
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -55,7 +58,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
