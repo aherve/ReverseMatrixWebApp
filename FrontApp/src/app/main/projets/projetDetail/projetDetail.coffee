@@ -9,6 +9,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         resolve: [
           'Project', '$stateParams',
           (Project, $stateParams)->
+            console.log 'resolving project lands'
             Project.loadLands( $stateParams.projectId )
         ]
 

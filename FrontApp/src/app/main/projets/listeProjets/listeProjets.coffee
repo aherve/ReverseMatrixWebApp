@@ -23,8 +23,10 @@ do (app=angular.module "trouverDesTerrains.listeProjets", [
   ]
 
   app.controller 'ListeProjetsController', [
-    '$scope', 'Project',
-    ($scope, Project) ->
+    '$scope', 'Project', '$state',
+    ($scope, Project, $state) ->
       $scope.Project = Project
+      $scope.navToProject = (project)->
+        $state.go 'main.projects.detail.new', projectId: project.id
 
   ]

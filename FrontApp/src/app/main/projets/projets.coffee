@@ -82,8 +82,10 @@ do (app=angular.module "trouverDesTerrains.projets", [
           ProjectResource.getFavouriteLands( project.id ).then onSuccess
 
         loadLands: (projectId)->
+          console.log 'load lands'
           that = @
           if project = projectIsLoaded( projectId, @projects )
+            console.log 'found project'
             project.lands = []
             promises = [
               $q.when @loadFavouriteLands( project )
@@ -93,7 +95,9 @@ do (app=angular.module "trouverDesTerrains.projets", [
             $q.all( promises )
 
           else
+            console.log 'project was not loaded'
             onSuccess = (success)->
+              console.log 'success get project'
               if project = projectIsLoaded( projectId, that.projects )
                 project.lands = []
                 promises = [

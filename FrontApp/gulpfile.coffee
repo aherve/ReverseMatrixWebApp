@@ -161,7 +161,7 @@ gulp.task 'compile:index', ->
 
 # watch
 gulp.task 'watch', ->
-	gulp.watch globs.vendor, ['move:vendor']
+  #gulp.watch globs.vendor, ['move:vendor']
 	gulp.watch globs.jade, ['move:jade']
 	gulp.watch globs.assets, ['move:assets']
 	gulp.watch globs.sass, ['move:sass']
