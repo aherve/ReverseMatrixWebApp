@@ -1,3 +1,5 @@
+do(app=angular.module 'templates', [])->
+
 do (app=angular.module "trouverDesTerrains", [
   'ui.router'
   'ui.bootstrap'
@@ -74,4 +76,3 @@ do (app=angular.module "trouverDesTerrains", [
           httpConfig: httpConfig
   ]
 
-do(app=angular.module 'templates', [])->

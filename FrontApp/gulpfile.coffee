@@ -73,6 +73,12 @@ gulp.task 'move:jade', ->
     .pipe inject(gulp.src(globs.app, { read : false }), { ignorePath : ['build'], addRootSlash : false })
     .pipe gulp.dest(build_dir)
 
+gulp.task 'move:injectdep', ->
+  gulp.src 'build/index.html'
+    .pipe plumber()
+    .pipe inject(gulp.src(globs.app, { read : false }), { ignorePath : ['build'], addRootSlash : false })
+    .pipe gulp.dest(build_dir)
+
 gulp.task 'move:templateCache', ->
   gulp.src globs.html
     .pipe plumber()
@@ -174,6 +180,9 @@ gulp.task 'compile', [
 
 gulp.task 'move:files', ['move:templateCache', 'move:vendor', 'move:sass', 'move:assets', 'move:coffee'], ->
 	gulp.start 'move:jade'
+
+gulp.task 'build', ['move:files'], ->
+  gulp.start 'move:injectdep'
 
 gulp.task 'test', [
   'run:karmaonce'
