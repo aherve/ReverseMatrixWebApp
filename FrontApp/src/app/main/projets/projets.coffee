@@ -34,7 +34,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
           that = @
           onSuccess = (success)->
             that.projects.push( success.project )
-            $state.go 'main.projects.detail', projectId: success.project.id
+            $state.go 'main.projects.detail.new', projectId: success.project.id
           ProjectResource.postProject( project ).then onSuccess
 
         activeProject: ()->
@@ -105,17 +105,17 @@ do (app=angular.module "trouverDesTerrains.projets", [
             @getProjects().then onSuccess
 
 
-        archiveLand: (land, lands, projectId )->
+        archiveLand: (land, projectId )->
           onSuccess = (success)->
             land.status = -1
           Land.score( projectId, land.id, -1 ).then onSuccess
 
-        favouriteLand: (land, lands, projectId )->
+        favouriteLand: (land, projectId )->
           onSuccess = (success)->
             land.status = 1
           Land.score( projectId, land.id, 1 ).then onSuccess
 
-        unSortLand: (land, lands, projectId )->
+        unSortLand: (land, projectId )->
           onSuccess = (success)->
             land.status = 0
           Land.score( projectId, land.id, 0 ).then onSuccess
@@ -141,7 +141,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
 
         postProject: (project)->
           params =
-            town_id: project.town_id
+            town_id: project.town.id
             name: project.name
             min_surface: project.min_surface
             max_surface: project.max_surface
@@ -153,7 +153,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
         townsTypeahead: (string)->
           Restangular
             .all 'towns'
-            .customPOST string, 'typeahead'
+            .customPOST query: string, 'typeahead'
 
         getArchivedLands: (projectId)->
           Restangular

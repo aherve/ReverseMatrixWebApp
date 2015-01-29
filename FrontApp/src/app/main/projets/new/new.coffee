@@ -13,11 +13,18 @@ do (app=angular.module "trouverDesTerrains.new", [
   ]
 
   app.controller 'NewController', [
-    '$scope', 'Project',
-    ($scope, Project) ->
+    '$scope', 'Project', 'ProjectResource', '$q',
+    ($scope, Project, ProjectResource, $q) ->
       $scope.project = {
-        town_id: '54b7d533616865624fa67700'
       }
+
+      $scope.townsTypeahead = (string)->
+        onSuccess = (success)->
+          $scope.loading = false
+          $q.when(success.towns)
+        if string.length > 2
+          $scope.loading = true
+          ProjectResource.townsTypeahead(string).then onSuccess
 
       $scope.createProject = ->
         Project.createProject $scope.project

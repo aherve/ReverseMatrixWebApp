@@ -15,7 +15,11 @@ div.big-padding
       label Ville de référence
       input(
         ng-model="project.town"
-        type="text"
+        typeahead-min-length="3"
+        typeahead-on-select="console.log($item)"
+        typeahead-wait-ms="100"
+        typeahead-loading="loading"
+        typeahead="town as town.readable_name for town in townsTypeahead( $viewValue )"
         name="name"
       )
 

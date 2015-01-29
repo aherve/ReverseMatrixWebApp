@@ -29,7 +29,7 @@
 }
 
 .grey-bg {
-  background-color: rgba(0, 0, 0, 0.02 ) !important;
+  background-color: rgba(0, 0, 0, 0.05 ) !important;
 }
 
 html, body {
@@ -84,14 +84,14 @@ md-tabs.md-white-theme md-tab {
 }
 
 .wrapper {
+  background-color: white;
   @extend .md-whiteframe-z1;
   margin-left: 10%;
   margin-right: 10%;
-  margin-top: 100px;
+  margin-top: 40px;
+  margin-bottom: 200px;
   @media (max-width: 624px) {
-    margin-right: 0;
-    margin-left: 0;
-    margin-top: 55px;
+    margin: 0;
   }
 }
 

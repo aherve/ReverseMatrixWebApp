@@ -54,18 +54,31 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
       $scope.project = Project.activeProject()
 
       $scope.archive = (land)->
-        Project.archiveLand( land, $scope.lands, $stateParams.projectId )
-        $timeout(
-          ()->
-            $scope.$apply()
-          100
-        )
+        $scope.project.archived_lands_count += 1
+        if $scope.status == 0
+          $scope.project.new_lands_count -= 1
+        else if $scope.status == 1
+          $scope.project.favorite_lands_count -= 1
+          console.log( $scope.project )
+        Project.archiveLand( land, $scope.project.id )
 
       $scope.favourite = (land)->
-        Project.favouriteLand( land, $scope.lands, $stateParams.projectId )
+        $scope.project.favorite_lands_count += 1
+        if $scope.status == 0
+          $scope.project.new_lands_count -= 1
+        else if $scope.status == -1
+          $scope.project.archived_lands_count -= 1
+        console.log( $scope.project )
+        Project.favouriteLand( land, $scope.project.id )
 
       $scope.unSortLand = (land)->
-        Project.unSortLand( land, $scope.lands, $stateParams.projectId )
+        if $scope.status == -1
+          $scope.project.archived_lands_count -= 1
+        else if $scope.status == 1
+          $scope.project.favorite_lands_count -= 1
+        $scope.project.new_lands_count += 1
+        console.log( $scope.project )
+        Project.unSortLand(land, $scope.project.id)
 
   ]
 
