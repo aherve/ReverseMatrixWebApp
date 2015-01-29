@@ -1,5 +1,6 @@
 do (app=angular.module "trouverDesTerrains", [
   'ui.router'
+  'ui.bootstrap'
   'ngMaterial'
   'templates'
   'siyfion.sfTypeahead'

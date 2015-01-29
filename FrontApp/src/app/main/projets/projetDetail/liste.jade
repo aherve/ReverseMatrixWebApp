@@ -1,9 +1,10 @@
 section
-  md-subheader
-    h2 {{ project.name }}
-    span( ng-show="$state.current.name == 'main.projects.detail.new'" ) {{ (project.lands | filter: {'status': 0}).length }} terrains non classés
-    span( ng-show="$state.current.name == 'main.projects.detail.archived'" ) {{ (project.lands | filter: {'status': -1 }).length }}  terrains archivés
-    span( ng-show="$state.current.name == 'main.projects.detail.favourite'" ) {{ (project.lands | filter: {'status': 1 }).length }}  terrains intéressants 
+  div.md-subheader.md-default-theme
+    div.md-subheader-content
+      h2 {{ project.name }}
+      span( ng-show="$state.current.name == 'main.projects.detail.new'" ) {{ project.new_lands_count }} terrains non classés
+      span( ng-show="$state.current.name == 'main.projects.detail.archived'" ) {{ project.archived_lands_count }}  terrains archivés
+      span( ng-show="$state.current.name == 'main.projects.detail.favourite'" ) {{ project.favorite_lands_count }}  terrains intéressants 
 
   md-list.lands-list( layout="column" )
     md-item( 
@@ -12,15 +13,17 @@ section
       md-divider.display-when-sup-leaves
       md-divider( ng-show="$index == 0" )
       md-item-content
+        div.md-tile-left.md-image-tile
+          img( ng-src="{{land.img}}" class="land-image" ng-if="land.img")
         div.md-tile-content
           h3
             a.text-cyan(
               target = '_blank'
               ng-href="{{ land.url }}"
             ) {{ land.town_readable_name }}
-            small  - {{ land.surface_in_squared_meters }} m
+            small  - {{ land.surface_in_squared_meters | number }} m
               sup 2
-          p prix : {{ land.price_in_euro }} &euro;
+          p prix : {{ land.price_in_euro | number }} &euro;
           p temps de trajet  : {{ land.town_car_travel_time_text }}
           p {{ land.description }} 
 
@@ -55,6 +58,6 @@ section
           )
             span.fa.fa-star
             |  retirer des favoris
-      md-divider.hidden-on-leave
+      md-divider.hidden-on-leave( ng-hide="$last" )
 
 

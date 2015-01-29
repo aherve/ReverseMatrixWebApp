@@ -64,6 +64,7 @@ globs.vendor_js = [
   'vendor/restangular/dist/restangular.js'
   'vendor/angular-typeahead/angular-typeahead.js'
   'vendor/ionrangeslider/js/ion.rangeSlider.js'
+  'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
 ]
  
 globs.app = globs.vendor_js.concat([

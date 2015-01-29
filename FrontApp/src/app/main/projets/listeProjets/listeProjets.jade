@@ -9,6 +9,7 @@ section
       style="position: relative"
       md-ink-ripple
     )
+      md-divider
       md-item-content
         div.md-tile-left
           div.news-count( 
@@ -19,8 +20,10 @@ section
         div.md-tile-content
           h3.text-cyan {{ project.name }} 
           h4 {{ project.town.readable_name }}
-          p Contenu de l'annonce, contenu de l'annonce
-      md-divider
+          p 
+            | à moins de {{ project.max_distance / 1000 | number }} km - 
+            | surface entre {{ project.min_surface | number }} et {{ project.max_surface }} m
+            sup 2
 
 md-button.action-button.md-warn.md-fab( ui-sref="main.projects.new")
   span.fa.fa-plus
