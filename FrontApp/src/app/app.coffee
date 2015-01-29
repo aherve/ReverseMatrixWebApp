@@ -1,6 +1,7 @@
 do (app=angular.module "trouverDesTerrains", [
   'ui.router'
   'ngMaterial'
+  'templates'
   'siyfion.sfTypeahead'
   'security'
   'trouverDesTerrains.main'
@@ -21,8 +22,9 @@ do (app=angular.module "trouverDesTerrains", [
     $urlRouterProvider.otherwise '/landing'
 
   app.controller 'AppController', [
-    '$scope', '$mdSidenav', '$state',
-    ($scope, $mdSidenav, $state) ->
+    '$scope', '$mdSidenav', '$state', 'Auth',
+    ($scope, $mdSidenav, $state, Auth) ->
+      $scope.Auth = Auth
       $scope.$state = $state
       $scope.toggleLeftNav = ->
         $mdSidenav( 'sidenav-left' ).toggle()
@@ -67,3 +69,5 @@ do (app=angular.module "trouverDesTerrains", [
           headers: headers
           httpConfig: httpConfig
   ]
+
+do(app=angular.module 'templates', [])->

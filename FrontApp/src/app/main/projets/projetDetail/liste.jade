@@ -3,7 +3,7 @@ section
     h2 {{ project.name }}
     span( ng-show="$state.current.name == 'main.projects.detail.new'" ) {{ (project.lands | filter: {'status': 0}).length }} terrains non classés
     span( ng-show="$state.current.name == 'main.projects.detail.archived'" ) {{ (project.lands | filter: {'status': -1 }).length }}  terrains archivés
-    span( ng-show="$state.current.name == 'main.projects.detail.favourite'" ){{ (project.lands | filter: {'status': 1 }).length }}  terrains intéressants 
+    span( ng-show="$state.current.name == 'main.projects.detail.favourite'" ) {{ (project.lands | filter: {'status': 1 }).length }}  terrains intéressants 
 
   md-list.lands-list( layout="column" )
     md-item( 

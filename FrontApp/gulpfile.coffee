@@ -19,13 +19,20 @@ rename = require('gulp-rename')
 gulpif = require('gulp-if')
 url = require('url')
 proxy = require('proxy-middleware')
+templateCache = require('gulp-angular-templatecache')
+uglify = require('gulp-uglify')
 
 # Paths
 index_path = 'build/index.html'
 src_dir = 'src/'
+
 build_dir = 'build/'
+build_app_dir = 'build/app/'
 build_vendor_dir = 'build/vendor/'
 build_assets_dir = 'build/assets/'
+
+compile_dir = 'bin/'
+compile_assets_dir = 'bin/assets/'
 
 
 `
@@ -46,14 +53,18 @@ gulp.task('connect', function(){
 });
 `
 
-
 gulp.task 'move:jade', ->
 	gulp.src globs.jade
-	.pipe plumber()
-	.pipe jade({ pretty : true })
-	.pipe inject(gulp.src(globs.app, { read : false }), { ignorePath : ['build'], addRootSlash : false })
-	.pipe gulp.dest(build_dir)
+    .pipe plumber()
+    .pipe jade({ pretty : true })
+    .pipe inject(gulp.src(globs.app, { read : false }), { ignorePath : ['build'], addRootSlash : false })
+    .pipe gulp.dest(build_dir)
 
+gulp.task 'move:templateCache', ->
+  gulp.src globs.html
+    .pipe plumber()
+    .pipe templateCache()
+    .pipe gulp.dest(build_app_dir)
 
 gulp.task 'move:sass', ->
   gulp.src globs.sass
@@ -70,32 +81,56 @@ gulp.task 'move:sass', ->
 
 gulp.task 'move:coffee', ->
 	gulp.src globs.coffee
-	.pipe plumber()
-	.pipe coffee({ bare : true })
-	.pipe gulp.dest(build_dir)
+    .pipe plumber()
+    .pipe coffee({ bare : true })
+    .pipe gulp.dest(build_dir)
 
 gulp.task 'move:assets', ->
 	gulp.src globs.assets
-	.pipe plumber()
-	.pipe gulp.dest(build_assets_dir)
-
+    .pipe plumber()
+    .pipe gulp.dest(build_assets_dir)
 
 gulp.task 'move:vendor', ->
 	gulp.src globs.vendor
-	.pipe plumber()
-	.pipe gulp.dest(build_vendor_dir)
-
+    .pipe plumber()
+    .pipe gulp.dest(build_vendor_dir)
 
 gulp.task 'run:karma', ->
 	gulp.src globs.karma
-	.pipe karma
-		configFile : 'karma.conf.js'
-		action : 'watch'
-	.on 'error', (err) ->
-		throw err
-		return
+    .pipe karma
+      configFile : 'karma.conf.js'
+      action : 'watch'
+    .on 'error', (err) ->
+      throw err
+      return
+
+# Compile
+gulp.task 'compile:javascript', ->
+  gulp.src globs.js
+    .pipe plumber()
+    .pipe(concat('app.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(compile_assets_dir))
+
+gulp.task 'compile:movecss', ->
+  gulp.src globs.app_css
+    .pipe plumber()
+    .pipe(gulp.dest(compile_assets_dir))
+
+gulp.task 'compile:moveassets', ->
+	gulp.src globs.assets
+    .pipe(plumber())
+    .pipe(gulp.dest(compile_assets_dir))
+
+gulp.task 'compile:index', ->
+	gulp.src globs.index
+    .pipe plumber()
+    .pipe jade({ pretty : true })
+    .pipe inject(gulp.src(globs.compiled_assets, { read : false }), { ignorePath : ['bin'], addRootSlash : false })
+    .pipe gulp.dest(compile_dir)
 
 
+# watch
 gulp.task 'watch', ->
 	gulp.watch globs.vendor, ['move:vendor']
 	gulp.watch globs.jade, ['move:jade']
@@ -103,9 +138,18 @@ gulp.task 'watch', ->
 	gulp.watch globs.sass, ['move:sass']
 	gulp.watch globs.coffee, ['move:coffee']
 	gulp.watch globs.karma, ['run:karma']
-	
 
-gulp.task 'move:files', ['move:vendor', 'move:sass', 'move:assets', 'move:coffee'], ->
+
+# global tasks
+gulp.task 'compile', [
+  'move:files'
+  'compile:moveassets'
+  'compile:movecss'
+  'compile:javascript'
+  'compile:index'
+]
+
+gulp.task 'move:files', ['move:templateCache', 'move:vendor', 'move:sass', 'move:assets', 'move:coffee'], ->
 	gulp.start 'move:jade'
 
 gulp.task 'default', ['move:files', 'connect', 'watch']

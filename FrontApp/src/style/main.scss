@@ -37,7 +37,8 @@ html, body {
   @extend .full-width;
 }
 
-[ui-sref], ng-click {
+[ui-sref], 
+[ng-click] {
   cursor: pointer
 }
 

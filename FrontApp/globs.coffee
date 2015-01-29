@@ -3,17 +3,17 @@ globs = {}
 globs.coffee = 'src/**/*.coffee'
 globs.jade = 'src/**/*.jade'
 globs.src = 'src/**/*'
+globs.assets = 'src/assets/**/*'
+globs.vendor = 'vendor/**/*'
+
 globs.build = 'build/**/*'
 globs.html = 'build/**/*.html'
 globs.app_js = 'build/app/**/*.js'
-globs.common_js = 'build/common/**/*.js'
-globs.app_sass = 'src/style/app.scss'
 globs.app_css = 'build/style/main.css'
-globs.vendor_js = 'build/vendor/**/*.js'
-globs.vendor_css = 'build/vendor/**/*.css'
-globs.vendor = 'vendor/**/*'
-globs.assets = 'src/assets/**/*'
-globs.assets_js = 'build/assets/**/*.js'
+globs.common_js = 'build/common/**/*.js'
+globs.compiled_assets = 'bin/assets/**'
+
+globs.index = "src/index.jade"
 
 # choose the angular material themes you want to use
 # globs.themes = [ 'cyan', 'deep-purple', 'pink' ]
@@ -47,8 +47,8 @@ globs.karma = [
   'vendor/angular-ui-router/release/angular-ui-router.js'
   globs.app_js
 ]
- 
-globs.app = [
+
+globs.vendor_js = [
   # you need to reference bower modules here
   'vendor/jquery/dist/jquery.js'
   'vendor/angular/angular.js'
@@ -64,12 +64,19 @@ globs.app = [
   'vendor/restangular/dist/restangular.js'
   'vendor/angular-typeahead/angular-typeahead.js'
   'vendor/ionrangeslider/js/ion.rangeSlider.js'
-
+]
+ 
+globs.app = globs.vendor_js.concat([
   globs.app_js
   globs.common_js
   "!build/app/**/*.spec.js"
   globs.app_css
-  globs.assets_js
-]
+])
+
+globs.js = globs.vendor_js.concat([
+  globs.app_js,
+  globs.common_js,
+  "!build/app/**/*.spec.js"
+])
 
 module.exports = globs

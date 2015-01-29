@@ -1,7 +1,32 @@
+md-sidenav( md-component-id="sidenav-left" )
+  md-toolbar
+    h1.md-toolbar-tools 
+      span.fa.fa-bars( ng-click="toggleLeftNav()", style="cursor: pointer" )
+      span.pacifico( ui-sref="main.projects.list" )  &nbsp; &nbsp; Terrains à construire
+
+  md-content
+    md-subheader navigation
+    md-list
+      md-item
+        md-item-content 
+          div.md-tile-content 
+            span( ui-sref="main.projects.list", ng-click="toggleLeftNav()" )  mes projets
+      md-item
+        md-item-content 
+          div.md-tile-content
+            span.fa.fa-plus 
+            span(ui-sref="main.projects.new", ng-click="toggleLeftNav()")  nouveau projet
+      md-item
+        md-divider
+        md-item-content
+          div.md-tile-content 
+            span.fa.fa-power-off( ng-click="Auth.logout(); toggleLeftNav()" )  déconnexion
+
 div( layout="column", layout-fill )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
-      a.pacifico( ui-sref="main.projects.list" ) Terrains à construire
+      span.fa.fa-bars( ng-click="toggleLeftNav()", style="cursor: pointer" )
+      a.pacifico( ui-sref="main.projects.list" )  &nbsp; &nbsp; Terrains à construire
       div( ui-view="title" ) 
 
   md-toolbar( 
