@@ -9,7 +9,8 @@ section
     md-item( 
       ng-repeat="land in project.lands | landCat:status | reverse "
     )
-      md-divider
+      md-divider.display-when-sup-leaves
+      md-divider( ng-show="$index == 0" )
       md-item-content
         div.md-tile-content
           h3
@@ -54,5 +55,6 @@ section
           )
             span.fa.fa-star
             |  retirer des favoris
+      md-divider.hidden-on-leave
 
 
