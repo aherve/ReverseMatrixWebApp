@@ -1,13 +1,11 @@
 md-sidenav.md-whiteframe-z2(
   md-component-id="sidenav-left"
-  md-is-locked-open="$media('gt-md')"
 )
   md-toolbar
     h1.md-toolbar-tools 
       span.fa.fa-bars( 
         ng-click="toggleLeftNav()"
         style="cursor: pointer"
-        hide-gt-md
       )
       span.pacifico( ui-sref="main.projects.list" )  &nbsp; &nbsp; Terrains à construire
 
@@ -29,11 +27,11 @@ md-sidenav.md-whiteframe-z2(
           div.md-tile-content 
             span.fa.fa-power-off( ng-click="Auth.logout(); toggleLeftNav()" )  déconnexion
 
-div( layout="column", layout-fill )
+div.full-height( layout="column", layout-fill )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
-      span.fa.fa-bars( ng-click="toggleLeftNav()", style="cursor: pointer", hide-gt-md )
-      a.pacifico( ui-sref="main.projects.list", hide-gt-md )  &nbsp; &nbsp; Terrains à construire
+      span.fa.fa-bars( ng-click="toggleLeftNav()", style="cursor: pointer" )
+      a.pacifico( ui-sref="main.projects.list" )  &nbsp; &nbsp; Terrains à construire
       div( ui-view="title" ) 
 
   md-toolbar( 
@@ -70,6 +68,6 @@ div( layout="column", layout-fill )
           span( hide-sm )  intéressants
 
 
-  md-content(class="full-width grey-bg")
+  md-content(class="full-width full-height grey-bg landing-background")
     div( ui-view="main", class="wrapper" )
 
