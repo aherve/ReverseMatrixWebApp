@@ -21,6 +21,7 @@ url = require('url')
 proxy = require('proxy-middleware')
 templateCache = require('gulp-angular-templatecache')
 uglify = require('gulp-uglify')
+clean = require('gulp-clean')
 p = require('./package.json')
 v = p.version
 
@@ -54,6 +55,16 @@ gulp.task('connect', function(){
     });
 });
 `
+
+gulp.task 'clean:build', ->
+  gulp.src(globs.build, read: false)
+  .pipe(clean(force: true))
+
+gulp.task 'clean:bin', ->
+  gulp.src(globs.bin, read: false)
+  .pipe(clean(force: true))
+
+gulp.task 'clean:all', ['clean:bin', 'clean:build']
 
 gulp.task 'move:jade', ->
 	gulp.src globs.jade
@@ -154,18 +165,17 @@ gulp.task 'watch', ->
 
 # global tasks
 gulp.task 'compile', [
-  'move:files'
   'compile:moveassets'
   'compile:movecss'
   'compile:javascript'
-  'compile:index'
-]
+], ->
+  gulp.start 'compile:index'
+
 
 gulp.task 'move:files', ['move:templateCache', 'move:vendor', 'move:sass', 'move:assets', 'move:coffee'], ->
 	gulp.start 'move:jade'
 
 gulp.task 'test', [
-  'move:files'
   'run:karmaonce'
 ]
 

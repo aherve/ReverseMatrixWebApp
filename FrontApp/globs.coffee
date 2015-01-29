@@ -6,12 +6,26 @@ globs.src = 'src/**/*'
 globs.assets = 'src/assets/**/*'
 globs.vendor = 'vendor/**/*'
 
-globs.build = 'build/**/*'
+
+globs.bin = [
+  'bin/assets/*.js'
+  'bin/assets/*.css'
+  'bin/index.html'
+]
 globs.html = 'build/**/*.html'
 globs.app_js = 'build/app/**/*.js'
 globs.app_css = 'build/style/main.css'
 globs.common_js = 'build/common/**/*.js'
 globs.compiled_assets = 'bin/assets/**'
+
+globs.build = [
+  'build/app/**/*.html'
+  'build/app/**/*.js'
+  'build/common/**/*.js'
+  'build/style/**/*.css'
+  'build/assets/**'
+]
+
 
 globs.index = "src/index.jade"
 
