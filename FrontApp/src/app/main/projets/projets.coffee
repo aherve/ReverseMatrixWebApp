@@ -13,11 +13,22 @@ do (app=angular.module "trouverDesTerrains.projets", [
   ]
 
   app.factory 'Project', [
-    'ProjectResource', '$state', '$q',
-    (ProjectResource, $state, $q )->
+    'ProjectResource', '$state', '$q', 'Land', '$stateParams', '$rootScope',
+    (ProjectResource, $state, $q, Land, $stateParams, $rootScope )->
+
+      # helper function
+      projectIsLoaded = (projectId, projects)->
+        out = null
+        angular.forEach( projects, ( project )->
+          if project.id == projectId
+            out = project
+        )
+        out
+
       new class Project
         constructor: ()->
           @projects = []
+          @projectsPromise = null
 
         createProject: (project)->
           that = @
@@ -26,28 +37,94 @@ do (app=angular.module "trouverDesTerrains.projets", [
             $state.go 'main.projects.detail', projectId: success.project.id
           ProjectResource.postProject( project ).then onSuccess
 
+        activeProject: ()->
+          if $stateParams.projectId
+            projectIsLoaded( $stateParams.projectId, @projects )
+          else
+            {}
+
         getProjects: ()->
           that = @
           onSuccess = (success)->
-            console.log success
             that.projects = success.projects
           onError = (error)->
             console.log error
           if that.projects.length > 0
-            console.log 'q'
             $q.when that.projects
           else
-            ProjectResource.myProjects().then onSuccess, onError
+            that.projectsPromise = $q.when( ProjectResource.myProjects().then onSuccess, onError )
 
-        loadProject: (projectId)->
-          # two cases : project is in list, or not
+        loadNewLands: (project)->
+          project.lands = project.lands || []
+          onSuccess = (success)->
+            project.lands = project.lands.concat(success.new_lands.map((project)->
+              project.status = 0
+              project
+            ))
+          ProjectResource.getNewLands( project.id ).then onSuccess
+
+        loadArchivedLands: (project)->
+          project.lands = project.lands || []
+          onSuccess = (success)->
+            project.lands = project.lands.concat(success.archived_lands.map((project)->
+              project.status = -1
+              project
+            ))
+          ProjectResource.getArchivedLands( project.id ).then onSuccess
+
+        loadFavouriteLands: (project)->
+          project.lands = project.lands || []
+          onSuccess = (success)->
+            project.lands = project.lands.concat(success.favorite_lands.map((project)->
+              project.status = 1
+              project
+            ))
+          ProjectResource.getFavouriteLands( project.id ).then onSuccess
+
+        loadLands: (projectId)->
+          that = @
+          if project = projectIsLoaded( projectId, @projects )
+            promises = [
+              $q.when @loadFavouriteLands( project )
+              $q.when @loadArchivedLands( project )
+              $q.when @loadNewLands( project )
+            ]
+            $q.all( promises )
+
+          else
+            onSuccess = (success)->
+              if project = projectIsLoaded( projectId, that.projects )
+                promises = [
+                  $q.when that.loadFavouriteLands( project )
+                  $q.when that.loadArchivedLands( project )
+                  $q.when that.loadNewLands( project )
+                ]
+                $q.all( promises )
+            @getProjects().then onSuccess
+
+
+        archiveLand: (land, lands, projectId )->
+          onSuccess = (success)->
+            land.status = -1
+          Land.score( projectId, land.id, -1 ).then onSuccess
+
+        favouriteLand: (land, lands, projectId )->
+          onSuccess = (success)->
+            land.status = 1
+          Land.score( projectId, land.id, 1 ).then onSuccess
+
+        unSortLand: (land, lands, projectId )->
+          onSuccess = (success)->
+            land.status = 0
+          Land.score( projectId, land.id, 0 ).then onSuccess
+
 
 
   ]
 
   app.factory 'ProjectResource', [
-    'Restangular',
-    (Restangular)->
+    'Restangular', '$rootScope',
+    (Restangular, $rootScope)->
       new class ProjectResource
 
         myProjects: ->

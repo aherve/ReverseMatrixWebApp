@@ -14,9 +14,8 @@ do (app=angular.module "trouverDesTerrains.listeProjets", [
         projects: [
           'Project',
           (Project)->
-            console.log 'resolving projects'
             onSuccess = (success)->
-              console.log success
+              success
             onError = (error)->
               console.log error
             Project.getProjects().then onSuccess, onError

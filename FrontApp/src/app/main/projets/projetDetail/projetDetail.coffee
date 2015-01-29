@@ -6,51 +6,41 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
       .state 'main.projects.detail',
         url: '/:projectId'
         abstract: true
-        views:
-          "main@main":
-            templateUrl: 'app/main/projets/projetDetail/projetDetail.html'
-            controller: 'ProjetDetailController'
+        resolve: [
+          'Project', '$stateParams',
+          (Project, $stateParams)->
+            Project.loadLands( $stateParams.projectId )
+        ]
 
       .state 'main.projects.detail.new',
         url: '/nouveaux'
         views:
-          "main":
+          "main@main":
             templateUrl: 'app/main/projets/projetDetail/liste.html'
             controller: 'LandsListController'
-        resolve:
-          lands: [ 'ProjectResource', '$stateParams', (ProjectResource, $stateParams)->
-            onSuccess = (success)->
-              success.new_lands
-            onError = (error)->
-              console.log error
-            ProjectResource.getNewLands( $stateParams.projectId ).then onSuccess
-          ]
+          "title@main":
+            template: '{{ project.title }}'
+            controller: 'LandsListController'
 
       .state 'main.projects.detail.favourite',
         url: '/favoris'
         views:
-          "main":
+          "main@main":
             templateUrl: 'app/main/projets/projetDetail/liste.html'
             controller: 'LandsListController'
-        resolve:
-          lands: [ 'ProjectResource', '$stateParams', (ProjectResource, $stateParams)->
-            onSuccess = (success)->
-              success.favorite_lands
-            ProjectResource.getFavouriteLands( $stateParams.projectId ).then onSuccess
-          ]
+          "title@main":
+            template: '{{ project.title }}'
+            controller: 'LandsListController'
 
       .state 'main.projects.detail.archived',
         url: '/archives'
         views:
-          "main":
+          "main@main":
             templateUrl: 'app/main/projets/projetDetail/liste.html'
             controller: 'LandsListController'
-        resolve:
-          lands: [ 'ProjectResource', '$stateParams', (ProjectResource, $stateParams)->
-            onSuccess = (success)->
-              success.archived_lands
-            ProjectResource.getArchivedLands( $stateParams.projectId ).then onSuccess
-          ]
+          "title@main":
+            template: '{{ project.title }}'
+            controller: 'LandsListController'
   ]
 
   app.controller 'ProjetDetailController', [
@@ -60,9 +50,33 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'LandsListController', [
-    '$scope', 'lands', '$state',
-    ($scope, lands, $state) ->
+    '$scope', '$state', 'Project', '$stateParams',
+    ($scope, $state, Project, $stateParams) ->
+
       $scope.$state = $state
-      $scope.test = "lol"
-      $scope.lands = lands
+      $scope.status =
+        switch $state.current.name
+          when 'main.projects.detail.new' then 0
+          when 'main.projects.detail.archived' then -1
+          when 'main.projects.detail.favourite' then 1
+        
+      $scope.project = Project.activeProject()
+
+      $scope.archive = (land)->
+        Project.archiveLand( land, $scope.lands, $stateParams.projectId )
+
+      $scope.favourite = (land)->
+        Project.favouriteLand( land, $scope.lands, $stateParams.projectId )
+
+      $scope.unSortLand = (land)->
+        Project.unSortLand( land, $scope.lands, $stateParams.projectId )
+
   ]
+
+  app.filter 'landCat', ()->
+    (lands, status)->
+      land for land in lands when land.status == status
+
+  app.filter 'reverse', ()->
+    (items)->
+      items.slice().reverse()

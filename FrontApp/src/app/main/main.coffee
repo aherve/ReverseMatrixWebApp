@@ -13,15 +13,15 @@ do (app=angular.module "trouverDesTerrains.main", [
       data:
         pageTitle: 'main'
 
-      #resolve:
-      #  authenticatedUser: ['Auth', '$state', (Auth, $state) ->
-      #    onSuccess = (success) ->
-      #      if success then success else onError()
-      #    onError = (error) ->
-      #      console.log error
-      #      $state.go('landing')
-      #    Auth.getCurrentUser().then onSuccess, onError
-      #  ]
+      resolve:
+        authenticatedUser: ['Auth', '$state', (Auth, $state) ->
+          onSuccess = (success) ->
+            if success then success else onError()
+          onError = (error) ->
+            console.log error
+            $state.go('landing')
+          Auth.getCurrentUser().then onSuccess, onError
+        ]
   ]
 
   app.controller 'MainController', ->

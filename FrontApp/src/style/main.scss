@@ -28,6 +28,10 @@
   width: 100%;
 }
 
+.grey-bg {
+  background-color: rgba(0, 0, 0, 0.02 ) !important;
+}
+
 html, body {
   @extend .full-height;
   @extend .full-width;
@@ -76,12 +80,18 @@ md-tabs.md-white-theme md-tab {
   color: rgba( 0, 0, 0, 0.73 ) !important;
 }
 
+.md-whiteframe-z1 {
+}
+
 .wrapper {
-  margin-left: 15%;
-  margin-right: 15%;
-  margin-top: 50px;
+  @extend .md-whiteframe-z1;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 100px;
   @media (max-width: 624px) {
-    margin: 0;
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 55px;
   }
 }
 

@@ -1,28 +1,35 @@
-md-sidenav( 
-  ng-hide="true"
-  class="md-sidenav-left md-whiteframe-z2"
-  md-component-id="sidenav-left"
-  md-is-locked-open="$media( 'gt-md' )"
-)
-  md-toolbar.md-primary
-    h1.md-toolbar-tools  Terrains à construire
-  md-list
-    md-item
-      md-item-content
-        div.md-tile-content vue carte
-    md-item
-      md-item-content
-        div.md-tile-content vue liste
-    md-divider
-    md-item( ui-sref="main.projects.list" )
-      md-item-content
-        div.md-tile-content mes projets
-      
 div( layout="column", layout-fill, class="full-height full-width" )
-  md-toolbar.md-primary
+  md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
-      span.fa.fa-bars(ng-click="toggleLeftNav()", hide-gt-sm)
-      | &nbsp; {{ $state.current.data.pageTitle }}
+      a( ui-sref="main.projects.list" ) Terrains à construire
+      div( ui-view="title" ) 
+
+  section( style="position: relative; z-index: 3;", ng-show="$state.includes('main.projects.detail')" )
+    md-tabs( class="md-whiteframe-z1 md-white-theme", md-stretch-tabs="always")
+      md-tab.md-left-tab( 
+        md-active="$state.current.name == 'main.projects.detail.archived'"
+        md-on-select="$state.go('main.projects.detail.archived')"
+      )
+        md-tab-label 
+          span.fa.fa-archive
+          span( hide-sm )  archivés
+
+      md-tab( 
+        md-active="$state.current.name == 'main.projects.detail.new'" 
+        md-on-select="$state.go('main.projects.detail.new')"
+      )
+        md-tab-label 
+          span.fa.fa-home
+          span( hide-sm )  nouveaux
+
+      md-tab.md-right-tab( 
+        md-active="$state.current.name == 'main.projects.detail.favourite'"
+        md-on-select="$state.go('main.projects.detail.favourite')"
+      )
+        md-tab-label
+          span.fa.fa-star
+          span( hide-sm )  favoris
+
 
   md-content(ui-view="main", class="full-width")
 

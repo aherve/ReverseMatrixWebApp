@@ -1,12 +1,11 @@
 section
   md-subheader
-    | {{ lands.length }} &nbsp;
-    span( ng-if="$state.current.name == 'main.projects.detail.new'" ) nouveaux terrains
-    span( ng-if="$state.current.name == 'main.projects.detail.archived'" ) terrains archivés
-    span( ng-if="$state.current.name == 'main.projects.detail.favourite'" ) terrains dans vos favoris
+    span( ng-if="$state.current.name == 'main.projects.detail.new'" ) {{ land.new_lands_count }} nouveaux terrains
+    span( ng-if="$state.current.name == 'main.projects.detail.archived'" ) {{ land.archived_lands_count }} terrains archivés
+    span( ng-if="$state.current.name == 'main.projects.detail.favourite'" ) {{ land.favorite_lands_count }} terrains dans vos favoris
 
   md-list.lands-list( layout="column" )
-    md-item( ng-repeat="land in lands")
+    md-item( ng-repeat="land in project.lands | landCat:status | reverse ")
       md-item-content
         div.md-tile-content
           h3
@@ -20,13 +19,33 @@ section
           p temps de trajet  : {{ land.town_car_travel_time_text }}
           p {{ land.description }} 
 
-          md-button.md-primary.md-small
+          md-button.md-primary.md-small( 
+            ng-click="archive(land)"
+            ng-hide="$state.includes('main.projects.detail.archived')"
+          )
             span.fa.fa-archive
             |  archiver
 
-          md-button.md-primary.md-small
+          md-button.md-primary.md-small( 
+            ng-click="unSortLand(land)"
+            ng-show="$state.includes('main.projects.detail.archived')"
+          )
+            span.fa.fa-archive
+            |  annuler archiver
+
+          md-button.md-primary.md-small( 
+            ng-click="favourite(land)" 
+            ng-hide="$state.includes('main.projects.detail.favourite')"
+          )
             span.fa.fa-star
             |  ajouter aux favoris
+
+          md-button.md-primary.md-small( 
+            ng-click="unSortLand(land)" 
+            ng-show="$state.includes('main.projects.detail.favourite')"
+          )
+            span.fa.fa-star
+            |  retirer des favoris
 
       md-divider
 
