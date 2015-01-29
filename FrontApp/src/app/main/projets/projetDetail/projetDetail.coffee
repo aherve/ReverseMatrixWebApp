@@ -18,9 +18,6 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           "main@main":
             templateUrl: 'app/main/projets/projetDetail/liste.html'
             controller: 'LandsListController'
-          "title@main":
-            template: '{{ project.title }}'
-            controller: 'LandsListController'
 
       .state 'main.projects.detail.favourite',
         url: '/favoris'
@@ -28,18 +25,12 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           "main@main":
             templateUrl: 'app/main/projets/projetDetail/liste.html'
             controller: 'LandsListController'
-          "title@main":
-            template: '{{ project.title }}'
-            controller: 'LandsListController'
 
       .state 'main.projects.detail.archived',
         url: '/archives'
         views:
           "main@main":
             templateUrl: 'app/main/projets/projetDetail/liste.html'
-            controller: 'LandsListController'
-          "title@main":
-            template: '{{ project.title }}'
             controller: 'LandsListController'
   ]
 
@@ -50,8 +41,8 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'LandsListController', [
-    '$scope', '$state', 'Project', '$stateParams',
-    ($scope, $state, Project, $stateParams) ->
+    '$scope', '$state', 'Project', '$stateParams', '$timeout',
+    ($scope, $state, Project, $stateParams, $timeout) ->
 
       $scope.$state = $state
       $scope.status =
@@ -64,6 +55,11 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
 
       $scope.archive = (land)->
         Project.archiveLand( land, $scope.lands, $stateParams.projectId )
+        $timeout(
+          ()->
+            $scope.$apply()
+          100
+        )
 
       $scope.favourite = (land)->
         Project.favouriteLand( land, $scope.lands, $stateParams.projectId )
@@ -80,3 +76,23 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   app.filter 'reverse', ()->
     (items)->
       items.slice().reverse()
+
+  app.directive 'swipeLeft', [
+    '$document',
+    ($document)->
+      link: (scope, elem, attr)->
+        e = elem.parent().parent().parent()
+        elem.bind 'click', ()->
+          e.addClass('disappearLeft')
+          console.log 'left'
+  ]
+
+  app.directive 'swipeRight', [
+    '$document',
+    ($document)->
+      link: (scope, elem, attr)->
+        e = elem.parent().parent().parent()
+        elem.bind 'click', ()->
+          e.addClass('disappearRight')
+          console.log 'right'
+  ]

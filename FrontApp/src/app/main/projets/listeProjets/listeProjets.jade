@@ -10,9 +10,15 @@ section
       md-ink-ripple
     )
       md-item-content
+        div.md-tile-left
+          div.news-count( 
+            layout="row"
+            layout-align="center center" 
+          )
+            span {{ project.new_lands_count }}
         div.md-tile-content
-          h3 {{ project.town.readable_name }}
-          h4 sous titre
+          h3.text-cyan {{ project.name }} 
+          h4 {{ project.town.readable_name }}
           p Contenu de l'annonce, contenu de l'annonce
       md-divider
 

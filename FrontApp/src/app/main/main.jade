@@ -1,7 +1,7 @@
 div( layout="column", layout-fill )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
-      a( ui-sref="main.projects.list" ) Terrains à construire
+      a.pacifico( ui-sref="main.projects.list" ) Terrains à construire
       div( ui-view="title" ) 
 
   md-toolbar( 
@@ -28,7 +28,7 @@ div( layout="column", layout-fill )
       )
         md-tab-label 
           span.fa.fa-home
-          span( hide-sm )  nouveaux
+          span( hide-sm )  non classés
 
       md-tab.md-right-tab( 
         md-active="$state.current.name == 'main.projects.detail.favourite'"
@@ -36,7 +36,7 @@ div( layout="column", layout-fill )
       )
         md-tab-label
           span.fa.fa-star
-          span( hide-sm )  favoris
+          span( hide-sm )  intéressants
 
 
   md-content(ui-view="main", class="full-width")

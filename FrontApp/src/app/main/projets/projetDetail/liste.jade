@@ -1,11 +1,15 @@
 section
   md-subheader
-    span( ng-if="$state.current.name == 'main.projects.detail.new'" ) {{ land.new_lands_count }} nouveaux terrains
-    span( ng-if="$state.current.name == 'main.projects.detail.archived'" ) {{ land.archived_lands_count }} terrains archivés
-    span( ng-if="$state.current.name == 'main.projects.detail.favourite'" ) {{ land.favorite_lands_count }} terrains dans vos favoris
+    h2 {{ project.name }}
+    span( ng-show="$state.current.name == 'main.projects.detail.new'" ) {{ (project.lands | filter: {'status': 0}).length }} terrains non classés
+    span( ng-show="$state.current.name == 'main.projects.detail.archived'" ) {{ (project.lands | filter: {'status': -1 }).length }}  terrains archivés
+    span( ng-show="$state.current.name == 'main.projects.detail.favourite'" ){{ (project.lands | filter: {'status': 1 }).length }}  terrains intéressants 
 
   md-list.lands-list( layout="column" )
-    md-item( ng-repeat="land in project.lands | landCat:status | reverse ")
+    md-item( 
+      ng-repeat="land in project.lands | landCat:status | reverse "
+    )
+      md-divider
       md-item-content
         div.md-tile-content
           h3
@@ -21,6 +25,7 @@ section
 
           md-button.md-primary.md-small( 
             ng-click="archive(land)"
+            swipe-left
             ng-hide="$state.includes('main.projects.detail.archived')"
           )
             span.fa.fa-archive
@@ -28,6 +33,7 @@ section
 
           md-button.md-primary.md-small( 
             ng-click="unSortLand(land)"
+            swipe-right
             ng-show="$state.includes('main.projects.detail.archived')"
           )
             span.fa.fa-archive
@@ -35,6 +41,7 @@ section
 
           md-button.md-primary.md-small( 
             ng-click="favourite(land)" 
+            swipe-right
             ng-hide="$state.includes('main.projects.detail.favourite')"
           )
             span.fa.fa-star
@@ -42,10 +49,10 @@ section
 
           md-button.md-primary.md-small( 
             ng-click="unSortLand(land)" 
+            swipe-left
             ng-show="$state.includes('main.projects.detail.favourite')"
           )
             span.fa.fa-star
             |  retirer des favoris
 
-      md-divider
 

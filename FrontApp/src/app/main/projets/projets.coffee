@@ -84,6 +84,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
         loadLands: (projectId)->
           that = @
           if project = projectIsLoaded( projectId, @projects )
+            project.lands = []
             promises = [
               $q.when @loadFavouriteLands( project )
               $q.when @loadArchivedLands( project )
@@ -94,6 +95,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
           else
             onSuccess = (success)->
               if project = projectIsLoaded( projectId, that.projects )
+                project.lands = []
                 promises = [
                   $q.when that.loadFavouriteLands( project )
                   $q.when that.loadArchivedLands( project )
