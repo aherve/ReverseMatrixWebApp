@@ -17,9 +17,12 @@ do (app=angular.module "trouverDesTerrains", [
         .warnColor('pink')
   ])
 
-  app.config ($stateProvider, $urlRouterProvider) ->
-    $urlRouterProvider.when '/', '/projets'
-    $urlRouterProvider.otherwise '/landing'
+  app.config [
+    '$stateProvider', '$urlRouterProvider',
+    ($stateProvider, $urlRouterProvider) ->
+      $urlRouterProvider.when '/', '/projets'
+      $urlRouterProvider.otherwise '/landing'
+  ]
 
   app.controller 'AppController', [
     '$scope', '$mdSidenav', '$state', 'Auth',
