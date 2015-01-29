@@ -6,7 +6,7 @@ namespace :front do
       sh "pwd"
       sh "npm install"
       sh "bower install"
-      sh "grunt"
+      sh "gulp compile"
       sh "rsync -Pa bin/ ../public/"
     end
   end
@@ -17,7 +17,7 @@ namespace :front do
       sh "pwd"
       sh "npm install"
       sh "bower install"
-      sh "grunt karma:unit"
+      sh "gulp test"
     end
   end
 

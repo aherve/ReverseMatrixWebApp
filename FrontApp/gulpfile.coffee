@@ -104,6 +104,15 @@ gulp.task 'run:karma', ->
       throw err
       return
 
+gulp.task 'run:karmaonce', ->
+	gulp.src globs.karma
+    .pipe karma
+      configFile : 'karma.conf.js'
+    .on 'error', (err) ->
+      throw err
+      return
+
+
 # Compile
 gulp.task 'compile:javascript', ->
   gulp.src globs.js
@@ -151,5 +160,10 @@ gulp.task 'compile', [
 
 gulp.task 'move:files', ['move:templateCache', 'move:vendor', 'move:sass', 'move:assets', 'move:coffee'], ->
 	gulp.start 'move:jade'
+
+gulp.task 'test', [
+  'move:files'
+  'run:karmaonce'
+]
 
 gulp.task 'default', ['move:files', 'connect', 'watch']
