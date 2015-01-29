@@ -11,7 +11,7 @@
     "angular-ui-router": "~0.2.7",
     "angular-material": "~0.7.0",
     "restangular": "~1.4.0",
-    "angular-typeahead": "~0.2.1",
+    "angular-typeahead": "~0.2.1"
   },
   "dependencies": {},
   "resolutions": {

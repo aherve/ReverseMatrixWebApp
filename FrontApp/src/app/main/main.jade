@@ -1,11 +1,19 @@
-div( layout="column", layout-fill, class="full-height full-width" )
+div( layout="column", layout-fill )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
       a( ui-sref="main.projects.list" ) Terrains à construire
       div( ui-view="title" ) 
 
-  section( style="position: relative; z-index: 3;", ng-show="$state.includes('main.projects.detail')" )
-    md-tabs( class="md-whiteframe-z1 md-white-theme", md-stretch-tabs="always")
+  md-toolbar( 
+    style="min-height: 55px"
+    ng-show="$state.includes('main.projects.detail')"
+  )
+    md-tabs( 
+      class="md-whiteframe-z1 md-white-theme"
+      md-stretch-tabs="always"
+      style="z-index: 3; position: relative; display: block"
+
+    )
       md-tab.md-left-tab( 
         md-active="$state.current.name == 'main.projects.detail.archived'"
         md-on-select="$state.go('main.projects.detail.archived')"
