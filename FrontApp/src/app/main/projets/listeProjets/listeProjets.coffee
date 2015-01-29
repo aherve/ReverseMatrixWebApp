@@ -27,6 +27,8 @@ do (app=angular.module "trouverDesTerrains.listeProjets", [
     ($scope, Project, $state) ->
       $scope.Project = Project
       $scope.navToProject = (project)->
+        console.log project
+        console.log $state
         $state.go 'main.projects.detail.new', projectId: project.id
 
   ]

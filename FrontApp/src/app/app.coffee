@@ -9,6 +9,7 @@ do (app=angular.module "trouverDesTerrains", [
   'security'
   'trouverDesTerrains.main'
   'trouverDesTerrains.landing'
+  'trouverDesTerrains.projetDetail'
 ]) ->
 
   app.config ([
