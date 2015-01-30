@@ -6,8 +6,7 @@ namespace :lands do
     puts "min_surf=#{@min_surf}"
     #terrain-construction
     puts "fetching lands from terrain-construction.com"
-    tc = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: @min_surf, max_dist_from_paris: 900)
-    tc.all_pages.each{|p| p.delay.save_new_lands!}
+    tc = LandsScrapper::TerrainConstruction::Scrapper.new(min_surface: @min_surf, max_dist_from_paris: 900).delayed_saved_new_lands!
 
   end
 
@@ -16,8 +15,7 @@ namespace :lands do
     #se loger.com
     puts "min_surf=#{@min_surf}"
     puts "fetching lands from seloger.com"
-    sl = LandsScrapper::SeLoger::Scrapper.new(min_surface: @min_surf)
-    sl.all_pages.each{|p| p.delay.save_new_lands!}
+    sl = LandsScrapper::SeLoger::Scrapper.new(min_surface: @min_surf).delayed_saved_new_lands!
   end
 
   desc "scrap the ouèbe to find new lands"

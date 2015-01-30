@@ -14,5 +14,11 @@ module LandsScrapper
       @max_dist_from_paris = params[:max_dist_from_paris] || params["max_dist_from_paris"] || 500
     end
 
+    def delayed_saved_new_lands!
+      all_pages.each do |p|
+        p.delay.save_new_lands!
+      end
+    end
+
   end
 end
