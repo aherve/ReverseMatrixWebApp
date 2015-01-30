@@ -1,5 +1,5 @@
 namespace :lands do
-  @min_surf = 1_000
+  @min_surf = 100
 
   desc "get terrain-construction lands"
   task terrain_construction: :environment do 
