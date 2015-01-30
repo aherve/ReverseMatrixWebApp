@@ -1,6 +1,3 @@
-require 'open-uri'
-require 'nokogiri'
-
 module LandsScrapper
   module SeLoger
     class Scrapper < LandsScrapper::Scrapper

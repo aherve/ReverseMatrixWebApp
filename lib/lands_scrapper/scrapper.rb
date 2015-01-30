@@ -1,3 +1,5 @@
+require 'open-uri'
+require 'nokogiri'
 module LandsScrapper
 
   #abstract class

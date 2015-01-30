@@ -1,3 +1,5 @@
+require 'open-uri'
+require 'nokogiri'
 module LandsScrapper
   #Abstract class
   class Page
@@ -39,7 +41,7 @@ module LandsScrapper
     def save_new_lands!
       new_lands.map { |l|
         if l.town_id.present? and l.save
-          puts "new land in #{l.town.readable_name}: #{l.surface_in_squared_meters}m² for #{l.price_in_euro} euros ( from #{l.provider}" 
+          puts "new land in #{l.town.readable_name}: #{l.surface_in_squared_meters}m² for #{l.price_in_euro} euros (from #{l.provider})" 
           true
         end
       }
