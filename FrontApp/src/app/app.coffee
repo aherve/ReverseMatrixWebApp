@@ -21,6 +21,30 @@ do (app=angular.module "trouverDesTerrains", [
         .warnColor('pink')
   ])
 
+
+  app.run([
+    '$state', '$rootScope',
+    ($state, $rootScope)->
+      $rootScope.$on '$stateChangeStart', (e, toS, toP, fS, fP)->
+        console.log 'event'
+        console.log e
+        console.log 'to state'
+        console.log toS
+        console.log 'to params'
+        console.log toP
+        console.log 'from state'
+        console.log fS
+        console.log 'from params'
+        console.log fP
+
+      $rootScope.$on '$stateChangeError', (e, toS, toP, fS, fP, err)->
+        console.log '------------------------'
+        console.log '-- state change error --'
+        console.log '------------------------'
+        console.log 'error'
+        console.log err
+  ])
+
   app.config [
     '$stateProvider', '$urlRouterProvider',
     ($stateProvider, $urlRouterProvider) ->

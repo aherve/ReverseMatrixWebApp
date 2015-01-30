@@ -10,7 +10,13 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           'Project', '$stateParams',
           (Project, $stateParams)->
             console.log 'resolving project lands'
-            Project.loadLands( $stateParams.projectId )
+            onSuccess = (success)->
+              console.log success
+              success
+            onError = (error)->
+              console.log error
+              error
+            Project.loadLands( $stateParams.projectId ).then onSuccess, onError
         ]
 
       .state 'main.projects.detail.new',
