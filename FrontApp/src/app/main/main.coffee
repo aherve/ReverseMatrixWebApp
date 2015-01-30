@@ -24,4 +24,6 @@ do (app=angular.module "trouverDesTerrains.main", [
         ]
   ]
 
-  app.controller 'MainController', ->
+  app.controller 'MainController', [
+    ()->
+  ]

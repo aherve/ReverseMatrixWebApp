@@ -6,18 +6,19 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
       .state 'main.projects.detail',
         url: '/:projectId'
         abstract: true
-        resolve: [
-          'Project', '$stateParams',
-          (Project, $stateParams)->
-            console.log 'resolving project lands'
-            onSuccess = (success)->
-              console.log success
-              success
-            onError = (error)->
-              console.log error
-              error
-            Project.loadLands( $stateParams.projectId ).then onSuccess, onError
-        ]
+        resolve:
+          lands: [
+            'Project', '$stateParams',
+            (Project, $stateParams)->
+              console.log 'resolving project lands'
+              onSuccess = (success)->
+                console.log success
+                success
+              onError = (error)->
+                console.log error
+                error
+              Project.loadLands( $stateParams.projectId ).then onSuccess, onError
+          ]
 
       .state 'main.projects.detail.new',
         url: '/nouveaux'
@@ -89,13 +90,15 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
 
   ]
 
-  app.filter 'landCat', ()->
+  app.filter 'landCat', [()->
     (lands, status)->
       land for land in lands when land.status == status
+  ]
 
-  app.filter 'reverse', ()->
+  app.filter 'reverse', [()->
     (items)->
       items.slice().reverse()
+  ]
 
   app.directive 'swipeLeft', [
     '$document',
