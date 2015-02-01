@@ -23,6 +23,7 @@ templateCache = require('gulp-angular-templatecache')
 uglify = require('gulp-uglify')
 clean = require('gulp-clean')
 runSequence = require('run-sequence')
+minifyCss = require('gulp-minify-css')
 p = require('./package.json')
 v = p.version
 
@@ -135,7 +136,8 @@ gulp.task 'compile:javascript', ->
 gulp.task 'compile:css', ->
   gulp.src globs.css
     .pipe plumber()
-    .pipe(rename('app-' + v + '.css'))
+    .pipe minifyCss()
+    .pipe(concat('app-' + v + '.css'))
     .pipe(gulp.dest(compile_assets_dir))
 
 gulp.task 'compile:assets', ->
