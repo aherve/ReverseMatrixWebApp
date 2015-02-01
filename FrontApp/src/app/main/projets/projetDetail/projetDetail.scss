@@ -1,17 +1,10 @@
 /* sass file for projetDetail*/
 
-
-.display-when-sup-leaves {
-  display: none;
+md-item.ng-leave {
+  & md-item-content {
+   background-color: transparent !important;
+  }
+  & md-divider {
+    display: none;
+  }
 }
-
-md-item.ng-leave + md-item .display-when-sup-leaves {
-  display: block;
-}
-
-md-item.ng-leave .hidden-on-leave {
-  display: none;
-}
-
-
-

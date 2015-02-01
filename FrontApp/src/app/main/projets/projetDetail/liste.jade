@@ -10,8 +10,7 @@ section
     md-item( 
       ng-repeat="land in project.lands | landCat:status | reverse "
     )
-      md-divider.display-when-sup-leaves
-      md-divider( ng-show="$index == 0" )
+      md-divider
       md-item-content( style="background-color: white" )
         div.md-tile-left.md-image-tile
           img( ng-src="{{land.img}}" class="land-image" ng-if="land.img")
@@ -58,6 +57,5 @@ section
           )
             span.fa.fa-star
             |  retirer des favoris
-      md-divider.hidden-on-leave( ng-hide="$last" )
 
 
