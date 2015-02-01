@@ -133,7 +133,7 @@ gulp.task 'compile:javascript', ->
     .pipe(gulp.dest(compile_assets_dir))
 
 gulp.task 'compile:css', ->
-  gulp.src globs.app_css
+  gulp.src globs.css
     .pipe plumber()
     .pipe(rename('app-' + v + '.css'))
     .pipe(gulp.dest(compile_assets_dir))

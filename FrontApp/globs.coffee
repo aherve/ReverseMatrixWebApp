@@ -1,17 +1,18 @@
 globs = {}
 
+# ------------------------------------ #
+# ---------------- src --------------- #
+# ------------------------------------ #
 globs.coffee = 'src/**/*.coffee'
 globs.jade = 'src/**/*.jade'
 globs.src = 'src/**/*'
 globs.assets = 'src/assets/**/*'
+globs.index = "src/index.jade"
 globs.vendor = 'vendor/**/*'
 
-
-globs.bin = [
-  'bin/assets/*.js'
-  'bin/assets/*.css'
-  'bin/index.html'
-]
+# ------------------------------------ #
+# --------------- build -------------- #
+# ------------------------------------ #
 globs.html = [
   'build/**/*.html'
   '!build/index.html'
@@ -19,7 +20,6 @@ globs.html = [
 globs.app_js = 'build/app/**/*.js'
 globs.app_css = 'build/style/main.css'
 globs.common_js = 'build/common/**/*.js'
-globs.compiled_assets = 'bin/assets/**'
 
 globs.build = [
   'build/app/**/*.html'
@@ -29,33 +29,33 @@ globs.build = [
   'build/assets/**'
 ]
 
+# ------------------------------------ #
+# ---------------- bin --------------- #
+# ------------------------------------ #
+globs.bin = [
+  'bin/assets/*.js'
+  'bin/assets/*.css'
+  'bin/index.html'
+]
+globs.compiled_assets = 'bin/assets/**'
 
-globs.index = "src/index.jade"
 
-# choose the angular material themes you want to use
-# globs.themes = [ 'cyan', 'deep-purple', 'pink' ]
 
-globs.theme = 'vendor/angular-material-source/src/core/style/variables.scss'
+
 
 globs.sass = [
   # angular material core
-  'vendor/angular-material-source/src/core/style/variables.scss'
-  'vendor/angular-material-source/src/core/style/mixins.scss'
-  'vendor/angular-material-source/src/core/style/structure.scss'
-  'vendor/angular-material-source/src/core/style/layout.scss'
+  # 'vendor/angular-material-source/src/core/style/variables.scss'
+  # 'vendor/angular-material-source/src/core/style/mixins.scss'
+  # 'vendor/angular-material-source/src/core/style/structure.scss'
+  # 'vendor/angular-material-source/src/core/style/layout.scss'
 
   # angular material components
-  'vendor/angular-material-source/src/components/**/*.scss'
-  '!vendor/angular-material-source/src/components/**/*-theme.scss'
+  # 'vendor/angular-material-source/src/components/**/*.scss'
+  # '!vendor/angular-material-source/src/components/**/*-theme.scss'
 
   # application style
   'src/**/*.scss'
-]
-
-globs.themeSass = [
-  'vendor/angular-material-source/src/components/**/*-theme.scss'
-  'src/core/style/variables.scss'
-  'src/core/style/mixins.scss'
 ]
 
 globs.karma = [
@@ -66,7 +66,6 @@ globs.karma = [
 ]
 
 globs.vendor_js = [
-  # you need to reference bower modules here
   'vendor/jquery/dist/jquery.js'
   'vendor/angular/angular.js'
   'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js'
@@ -83,18 +82,27 @@ globs.vendor_js = [
   'vendor/ionrangeslider/js/ion.rangeSlider.js'
   'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
 ]
+
+globs.vendor_css = [
+  'vendor/angular-material/angular-material.css'
+]
  
-globs.app = globs.vendor_js.concat([
-  globs.app_js
-  globs.common_js
-  "!build/app/**/*.spec.js"
-  globs.app_css
-])
+globs.app = globs.vendor_js
+  .concat globs.vendor_css
+  .concat [
+    globs.app_js
+    globs.common_js
+    "!build/app/**/*.spec.js"
+    globs.app_css
+  ]
 
 globs.js = globs.vendor_js.concat([
   globs.app_js,
   globs.common_js,
   "!build/app/**/*.spec.js"
 ])
+
+globs.css = globs.app_css
+  .concat globs.vendor_css
 
 module.exports = globs
