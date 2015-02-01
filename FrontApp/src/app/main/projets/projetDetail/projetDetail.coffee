@@ -10,9 +10,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           lands: [
             'Project', '$stateParams',
             (Project, $stateParams)->
-              console.log 'resolving project lands'
               onSuccess = (success)->
-                console.log success
                 success
               onError = (error)->
                 console.log error
@@ -67,7 +65,6 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           $scope.project.new_lands_count -= 1
         else if $scope.status == 1
           $scope.project.favorite_lands_count -= 1
-          console.log( $scope.project )
         Project.archiveLand( land, $scope.project.id )
 
       $scope.favourite = (land)->
@@ -76,7 +73,6 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           $scope.project.new_lands_count -= 1
         else if $scope.status == -1
           $scope.project.archived_lands_count -= 1
-        console.log( $scope.project )
         Project.favouriteLand( land, $scope.project.id )
 
       $scope.unSortLand = (land)->
@@ -85,7 +81,6 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         else if $scope.status == 1
           $scope.project.favorite_lands_count -= 1
         $scope.project.new_lands_count += 1
-        console.log( $scope.project )
         Project.unSortLand(land, $scope.project.id)
 
   ]
@@ -107,7 +102,6 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         e = elem.parent().parent().parent()
         elem.bind 'click', ()->
           e.addClass('disappearLeft')
-          console.log 'left'
   ]
 
   app.directive 'swipeRight', [
@@ -117,5 +111,4 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         e = elem.parent().parent().parent()
         elem.bind 'click', ()->
           e.addClass('disappearRight')
-          console.log 'right'
   ]

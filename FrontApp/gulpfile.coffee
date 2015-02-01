@@ -159,7 +159,7 @@ gulp.task 'watch', ->
 	gulp.watch globs.assets, ['build:assets']
 	gulp.watch globs.sass, ['build:sass']
 	gulp.watch globs.coffee, ['build:coffee']
-	gulp.watch globs.karma, ['run:karma']
+  #gulp.watch globs.karma, ['run:karma']
 
 `
 gulp.task('connect', function(){
@@ -190,6 +190,7 @@ gulp.task 'build', ()->
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
     'build:templateCache'
     'build:index'
+    'run:karma'
   )
 
 # production build
@@ -201,6 +202,7 @@ gulp.task 'compile', ()->
     'clean:bin'
     ['compile:assets', 'compile:css', 'compile:javascript']
     'compile:index'
+    'run:karmaonce'
   )
 
 # dev build + unit tests
