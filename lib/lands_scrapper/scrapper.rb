@@ -1,3 +1,5 @@
+require 'open-uri'
+require 'nokogiri'
 module LandsScrapper
 
   #abstract class
@@ -10,6 +12,12 @@ module LandsScrapper
 
       #dist in kilometers
       @max_dist_from_paris = params[:max_dist_from_paris] || params["max_dist_from_paris"] || 500
+    end
+
+    def delayed_saved_new_lands!
+      all_pages.each do |p|
+        p.delay.save_new_lands!
+      end
     end
 
   end
