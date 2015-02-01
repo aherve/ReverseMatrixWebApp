@@ -6,9 +6,6 @@ namespace :front do
       sh "pwd"
       sh "npm install"
       sh "bower install"
-      sh "gulp clean:all"
-      sh "gulp build"
-      sh "gulp build"
       sh "gulp compile"
       sh "rsync -Pa bin/ ../public/"
     end
@@ -20,9 +17,6 @@ namespace :front do
       sh "pwd"
       sh "npm install"
       sh "bower install"
-      sh "gulp clean:build"
-      sh "gulp build"
-      sh "gulp build"
       sh "gulp test"
     end
   end

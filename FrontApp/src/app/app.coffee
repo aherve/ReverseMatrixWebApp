@@ -25,7 +25,11 @@ do (app=angular.module "trouverDesTerrains", [
   app.run([
     '$state', '$rootScope',
     ($state, $rootScope)->
-      $rootScope.$on '$stateChangeStart', (e, toS, toP, fS, fP)->
+
+      $rootScope.$on '$stateChangeError', (e, toS, toP, fS, fP, err)->
+        console.log '------------------------'
+        console.log '-- state change error --'
+        console.log '------------------------'
         console.log 'event'
         console.log e
         console.log 'to state'
@@ -36,11 +40,6 @@ do (app=angular.module "trouverDesTerrains", [
         console.log fS
         console.log 'from params'
         console.log fP
-
-      $rootScope.$on '$stateChangeError', (e, toS, toP, fS, fP, err)->
-        console.log '------------------------'
-        console.log '-- state change error --'
-        console.log '------------------------'
         console.log 'error'
         console.log err
   ])

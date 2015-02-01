@@ -12,7 +12,10 @@ globs.bin = [
   'bin/assets/*.css'
   'bin/index.html'
 ]
-globs.html = 'build/**/*.html'
+globs.html = [
+  'build/**/*.html'
+  '!build/index.html'
+]
 globs.app_js = 'build/app/**/*.js'
 globs.app_css = 'build/style/main.css'
 globs.common_js = 'build/common/**/*.js'
