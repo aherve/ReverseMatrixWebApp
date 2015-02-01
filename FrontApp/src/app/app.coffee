@@ -21,11 +21,9 @@ do (app=angular.module "trouverDesTerrains", [
         .warnColor('pink')
   ])
 
-
   app.run([
     '$state', '$rootScope',
     ($state, $rootScope)->
-
       $rootScope.$on '$stateChangeError', (e, toS, toP, fS, fP, err)->
         console.log '------------------------'
         console.log '-- state change error --'

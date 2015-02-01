@@ -58,12 +58,7 @@ globs.sass = [
   'src/**/*.scss'
 ]
 
-globs.karma = [
-  'build/vendor/angular/angular.js'
-  'build/vendor/angular-mocks/angular-mocks.js'
-  'vendor/angular-ui-router/release/angular-ui-router.js'
-  globs.app_js
-]
+
 
 globs.vendor_js = [
   'vendor/jquery/dist/jquery.js'
@@ -82,6 +77,10 @@ globs.vendor_js = [
   'vendor/ionrangeslider/js/ion.rangeSlider.js'
   'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
 ]
+
+globs.karma = globs.vendor_js
+  .concat [globs.common_js]
+  .concat [globs.app_js]
 
 globs.vendor_css = [
   'vendor/angular-material/angular-material.css'

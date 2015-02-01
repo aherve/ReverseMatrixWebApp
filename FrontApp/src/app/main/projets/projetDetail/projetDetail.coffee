@@ -1,5 +1,6 @@
 do (app=angular.module "trouverDesTerrains.projetDetail", [
   'ui.router'
+  'trouverDesTerrains.projets'
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
     $stateProvider
@@ -51,6 +52,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
     ($scope, $state, Project, $stateParams, $timeout) ->
 
       $scope.$state = $state
+
       $scope.status =
         switch $state.current.name
           when 'main.projects.detail.new' then 0

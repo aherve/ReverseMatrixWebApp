@@ -1,6 +1,18 @@
+$scope = $state = createController = {}
+
 describe 'projetDetail section', ->
   beforeEach(module 'trouverDesTerrains.projetDetail')
 
-  it('should have a dummy test', inject ->
-    expect(true).toBeTruthy()
-  )
+  describe 'LandsListController', ->
+    beforeEach inject ( $injector ) ->
+      $state = $injector.get '$state'
+      $rootScope = $injector.get '$rootScope'
+      Project = $injector.get 'Project'
+      $scope = $rootScope.$new()
+      $controller = $injector.get '$controller'
+      createController = ()->
+        $controller 'LandsListController', $scope: $scope
+
+    it 'should have $state in the $scope', ()->
+      controller = createController()
+      expect( $scope.$state ).toBe( $state )
