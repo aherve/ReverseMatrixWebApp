@@ -39,26 +39,9 @@ globs.bin = [
 ]
 globs.compiled_assets = 'bin/assets/**'
 
-
-
-
-
 globs.sass = [
-  # angular material core
-  # 'vendor/angular-material-source/src/core/style/variables.scss'
-  # 'vendor/angular-material-source/src/core/style/mixins.scss'
-  # 'vendor/angular-material-source/src/core/style/structure.scss'
-  # 'vendor/angular-material-source/src/core/style/layout.scss'
-
-  # angular material components
-  # 'vendor/angular-material-source/src/components/**/*.scss'
-  # '!vendor/angular-material-source/src/components/**/*-theme.scss'
-
-  # application style
   'src/**/*.scss'
 ]
-
-
 
 globs.vendor_js = [
   'vendor/jquery/dist/jquery.js'
@@ -101,7 +84,7 @@ globs.js = globs.vendor_js.concat([
   "!build/app/**/*.spec.js"
 ])
 
-globs.css = globs.app_css
+globs.css = [globs.app_css]
   .concat globs.vendor_css
 
 module.exports = globs

@@ -197,10 +197,10 @@ gulp.task 'build', ()->
 gulp.task 'compile', ()->
   runSequence(
     'clean:build'
+    'clean:bin'
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
     'build:templateCache'
-    'clean:bin'
-    ['compile:assets', 'compile:css', 'compile:javascript']
+    ['compile:assets', 'compile:javascript', 'compile:css']
     'compile:index'
     'run:karmaonce'
   )
