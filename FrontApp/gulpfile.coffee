@@ -24,6 +24,7 @@ uglify = require('gulp-uglify')
 clean = require('gulp-clean')
 runSequence = require('run-sequence')
 minifyCss = require('gulp-minify-css')
+livereload = require('gulp-livereload')
 p = require('./package.json')
 v = p.version
 
@@ -157,11 +158,11 @@ gulp.task 'compile:index', ->
 # ---------- development ------------- #
 # ------------------------------------ #
 gulp.task 'watch', ->
+  gulp.watch globs.karma, ['run:karma']
 	gulp.watch globs.jade, ['build:jade']
 	gulp.watch globs.assets, ['build:assets']
 	gulp.watch globs.sass, ['build:sass']
 	gulp.watch globs.coffee, ['build:coffee']
-  #gulp.watch globs.karma, ['run:karma']
 
 `
 gulp.task('connect', function(){
@@ -192,7 +193,6 @@ gulp.task 'build', ()->
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
     'build:templateCache'
     'build:index'
-    'run:karma'
   )
 
 # production build

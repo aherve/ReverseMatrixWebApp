@@ -8,7 +8,9 @@ section
 
   md-list.lands-list( layout="column" )
     md-item( 
-      ng-repeat="land in project.lands | landCat:status | reverse "
+      ng-repeat="land in project.lands | landCat:status | reverse"
+      md-swipe-left="onSwipeLeft(land)"
+      md-swipe-right="onSwipeRight(land)"
     )
       md-divider
       md-item-content( style="background-color: white" )
@@ -30,6 +32,7 @@ section
             ng-click="archive(land)"
             swipe-left
             ng-hide="$state.includes('main.projects.detail.archived')"
+            hide-sm
           )
             span.fa.fa-archive
             |  archiver
@@ -38,6 +41,7 @@ section
             ng-click="unSortLand(land)"
             swipe-right
             ng-show="$state.includes('main.projects.detail.archived')"
+            hide-sm
           )
             span.fa.fa-archive
             |  annuler archiver
@@ -46,6 +50,7 @@ section
             ng-click="favourite(land)" 
             swipe-right
             ng-hide="$state.includes('main.projects.detail.favourite')"
+            hide-sm
           )
             span.fa.fa-star
             |  ajouter aux favoris
@@ -54,6 +59,7 @@ section
             ng-click="unSortLand(land)" 
             swipe-left
             ng-show="$state.includes('main.projects.detail.favourite')"
+            hide-sm
           )
             span.fa.fa-star
             |  retirer des favoris

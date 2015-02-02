@@ -58,6 +58,24 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
           when 'main.projects.detail.new' then 0
           when 'main.projects.detail.archived' then -1
           when 'main.projects.detail.favourite' then 1
+
+      $scope.onSwipeRight = (land)->
+        switch $state.current.name
+          when 'main.projects.detail.new'
+            $scope.favourite land
+          when 'main.projects.detail.archived'
+            $scope.unSortLand land
+          when 'main.projects.detail.favourite'
+            return
+
+      $scope.onSwipeLeft = (land)->
+        switch $state.current.name
+          when 'main.projects.detail.new'
+            $scope.archive land
+          when 'main.projects.detail.archived'
+            return
+          when 'main.projects.detail.favourite'
+            $scope.unSortLand land
         
       $scope.project = Project.activeProject()
 
