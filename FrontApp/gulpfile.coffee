@@ -64,6 +64,7 @@ gulp.task 'build:jade', ->
     .pipe plumber()
     .pipe jade({ pretty : true })
     .pipe gulp.dest(build_dir)
+    .pipe connect.reload()
 
 gulp.task 'build:index', ->
   gulp.src 'build/index.html'
@@ -76,6 +77,7 @@ gulp.task 'build:templateCache', ->
     .pipe plumber()
     .pipe templateCache()
     .pipe gulp.dest(build_app_dir)
+    .pipe connect.reload()
 
 gulp.task 'build:sass', ->
   gulp.src globs.sass
@@ -89,22 +91,26 @@ gulp.task 'build:sass', ->
       path
     )
     .pipe gulp.dest(build_dir)
+    .pipe connect.reload()
 
 gulp.task 'build:coffee', ->
 	gulp.src globs.coffee
     .pipe plumber()
     .pipe coffee({ bare : true })
     .pipe gulp.dest(build_dir)
+    .pipe connect.reload()
 
 gulp.task 'build:assets', ->
 	gulp.src globs.assets
     .pipe plumber()
     .pipe gulp.dest(build_assets_dir)
+    .pipe connect.reload()
 
 gulp.task 'build:vendor', ->
 	gulp.src globs.vendor
     .pipe plumber()
     .pipe gulp.dest(build_vendor_dir)
+    .pipe connect.reload()
 
 gulp.task 'run:karma', ->
 	gulp.src globs.karma
@@ -119,6 +125,7 @@ gulp.task 'run:karmaonce', ->
 	gulp.src globs.karma
     .pipe karma
       configFile : 'karma.conf.js'
+      action: 'run'
     .on 'error', (err) ->
       throw err
       return
@@ -157,13 +164,6 @@ gulp.task 'compile:index', ->
 # ------------------------------------ #
 # ---------- development ------------- #
 # ------------------------------------ #
-gulp.task 'watch', ->
-  gulp.watch globs.karma, ['run:karma']
-	gulp.watch globs.jade, ['build:jade']
-	gulp.watch globs.assets, ['build:assets']
-	gulp.watch globs.sass, ['build:sass']
-	gulp.watch globs.coffee, ['build:coffee']
-
 `
 gulp.task('connect', function(){
     connect.server({
@@ -182,6 +182,14 @@ gulp.task('connect', function(){
 });
 `
 
+gulp.task 'watch', ()->
+  gulp.watch globs.jade, ['build:jade']
+  gulp.watch globs.assets, ['build:assets']
+  gulp.watch globs.sass, ['build:sass']
+  gulp.watch globs.coffee, ['build:coffee']
+  gulp.watch globs.karma, ['run:karma']
+
+
 # ------------------------------------ #
 # ---------- global tasks ------------ #
 # ------------------------------------ #
@@ -193,6 +201,7 @@ gulp.task 'build', ()->
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
     'build:templateCache'
     'build:index'
+    'run:karmaonce'
   )
 
 # production build
@@ -218,4 +227,13 @@ gulp.task 'test', ()->
   )
 
 # connect and watch 
-gulp.task 'default', ['build', 'connect', 'watch']
+gulp.task 'default', ->
+  runSequence(
+    'clean:build'
+    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
+    'build:templateCache'
+    'build:index'
+    'run:karmaonce'
+    ['connect', 'watch']
+  )
+
